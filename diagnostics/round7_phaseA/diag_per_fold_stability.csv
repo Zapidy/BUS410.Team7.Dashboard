@@ -1,0 +1,2 @@
+n_folds,mean_test_auc,std_test_auc,mean_test_ap,std_test_ap,min_fold_auc,max_fold_auc,fold_at_min,stability_flag
+8,0.8165545311609786,0.07260044896037092,0.15303713297025978,0.08128343028462628,0.7279220682900478,0.8926396785699404,F6,FLAGGED (std > 0.06)

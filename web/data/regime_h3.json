@@ -1,0 +1,109 @@
+{
+  "horizon": 3,
+  "rows": [
+    {
+      "regime": "precovid",
+      "train_years": "2009-2014",
+      "test_years": "2015-2016",
+      "n_test": 184770,
+      "auc": 0.8468,
+      "ap": 0.3814,
+      "ap_lift": 18.57,
+      "pos_rate": 0.0205
+    },
+    {
+      "regime": "postcovid",
+      "train_years": "2018-2019",
+      "test_years": "2020-2021",
+      "n_test": 156847,
+      "auc": 0.8246,
+      "ap": 0.2869,
+      "ap_lift": 6.05,
+      "pos_rate": 0.0475
+    }
+  ],
+  "precovid_top": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.3312
+    },
+    {
+      "rank": 2,
+      "feature": "ssbci_active",
+      "importance": 0.1384
+    },
+    {
+      "rank": 3,
+      "feature": "nearest_mdi_branch_miles",
+      "importance": 0.0777
+    },
+    {
+      "rank": 4,
+      "feature": "pct_loans_from_credit_unions_resid",
+      "importance": 0.0713
+    },
+    {
+      "rank": 5,
+      "feature": "top3_lender_share_tract_resid",
+      "importance": 0.0529
+    },
+    {
+      "rank": 6,
+      "feature": "pct_loans_from_top4_banks_resid",
+      "importance": 0.0413
+    },
+    {
+      "rank": 7,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.0408
+    },
+    {
+      "rank": 8,
+      "feature": "pct_loans_under_250k_resid",
+      "importance": 0.0364
+    }
+  ],
+  "postcovid_top": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.4456
+    },
+    {
+      "rank": 2,
+      "feature": "mdi_branches_within_10mi",
+      "importance": 0.1198
+    },
+    {
+      "rank": 3,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.0823
+    },
+    {
+      "rank": 4,
+      "feature": "branch_closures_3y_within_10mi",
+      "importance": 0.0592
+    },
+    {
+      "rank": 5,
+      "feature": "mdi_branches_within_25mi",
+      "importance": 0.0517
+    },
+    {
+      "rank": 6,
+      "feature": "top3_lender_share_tract_resid",
+      "importance": 0.0512
+    },
+    {
+      "rank": 7,
+      "feature": "top1_lender_share_tract_resid",
+      "importance": 0.0349
+    },
+    {
+      "rank": 8,
+      "feature": "pct_loans_from_top4_banks_resid",
+      "importance": 0.0303
+    }
+  ]
+}

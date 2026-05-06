@@ -1,0 +1,92 @@
+{
+  "horizon": 3,
+  "ranking": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.2335
+    },
+    {
+      "rank": 2,
+      "feature": "ssbci_active",
+      "importance": 0.1126
+    },
+    {
+      "rank": 3,
+      "feature": "pct_loans_from_credit_unions_resid",
+      "importance": 0.0855
+    },
+    {
+      "rank": 4,
+      "feature": "nearest_mdi_branch_miles",
+      "importance": 0.0717
+    },
+    {
+      "rank": 5,
+      "feature": "top3_lender_share_tract_resid",
+      "importance": 0.0635
+    },
+    {
+      "rank": 6,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.055
+    },
+    {
+      "rank": 7,
+      "feature": "pct_loans_from_top4_banks_resid",
+      "importance": 0.0493
+    },
+    {
+      "rank": 8,
+      "feature": "ssbci_program_count",
+      "importance": 0.0382
+    },
+    {
+      "rank": 9,
+      "feature": "mdi_active_in_county",
+      "importance": 0.0337
+    },
+    {
+      "rank": 10,
+      "feature": "pct_loans_under_250k_resid",
+      "importance": 0.0329
+    }
+  ],
+  "sweep": [
+    {
+      "k": 3,
+      "auc": 0.6711,
+      "ap": 0.2005
+    },
+    {
+      "k": 5,
+      "auc": 0.7066,
+      "ap": 0.2123
+    },
+    {
+      "k": 7,
+      "auc": 0.8053,
+      "ap": 0.2747
+    },
+    {
+      "k": 10,
+      "auc": 0.8152,
+      "ap": 0.2682
+    },
+    {
+      "k": 14,
+      "auc": 0.8324,
+      "ap": 0.2971
+    },
+    {
+      "k": 18,
+      "auc": 0.8293,
+      "ap": 0.2468
+    },
+    {
+      "k": 20,
+      "auc": 0.815,
+      "ap": 0.2404
+    }
+  ]
+}

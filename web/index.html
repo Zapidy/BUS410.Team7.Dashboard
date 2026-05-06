@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Two-Layer Credit-Desert Risk · Round 7</title>
+<meta name="description" content="An interactive forecast of small-business credit-desert risk across 77,000 U.S. census tracts. Two models, two horizons, one map.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=Recursive:slnt,wght,CASL,MONO@-15..0,300..800,0..1,0..1&display=swap">
+
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+<link rel="stylesheet" href="style.css?v=14">
+</head>
+<body>
+
+<main class="stage">
+
+  <!-- HERO: full-bleed map. -->
+  <section class="hero" aria-label="Interactive credit-desert risk map">
+
+    <div id="map" class="map" role="application" aria-label="Choropleth map of U.S. tracts colored by risk"></div>
+
+    <!-- Floating overlay: title (top-left) -->
+    <header class="ovl ovl--title">
+      <div class="kicker">BUS 410 · Round 7 · v3 / 2026</div>
+      <h1 class="title">
+        <span class="title__line">Two-Layer</span>
+        <span class="title__line">Credit-Desert Risk.</span>
+      </h1>
+      <p class="title__sub">A forecast across <span class="num">77,036</span> U.S. census tracts. Toggle the lens. Pick a horizon. Move the levers. Watch the map answer.</p>
+      <div class="ovl--horizonlabel mono" id="horizonLabel">Forecasting → 2027</div>
+    </header>
+
+    <!-- Floating overlay: model + horizon toggles (top-right) -->
+    <div class="ovl ovl--toggles">
+      <div class="toggrp" role="tablist" aria-label="Choose model">
+        <span class="toggrp__lbl kicker">Model</span>
+        <div class="toggrp__pills">
+          <button class="model is-active" data-model="m1" role="tab" aria-selected="true">
+            <span class="model__dot" aria-hidden="true"></span>
+            <span class="model__label">
+              <span class="model__num">Lens 1</span>
+              <span class="model__name">Diagnostic</span>
+            </span>
+          </button>
+          <button class="model" data-model="m2" role="tab" aria-selected="false">
+            <span class="model__dot" aria-hidden="true"></span>
+            <span class="model__label">
+              <span class="model__num">Lens 2</span>
+              <span class="model__name">Influenceable</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="toggrp" role="tablist" aria-label="Choose forecast horizon">
+        <span class="toggrp__lbl kicker">Horizon</span>
+        <div class="toggrp__pills">
+          <button class="horizon is-active" data-horizon="h3" role="tab" aria-selected="true">
+            <span class="horizon__num">3 yrs</span>
+            <span class="horizon__name">2027 forecast</span>
+          </button>
+          <button class="horizon" data-horizon="h6" role="tab" aria-selected="false">
+            <span class="horizon__num">6 yrs</span>
+            <span class="horizon__name">2030 scenario</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating overlay: metadata strip (bottom-left) -->
+    <div class="ovl ovl--meta" aria-hidden="false">
+      <span class="meta__cell"><b class="meta__k">n</b> <span class="mono num">77,036</span> tracts</span>
+      <span class="meta__sep">·</span>
+      <span class="meta__cell">2009<span class="meta__d">→</span>2024 panel</span>
+      <span class="meta__sep">·</span>
+      <span class="meta__cell">8 time-split tests, no leakage</span>
+      <span class="meta__sep">·</span>
+      <span class="meta__cell" id="metaHorizon">2027 forecast · trained on data through 2021 · predicts 2024</span>
+    </div>
+
+    <!-- Floating overlay: legend (bottom-right) -->
+    <div class="ovl ovl--legend" aria-label="Risk percentile legend">
+      <div class="legend__head">
+        <span class="kicker">Risk percentile</span>
+        <span class="legend__model" id="legendModelName">Diagnostic</span>
+      </div>
+      <div class="legend__bar" id="legendBar"></div>
+      <div class="legend__ticks">
+        <span class="mono">0</span>
+        <span class="mono">25</span>
+        <span class="mono">50</span>
+        <span class="mono">75</span>
+        <span class="mono">100</span>
+      </div>
+      <div class="legend__foot"><span id="legendHorizon">2027 forecast</span> · in-state percentile</div>
+    </div>
+
+    <!-- Right rail sidebar -->
+    <aside class="rail" aria-label="Active model controls">
+
+      <!-- Headline numbers -->
+      <div class="rail__head">
+        <div class="rail__kicker">
+          <span class="kicker">Active lens</span>
+          <span class="rail__horizon mono" id="railHorizon">2027 forecast</span>
+        </div>
+        <div class="rail__model">
+          <span class="rail__model-tag" id="railModelTag">Lens 1</span>
+          <h2 class="rail__model-name" id="railModelName">Diagnostic</h2>
+        </div>
+        <p class="rail__model-desc" id="railModelDesc">All 39 features. Round-5 champion. The strongest predictor of future credit deserts, but it leans on supply-side signal we can't move.</p>
+        <p class="rail__horizon-desc" id="railHorizonDesc">2027 forecast: trained on data through 2021, predicts state at 2024. Federal CRA reporting lags about 2 years, so this is the soonest-actionable forecast.</p>
+      </div>
+
+      <div class="rail__bignums">
+        <div class="bignum">
+          <div class="bignum__v" id="bigAuc">–</div>
+          <div class="bignum__l">AUC <span class="bignum__sub">area under curve, averaged across 8 time-split tests</span></div>
+        </div>
+        <div class="bignum">
+          <div class="bignum__v" id="bigAp">–</div>
+          <div class="bignum__l">AP <span class="bignum__sub">average precision</span></div>
+        </div>
+        <div class="bignum bignum--small">
+          <div class="bignum__v" id="bigSpread">–</div>
+          <div class="bignum__l">Fold spread <span class="bignum__sub">how much accuracy varies across time-split tests</span></div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- Mode: SUMMARY (default) -->
+      <div class="rail__mode" id="modeSummary">
+        <div class="kicker rail__sect">Top states by mean risk</div>
+        <ol class="topstates" id="topStates"></ol>
+        <div class="kicker rail__sect rail__sect--mid">Where the lens looks weakest</div>
+        <ol class="topstates topstates--auc" id="weakStates"></ol>
+        <div class="kicker rail__sect rail__sect--mid">National risk distribution</div>
+        <p class="rail__hint" id="histCaption">Tracts per risk decile · active model × horizon. Long left tail = most tracts read low risk; the rightmost bar is the high-risk shoulder.</p>
+        <div class="histo" id="natHisto" aria-label="Histogram of tract risk by decile"></div>
+      </div>
+
+      <!-- Mode: FOCUS (when a state is clicked) -->
+      <div class="rail__mode" id="modeFocus" hidden>
+        <div class="focus__head">
+          <div class="focus__top">
+            <div>
+              <span class="kicker">Focused state</span>
+              <h3 class="focus__name" id="focusName">–</h3>
+              <div class="focus__meta mono" id="focusMeta">– tracts · – AUC</div>
+            </div>
+            <button class="focus__close" id="focusClose" type="button" aria-label="Clear state focus">Show all states</button>
+          </div>
+        </div>
+
+        <div class="kicker rail__sect">Mean risk · model × horizon</div>
+        <div class="focusgrid" id="focusGrid"></div>
+
+        <div class="kicker rail__sect rail__sect--mid">Top 5 tracts in state</div>
+        <ol class="toptracts" id="focusTopTracts"></ol>
+      </div>
+
+      <!-- Mode: SCENARIO (when sliders moved) -->
+      <div class="rail__mode" id="modeScenario" hidden>
+        <div class="kicker rail__sect">Tracts that crossed the high-risk line</div>
+        <div class="counters">
+          <div class="counter">
+            <div class="counter__v" id="cntUp">+0</div>
+            <div class="counter__l">moved <em>into</em> top quartile</div>
+          </div>
+          <div class="counter">
+            <div class="counter__v" id="cntDn">−0</div>
+            <div class="counter__l">moved <em>out of</em> top quartile</div>
+          </div>
+        </div>
+        <div class="net" id="netDelta">net 0</div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- Scenario sliders -->
+      <div class="rail__sliders">
+        <div class="kicker rail__sect">Scenario levers</div>
+        <p class="rail__hint">Move a lever to push national means. The map recolors live for the active model and horizon. Each lever shows its honest impact at this horizon; we don't pretend.</p>
+        <div id="sliders"></div>
+        <button class="reset" id="resetBtn" type="button">Reset all levers</button>
+      </div>
+
+    </aside>
+
+  </section>
+
+  <!-- USE GUIDE — between map and methodology, above the fold of methodology -->
+  <section class="guide" id="useGuide" aria-label="How to use this dashboard">
+    <header class="guide__head">
+      <div class="kicker">How to use this dashboard</div>
+      <h2 class="guide__title">Five things to know before you click around.</h2>
+    </header>
+    <div class="guide__grid">
+
+      <article class="guide__card">
+        <div class="guide__num">01</div>
+        <h3 class="guide__h">The toggles</h3>
+        <p><b>Model.</b> Diagnostic uses every available signal, including supply-side ones we can&rsquo;t move. Influenceable uses only levers a policymaker could fund or build. <b>Horizon.</b> 2027 is the soonest-actionable forecast; 2030 is a longer-reach scenario.</p>
+      </article>
+
+      <article class="guide__card">
+        <div class="guide__num">02</div>
+        <h3 class="guide__h">The map</h3>
+        <p>Tract color = predicted risk for the active model and horizon, ramped from ink to mustard (Diagnostic) or chartreuse (Influenceable). The faint hued tints across the country are state boundaries; peripheral context, not a fourth dimension. <b>Click any state to focus.</b></p>
+      </article>
+
+      <article class="guide__card">
+        <div class="guide__num">03</div>
+        <h3 class="guide__h">The right rail</h3>
+        <p>National AUC and average precision up top. Below: top states by mean risk and where the lens looks weakest. Click a state to swap this panel for a detail view of that state. The tint vanishes for the focused state, so you read its choropleth clean.</p>
+      </article>
+
+      <article class="guide__card">
+        <div class="guide__num">04</div>
+        <h3 class="guide__h">Scenario explorer</h3>
+        <p>Drag a slider; the map recolors live. Each lever shifts its feature within historically observed ranges. Each slider shows its own honest impact (what this lever actually moves). Most levers are low-impact, absorbed by other features. We don&rsquo;t pretend.</p>
+      </article>
+
+      <article class="guide__card">
+        <div class="guide__num">05</div>
+        <h3 class="guide__h">What to look for</h3>
+        <p>Switch Diagnostic ↔ Influenceable with a tract hovered. Same place, different lens. The gap is the gap between &ldquo;structural disadvantage&rdquo; and &ldquo;things you could fund.&rdquo; If a tract reads high on Diagnostic but lower on Influenceable, the levers we have don&rsquo;t reach it.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section class="meth" id="methodology">
+
+    <header class="meth__head">
+      <div class="kicker">Behind the map</div>
+      <h2 class="meth__title">How this thing was built, and why we forecast 2027 and 2030.</h2>
+      <p class="meth__lede">Round 7 splits credit-desert prediction into two layers: one that predicts as well as possible, one that only uses things you could change. The split is the project. Below: the architecture, the levers that mattered, the COVID break, and what we still can't see.</p>
+    </header>
+
+    <article class="meth__sec meth__sec--lead">
+      <div class="meth__num">00</div>
+      <div class="meth__body">
+        <h3 class="meth__h">Why 2027 and 2030, not next year.</h3>
+        <p>An earlier version of this dashboard predicted one year ahead. That's useless in practice: federal CRA and HMDA reporting lags about <b>two years</b>. By the time we run a model on real reported data, last year is already over. Predicting 2025 from 2024 is a paper exercise.</p>
+        <p>So we retrained at two real horizons. The <b>2027 forecast</b> uses data through 2021 to forecast 2024, the soonest the data and the model agree on. The <b>2030 scenario</b> uses data through 2018 to forecast 2024 (same target year, longer reach, weaker but still informative). Both are evaluated walk-forward on out-of-sample folds (averaged across 8 time-split tests); both are calibrated isotonically per fold.</p>
+      </div>
+      <div class="meth__viz">
+        <div class="hzkv">
+          <div class="hzkv__row"><span class="hzkv__k">2027 forecast</span><span class="hzkv__v mono" id="t_h3auc">–</span></div>
+          <div class="hzkv__row"><span class="hzkv__k">2030 scenario</span><span class="hzkv__v mono" id="t_h6auc">–</span></div>
+          <div class="hzkv__row hzkv__row--note"><span class="hzkv__k">Reporting lag</span><span class="hzkv__v mono">~2y CRA, ~1.5y HMDA</span></div>
+          <div class="hzkv__row hzkv__row--note"><span class="hzkv__k">Test calibration</span><span class="hzkv__v mono">isotonic, per-fold</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="meth__sec">
+      <div class="meth__num">01</div>
+      <div class="meth__body">
+        <h3 class="meth__h">Two layers, one panel.</h3>
+        <p>Both models train on the same tract-year panel, <span class="mono">2009&ndash;2024</span>, averaged across 8 time-split tests. <b>Model 1</b> gets all 39 features, including supply-side signals that are partly downstream of the outcome. <b>Model 2</b> gets only features a policymaker could actually move: twenty levers, residualized against demographics so the model has to find lever signal independent of who lives there.</p>
+        <p>The Diagnostic lens gives the best forecast, but won&rsquo;t tell you what to do. The Influenceable lens is a quieter forecast, but every signal in it is something you could fund or build.</p>
+      </div>
+      <div class="meth__viz">
+        <table class="kvtbl">
+          <thead><tr><th>at active horizon (<span id="t_hzlabel">2027 forecast</span>)</th><th class="mono">Diagnostic</th><th class="mono">Influenceable</th></tr></thead>
+          <tbody>
+            <tr><td>Features</td><td class="mono">39</td><td class="mono">20</td></tr>
+            <tr><td>AUC <span class="bignum__sub">(area under curve)</span></td><td class="mono" id="t_m1auc">–</td><td class="mono" id="t_m2auc">–</td></tr>
+            <tr><td>Average precision</td><td class="mono" id="t_m1ap">–</td><td class="mono" id="t_m2ap">–</td></tr>
+            <tr><td>Time-split tests</td><td class="mono" id="t_m1folds">–</td><td class="mono" id="t_m2folds">–</td></tr>
+            <tr><td>Forecast year</td><td class="mono" id="t_year">2024</td><td class="mono" id="t_year2">2024</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="meth__sec">
+      <div class="meth__num">02</div>
+      <div class="meth__body">
+        <h3 class="meth__h">Importance is not impact.</h3>
+        <p>How much the model leans on a feature is not the same as how much the forecast suffers when that feature is removed. They disagree. <b>Branch access</b> ranks high in the lean-on measure, but if you drop it from the model average precision barely moves. Distance to a branch is correlated with everything else; the model can route around it.</p>
+        <p>The honest read: at the active horizon, only one or two lever groups do meaningful predictive work alone. The rest are decoration. The slider readouts above show this plainly.</p>
+        <p class="meth__inlinenote mono" id="ablNote">Removed-feature impact: <span id="ablHzLabel">2027 forecast</span></p>
+      </div>
+      <div class="meth__viz">
+        <div class="ablchart" id="ablChart" aria-label="Ablation impact by lever group"></div>
+      </div>
+    </article>
+
+    <article class="meth__sec">
+      <div class="meth__num">02b</div>
+      <div class="meth__body">
+        <h3 class="meth__h">Top features at this horizon.</h3>
+        <p>How much the model leans on each feature, averaged across 8 time-split tests. Different from the removed-feature view. Leaning asks &ldquo;how much does the model use this feature when it&rsquo;s present?&rdquo; Removing asks &ldquo;what happens if we drop this feature group entirely?&rdquo; A heavily-leaned-on feature with low removal impact is a feature the model could route around.</p>
+        <p class="meth__inlinenote mono">Top 8 · <span id="topFeatHzLabel">2027 forecast</span></p>
+        <p class="meth__resnote">A name ending in <span class="mono">_resid</span> means the feature was residualized against demographics. We regressed out the part of it that&rsquo;s explained by who lives in the tract (in other words, the lender-count effect has been mathematically removed), so the model has to find lever signal independent of population.</p>
+      </div>
+      <div class="meth__viz">
+        <ol class="topfeats" id="topFeats"></ol>
+      </div>
+    </article>
+
+    <article class="meth__sec">
+      <div class="meth__num">03</div>
+      <div class="meth__body">
+        <h3 class="meth__h">The COVID break.</h3>
+        <p>We trained the same architecture on pre-COVID data and on post-COVID data and asked which features the model reached for. The answer changed. <b>Distance to a bank branch</b> dominated the pre-COVID model. Post-COVID, <b>lender concentration</b> and MDI presence move up the list.</p>
+        <p>This is not the model getting smarter. It&rsquo;s the world changing under it. Branch closures during COVID rewired what scarcity even means at the tract level.</p>
+        <p class="meth__inlinenote mono" id="regNote">Regime split: <span id="regHzLabel">2027 forecast</span></p>
+      </div>
+      <div class="meth__viz">
+        <div class="regimerow" id="regimeRow"></div>
+      </div>
+    </article>
+
+    <article class="meth__sec">
+      <div class="meth__num">04</div>
+      <div class="meth__body">
+        <h3 class="meth__h">What this map can&rsquo;t see.</h3>
+        <p>The unit is the census tract; the horizon is multi-year. Anything operating below that resolution (the closure of one branch, a new microlender opening, a single program rule change) is invisible. The model also can&rsquo;t see the future of the world it was trained on: another COVID-scale shock would land in the Influenceable lens&rsquo;s blind spot first.</p>
+        <p>Use it like a forecast, not a verdict. The colors on the map say <em>where the lens points</em>, not where intervention will work.</p>
+      </div>
+      <div class="meth__viz meth__viz--note">
+        <div class="lim">
+          <div class="lim__row"><span class="lim__k">Resolution</span><span class="lim__v mono">tract · year</span></div>
+          <div class="lim__row"><span class="lim__k">Horizons</span><span class="lim__v mono">2027, 2030</span></div>
+          <div class="lim__row"><span class="lim__k">Calibration</span><span class="lim__v mono">isotonic, per-fold</span></div>
+          <div class="lim__row"><span class="lim__k">Eval</span><span class="lim__v mono">8 time-split tests, no leakage</span></div>
+          <div class="lim__row"><span class="lim__k">Audience</span><span class="lim__v">BUS 410, Round 7</span></div>
+        </div>
+      </div>
+    </article>
+
+    <footer class="meth__foot">
+      <div class="kicker">Colophon</div>
+      <p>Bricolage Grotesque, Manrope, and Recursive (Casual axis) via Google Fonts. Tiles by CARTO and OpenStreetMap. Map by MapLibre GL. Data: HMDA, FDIC SOD, SBA SSBCI, U.S. Census ACS, NCUA. Built for BUS 410, Round 7. kyng.pinx@gmail.com.</p>
+    </footer>
+
+  </section>
+
+</main>
+
+<!-- Tract-detail drawer (slides in from left when a tract is pinned) -->
+<aside id="drawer" class="drawer" hidden aria-hidden="true" aria-label="Tract detail">
+  <div class="drawer__inner">
+    <header class="drawer__head">
+      <div class="drawer__headtop">
+        <span class="kicker drawer__kicker">Tract detail</span>
+        <button id="drawerClose" class="drawer__close" type="button" aria-label="Close tract detail">close</button>
+      </div>
+      <div class="drawer__fips mono num" id="drawerFips">–</div>
+      <div class="drawer__sub" id="drawerSub">–</div>
+      <div class="drawer__meta mono" id="drawerMeta" hidden></div>
+      <p class="drawer__intro">
+        One U.S. census tract, roughly a neighborhood of 4,000 people.
+        Every prediction below estimates the chance this neighborhood becomes
+        a small-business credit desert (the bottom 10% of bank-lender count
+        nationally) by the year shown.
+      </p>
+    </header>
+
+    <div class="drawer__rule"></div>
+
+    <section class="drawer__sect">
+      <div class="kicker drawer__sect-h">Forecasts for this neighborhood</div>
+      <p class="drawer__hint">
+        Two lenses, two horizons. The <em>Diagnostic</em> lens uses every
+        signal available, including ones you can't change (race, income,
+        poverty). The <em>Influenceable</em> lens only uses signals that
+        local action can move (branch access, mission lender presence,
+        state programs). The cell with the colored border is what's
+        currently shown on the map.
+      </p>
+      <div class="drawer__grid" id="drawerGrid"></div>
+    </section>
+
+    <section id="drawerDivergence" class="drawer__sect divergence" hidden>
+      <div class="kicker divergence__eyebrow">Why the two lenses disagree</div>
+      <h3 class="divergence__headline" id="drawerDivergenceHeadline"></h3>
+      <p class="divergence__body" id="drawerDivergenceBody"></p>
+    </section>
+
+    <div class="drawer__rule"></div>
+
+    <section class="drawer__sect">
+      <div class="kicker drawer__sect-h">What's pushing this prediction · <span id="drawerShapHz">Diagnostic · 2027 forecast</span></div>
+      <p class="drawer__hint">
+        The five conditions in this neighborhood's data that are most
+        responsible for the forecast above. ▲ means the condition raises
+        the predicted risk; ▼ means it lowers it. Bar length shows how
+        much, relative to the others on this list.
+      </p>
+      <ol class="drawer__shap" id="drawerShap"></ol>
+    </section>
+
+    <div class="drawer__rule"></div>
+
+    <footer class="drawer__foot">
+      Click the highlighted tract on the map again to close. Toggle Model
+      or Horizon up top to see the four forecasts and drivers update live.
+    </footer>
+  </div>
+</aside>
+
+<!-- Feature description tooltip (shown on SHAP row hover) -->
+<div id="featTip" class="featTip" role="tooltip" hidden aria-live="polite"></div>
+
+<!-- Tooltip -->
+<div id="tip" class="tip" hidden>
+  <div class="tip__head">
+    <span class="tip__statelabel">
+      <span class="tip__chip" id="tipChip" aria-hidden="true"></span>
+      <span class="kicker" id="tipState">–</span>
+    </span>
+    <span class="mono" id="tipFips">–</span>
+  </div>
+  <div class="tip__county" id="tipCounty">–</div>
+  <div class="tip__rows">
+    <div class="tip__row tip__row--active" id="tipRowActive">
+      <span class="tip__dot" id="tipDotActive"></span>
+      <span class="tip__l" id="tipLActive">Diagnostic</span>
+      <span class="tip__hzgrp">
+        <span class="tip__hzcell">
+          <span class="tip__hzk">2027</span>
+          <span class="tip__v mono" id="tipActive_h3">–</span>
+        </span>
+        <span class="tip__hzcell">
+          <span class="tip__hzk">2030</span>
+          <span class="tip__v mono" id="tipActive_h6">–</span>
+        </span>
+      </span>
+    </div>
+    <div class="tip__row tip__row--other" id="tipRowOther">
+      <span class="tip__dot" id="tipDotOther"></span>
+      <span class="tip__l" id="tipLOther">Influenceable</span>
+      <span class="tip__hzgrp">
+        <span class="tip__hzcell">
+          <span class="tip__hzk">2027</span>
+          <span class="tip__v mono" id="tipOther_h3">–</span>
+        </span>
+        <span class="tip__hzcell">
+          <span class="tip__hzk">2030</span>
+          <span class="tip__v mono" id="tipOther_h6">–</span>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div class="tip__pct">
+    <span class="tip__pl">In-state percentile · <span id="tipActiveLabel">Diagnostic · 2027</span></span>
+    <span class="mono" id="tipPct">–</span>
+  </div>
+</div>
+
+<script src="app.js?v=14"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual envs
+venv/
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor
+.vscode/
+.idea/
+
+# Big intermediate data — regenerate via the ETL pipeline.
+# These directories hold gigabytes of raw/processed data from federal sources.
+data/raw/
+data/processed/
+data/raw/geocode_cache/
+
+# Decompressed SHAP cache. The compressed .gz is checked in.
+# Run scripts/prepare-data.sh after clone to decompress.
+web/data/shap_top.json
+
+# Local server logs
+*.log
+nohup.out
+
+# Logs from running training/etl scripts
+/tmp/*.log

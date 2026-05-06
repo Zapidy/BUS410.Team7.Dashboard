@@ -1,0 +1,92 @@
+{
+  "horizon": 6,
+  "ranking": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.4096
+    },
+    {
+      "rank": 2,
+      "feature": "nearest_mdi_branch_miles",
+      "importance": 0.0695
+    },
+    {
+      "rank": 3,
+      "feature": "pct_loans_from_credit_unions_resid",
+      "importance": 0.0501
+    },
+    {
+      "rank": 4,
+      "feature": "top3_lender_share_tract_resid",
+      "importance": 0.0498
+    },
+    {
+      "rank": 5,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.0465
+    },
+    {
+      "rank": 6,
+      "feature": "ssbci_active",
+      "importance": 0.0409
+    },
+    {
+      "rank": 7,
+      "feature": "mdi_branches_within_25mi",
+      "importance": 0.0386
+    },
+    {
+      "rank": 8,
+      "feature": "pct_loans_under_250k_resid",
+      "importance": 0.0361
+    },
+    {
+      "rank": 9,
+      "feature": "mdi_active_in_county",
+      "importance": 0.034
+    },
+    {
+      "rank": 10,
+      "feature": "pct_loans_from_top4_banks_resid",
+      "importance": 0.0336
+    }
+  ],
+  "sweep": [
+    {
+      "k": 3,
+      "auc": 0.7702,
+      "ap": 0.3759
+    },
+    {
+      "k": 5,
+      "auc": 0.8467,
+      "ap": 0.4542
+    },
+    {
+      "k": 7,
+      "auc": 0.8439,
+      "ap": 0.448
+    },
+    {
+      "k": 10,
+      "auc": 0.8521,
+      "ap": 0.4355
+    },
+    {
+      "k": 14,
+      "auc": 0.8495,
+      "ap": 0.4398
+    },
+    {
+      "k": 18,
+      "auc": 0.8626,
+      "ap": 0.4458
+    },
+    {
+      "k": 20,
+      "auc": 0.8592,
+      "ap": 0.44
+    }
+  ]
+}

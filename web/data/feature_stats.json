@@ -1,0 +1,74 @@
+{
+  "distance_to_nearest_bank_branch": {
+    "mean": 1.70014,
+    "std": 3.396654,
+    "min": 0.000489,
+    "max": 653.628359,
+    "p10": 0.323381,
+    "p90": 3.916939,
+    "importance": 0.233453
+  },
+  "branches_within_5mi": {
+    "mean": 62.909571,
+    "std": 84.961035,
+    "min": 0.0,
+    "max": 977.0,
+    "p10": 1.0,
+    "p90": 136.0,
+    "importance": 0.024771
+  },
+  "mdi_branches_within_10mi": {
+    "mean": 6.08928,
+    "std": 16.338538,
+    "min": 0.0,
+    "max": 185.0,
+    "p10": 0.0,
+    "p90": 15.0,
+    "importance": 0.027166
+  },
+  "mdi_branches_within_25mi": {
+    "mean": 30.384788,
+    "std": 50.100121,
+    "min": 0.0,
+    "max": 280.0,
+    "p10": 0.0,
+    "p90": 98.0,
+    "importance": 0.03152
+  },
+  "ssbci_active": {
+    "mean": 0.448211,
+    "std": 0.497311,
+    "min": 0.0,
+    "max": 1.0,
+    "p10": 0.0,
+    "p90": 1.0,
+    "importance": 0.112589
+  },
+  "ssbci_program_count": {
+    "mean": 1.431976,
+    "std": 1.61082,
+    "min": 0.0,
+    "max": 4.0,
+    "p10": 0.0,
+    "p90": 3.0,
+    "importance": 0.03823
+  },
+  "microloan_intermediary_within_25mi": {
+    "mean": 0.399886,
+    "std": 0.643011,
+    "min": 0.0,
+    "max": 3.0,
+    "p10": 0.0,
+    "p90": 1.0,
+    "importance": 0.019871
+  },
+  "lender_hhi_tract_resid": {
+    "mean": 0.014439,
+    "std": 0.049393,
+    "min": -0.616846,
+    "max": 0.836644,
+    "p10": -0.039219,
+    "p90": 0.0613,
+    "importance": 0.055026
+  }
+}

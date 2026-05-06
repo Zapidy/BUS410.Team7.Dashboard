@@ -1,0 +1,73 @@
+{
+  "horizon": 3,
+  "baseline": {
+    "n_features": 20,
+    "mean_auc": 0.8204,
+    "mean_ap": 0.2819
+  },
+  "levers": [
+    {
+      "lever": "Lender concentration (residualized)",
+      "key": "residualized_concentration",
+      "n_features": 17,
+      "mean_auc": 0.7434,
+      "mean_ap": 0.2184,
+      "delta_auc": -0.0771,
+      "delta_ap": -0.0635
+    },
+    {
+      "lever": "MDI / mission lender",
+      "key": "mdi_mission_lender",
+      "n_features": 16,
+      "mean_auc": 0.8204,
+      "mean_ap": 0.254,
+      "delta_auc": -0.0001,
+      "delta_ap": -0.0279
+    },
+    {
+      "lever": "Microlender ecosystem",
+      "key": "microlender_ecosystem",
+      "n_features": 19,
+      "mean_auc": 0.8283,
+      "mean_ap": 0.2625,
+      "delta_auc": 0.0079,
+      "delta_ap": -0.0194
+    },
+    {
+      "lever": "Branch access",
+      "key": "branch_access",
+      "n_features": 17,
+      "mean_auc": 0.8249,
+      "mean_ap": 0.2648,
+      "delta_auc": 0.0045,
+      "delta_ap": -0.0171
+    },
+    {
+      "lever": "Loan-size mix (residualized)",
+      "key": "residualized_loan_size",
+      "n_features": 18,
+      "mean_auc": 0.8256,
+      "mean_ap": 0.2696,
+      "delta_auc": 0.0052,
+      "delta_ap": -0.0123
+    },
+    {
+      "lever": "Lender mix (residualized)",
+      "key": "residualized_lender_mix",
+      "n_features": 17,
+      "mean_auc": 0.8189,
+      "mean_ap": 0.2714,
+      "delta_auc": -0.0015,
+      "delta_ap": -0.0104
+    },
+    {
+      "lever": "SSBCI state policy",
+      "key": "ssbci_state_policy",
+      "n_features": 16,
+      "mean_auc": 0.8115,
+      "mean_ap": 0.2945,
+      "delta_auc": -0.0089,
+      "delta_ap": 0.0126
+    }
+  ]
+}

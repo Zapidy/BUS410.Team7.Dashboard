@@ -1,0 +1,109 @@
+{
+  "horizon": 6,
+  "rows": [
+    {
+      "regime": "precovid",
+      "train_years": "2009-2011",
+      "test_years": "2012-2013",
+      "n_test": 393582,
+      "auc": 0.9197,
+      "ap": 0.4922,
+      "ap_lift": 34.46,
+      "pos_rate": 0.0143
+    },
+    {
+      "regime": "postcovid",
+      "train_years": "2014-2015",
+      "test_years": "2017-2018",
+      "n_test": 168132,
+      "auc": 0.7739,
+      "ap": 0.322,
+      "ap_lift": 6.67,
+      "pos_rate": 0.0483
+    }
+  ],
+  "precovid_top": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.4725
+    },
+    {
+      "rank": 2,
+      "feature": "nearest_mdi_branch_miles",
+      "importance": 0.0861
+    },
+    {
+      "rank": 3,
+      "feature": "top3_lender_share_tract_resid",
+      "importance": 0.0472
+    },
+    {
+      "rank": 4,
+      "feature": "mdi_branches_within_10mi",
+      "importance": 0.0443
+    },
+    {
+      "rank": 5,
+      "feature": "mdi_branches_within_25mi",
+      "importance": 0.0432
+    },
+    {
+      "rank": 6,
+      "feature": "pct_loans_under_250k_resid",
+      "importance": 0.0354
+    },
+    {
+      "rank": 7,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.0341
+    },
+    {
+      "rank": 8,
+      "feature": "branches_within_5mi",
+      "importance": 0.0317
+    }
+  ],
+  "postcovid_top": [
+    {
+      "rank": 1,
+      "feature": "distance_to_nearest_bank_branch",
+      "importance": 0.731
+    },
+    {
+      "rank": 2,
+      "feature": "branches_within_5mi",
+      "importance": 0.0834
+    },
+    {
+      "rank": 3,
+      "feature": "lender_hhi_tract_resid",
+      "importance": 0.0362
+    },
+    {
+      "rank": 4,
+      "feature": "branch_closures_3y_within_10mi",
+      "importance": 0.0343
+    },
+    {
+      "rank": 5,
+      "feature": "nearest_mdi_branch_miles",
+      "importance": 0.0166
+    },
+    {
+      "rank": 6,
+      "feature": "pct_loans_from_top4_banks_resid",
+      "importance": 0.0151
+    },
+    {
+      "rank": 7,
+      "feature": "mdi_active_in_county",
+      "importance": 0.0133
+    },
+    {
+      "rank": 8,
+      "feature": "mdi_branches_within_25mi",
+      "importance": 0.0114
+    }
+  ]
+}

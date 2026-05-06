@@ -1,0 +1,15 @@
+feature,expected_direction,observed_direction,slope,match,error
+pct_loans_from_community_banks,down,,,False,SVD did not converge in Linear Least Squares
+pct_loans_from_top4_banks,up,,,False,SVD did not converge in Linear Least Squares
+pct_loans_under_100k,down,,,False,SVD did not converge in Linear Least Squares
+pct_loans_under_250k,down,,,False,SVD did not converge in Linear Least Squares
+top1_lender_share_tract,up,,,False,SVD did not converge in Linear Least Squares
+top3_lender_share_tract,up,,,False,SVD did not converge in Linear Least Squares
+lender_hhi_tract,up,,,False,SVD did not converge in Linear Least Squares
+distance_to_nearest_bank_branch,up,down,-0.00032331298354740316,False,
+branches_within_5mi,down,down,-1.3636601285292823e-05,True,
+branch_closures_3y_within_10mi,up,up,0.00028020022207586625,True,
+pct_loans_from_credit_unions,down,,,False,SVD did not converge in Linear Least Squares
+cdfi_within_10mi,down,,,False,SVD did not converge in Linear Least Squares
+mdi_branches_within_10mi,down,,,False,SVD did not converge in Linear Least Squares
+microloan_intermediary_within_25mi,down,,,False,SVD did not converge in Linear Least Squares
