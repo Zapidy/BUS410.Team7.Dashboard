@@ -1,3 +1,9 @@
+# Agent files
+.claude/
+.codex/
+AGENTS.md
+CLAUDE.md
+
 # Python
 __pycache__/
 *.pyc
