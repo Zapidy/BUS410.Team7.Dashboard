@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
@@ -203,34 +203,54 @@
     </header>
     <div class="guide__grid">
 
-      <article class="guide__card">
+      <article class="guide__card" data-accordion>
         <div class="guide__num">01</div>
         <h3 class="guide__h">The toggles</h3>
-        <p><b>Model.</b> Diagnostic uses every available signal, including supply-side ones we can&rsquo;t move. Influenceable uses only levers a policymaker could fund or build. <b>Horizon.</b> 2027 is the soonest-actionable forecast; 2030 is a longer-reach scenario.</p>
+        <p class="accordion__hook">Diagnostic shows the sharpest forecast; Influenceable narrows to only the levers a policymaker could actually move.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p><b>Model.</b> Diagnostic uses every available signal, including supply-side ones we can&rsquo;t move. Influenceable uses only levers a policymaker could fund or build. <b>Horizon.</b> 2027 is the soonest-actionable forecast; 2030 is a longer-reach scenario.</p>
+        </div>
       </article>
 
-      <article class="guide__card">
+      <article class="guide__card" data-accordion>
         <div class="guide__num">02</div>
         <h3 class="guide__h">The map</h3>
-        <p>Tract color = predicted risk for the active model and horizon, ramped from ink to mustard (Diagnostic) or chartreuse (Influenceable). The faint hued tints across the country are state boundaries; peripheral context, not a fourth dimension. <b>Click any state to focus.</b></p>
+        <p class="accordion__hook">Tract color encodes predicted risk at the active horizon; click any state to focus and the peripheral tints fade so you read one choropleth at a time.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>Tract color = predicted risk for the active model and horizon, ramped from ink to mustard (Diagnostic) or chartreuse (Influenceable). The faint hued tints across the country are state boundaries; peripheral context, not a fourth dimension. <b>Click any state to focus.</b></p>
+        </div>
       </article>
 
-      <article class="guide__card">
+      <article class="guide__card" data-accordion>
         <div class="guide__num">03</div>
         <h3 class="guide__h">The right rail</h3>
-        <p>National AUC and average precision up top. Below: top states by mean risk and where the lens looks weakest. Click a state to swap this panel for a detail view of that state. The tint vanishes for the focused state, so you read its choropleth clean.</p>
+        <p class="accordion__hook">National performance metrics and top states by mean risk live here; click a state to swap in a tract-level detail panel.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>National AUC and average precision up top. Below: top states by mean risk and where the lens looks weakest. Click a state to swap this panel for a detail view of that state. The tint vanishes for the focused state, so you read its choropleth clean.</p>
+        </div>
       </article>
 
-      <article class="guide__card">
+      <article class="guide__card" data-accordion>
         <div class="guide__num">04</div>
         <h3 class="guide__h">Scenario explorer</h3>
-        <p>Drag a slider; the map recolors live. Each lever shifts its feature within historically observed ranges. Each slider shows its own honest impact (what this lever actually moves). Most levers are low-impact, absorbed by other features. We don&rsquo;t pretend.</p>
+        <p class="accordion__hook">Drag a lever slider and the map recolors live; most levers have modest impact, and the readout will tell you so honestly.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>Drag a slider; the map recolors live. Each lever shifts its feature within historically observed ranges. Each slider shows its own honest impact (what this lever actually moves). Most levers are low-impact, absorbed by other features. We don&rsquo;t pretend.</p>
+        </div>
       </article>
 
-      <article class="guide__card">
+      <article class="guide__card" data-accordion>
         <div class="guide__num">05</div>
         <h3 class="guide__h">What to look for</h3>
-        <p>Switch Diagnostic ↔ Influenceable with a tract hovered. Same place, different lens. The gap is the gap between &ldquo;structural disadvantage&rdquo; and &ldquo;things you could fund.&rdquo; If a tract reads high on Diagnostic but lower on Influenceable, the levers we have don&rsquo;t reach it.</p>
+        <p class="accordion__hook">The gap between Diagnostic and Influenceable scores is the gap between structural disadvantage and things you can fund; tracts where that gap is large are the hardest to reach.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>Switch Diagnostic ↔ Influenceable with a tract hovered. Same place, different lens. The gap is the gap between &ldquo;structural disadvantage&rdquo; and &ldquo;things you could fund.&rdquo; If a tract reads high on Diagnostic but lower on Influenceable, the levers we have don&rsquo;t reach it.</p>
+        </div>
       </article>
 
     </div>
@@ -245,12 +265,16 @@
       <p class="meth__lede">Round 7 splits credit-desert prediction into two layers: one that predicts as well as possible, one that only uses things you could change. The split is the project. Below: the architecture, the levers that mattered, the COVID break, and what we still can't see.</p>
     </header>
 
-    <article class="meth__sec meth__sec--lead">
+    <article class="meth__sec meth__sec--lead" data-accordion>
       <div class="meth__num">00</div>
       <div class="meth__body">
         <h3 class="meth__h">Why 2027 and 2030, not next year.</h3>
-        <p>An earlier version of this dashboard predicted one year ahead. That's useless in practice: federal CRA and HMDA reporting lags about <b>two years</b>. By the time we run a model on real reported data, last year is already over. Predicting 2025 from 2024 is a paper exercise.</p>
-        <p>So we retrained at two real horizons. The <b>2027 forecast</b> uses data through 2021 to forecast 2024, the soonest the data and the model agree on. The <b>2030 scenario</b> uses data through 2018 to forecast 2024 (same target year, longer reach, weaker but still informative). Both are evaluated walk-forward on out-of-sample folds (averaged across 8 time-split tests); both are calibrated isotonically per fold.</p>
+        <p class="accordion__hook">Federal CRA and HMDA data arrives ~2 years late, making 1-year-ahead forecasts useless in practice; the models were trained at the two soonest actionable horizons instead.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>An earlier version of this dashboard predicted one year ahead. That's useless in practice: federal CRA and HMDA reporting lags about <b>two years</b>. By the time we run a model on real reported data, last year is already over. Predicting 2025 from 2024 is a paper exercise.</p>
+          <p>So we retrained at two real horizons. The <b>2027 forecast</b> uses data through 2021 to forecast 2024, the soonest the data and the model agree on. The <b>2030 scenario</b> uses data through 2018 to forecast 2024 (same target year, longer reach, weaker but still informative). Both are evaluated walk-forward on out-of-sample folds (averaged across 8 time-split tests); both are calibrated isotonically per fold.</p>
+        </div>
       </div>
       <div class="meth__viz">
         <div class="hzkv">
@@ -262,12 +286,16 @@
       </div>
     </article>
 
-    <article class="meth__sec">
+    <article class="meth__sec" data-accordion>
       <div class="meth__num">01</div>
       <div class="meth__body">
         <h3 class="meth__h">Two layers, one panel.</h3>
-        <p>Both models train on the same tract-year panel, <span class="mono">2009&ndash;2024</span>, averaged across 8 time-split tests. <b>Model 1</b> gets all 39 features, including supply-side signals that are partly downstream of the outcome. <b>Model 2</b> gets only features a policymaker could actually move: twenty levers, residualized against demographics so the model has to find lever signal independent of who lives there.</p>
-        <p>The Diagnostic lens gives the best forecast, but won&rsquo;t tell you what to do. The Influenceable lens is a quieter forecast, but every signal in it is something you could fund or build.</p>
+        <p class="accordion__hook">Model 1 uses every available signal for the best possible forecast; Model 2 uses only the 20 features a policymaker could build or fund, residualized against demographics.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>Both models train on the same tract-year panel, <span class="mono">2009&ndash;2024</span>, averaged across 8 time-split tests. <b>Model 1</b> gets all 39 features, including supply-side signals that are partly downstream of the outcome. <b>Model 2</b> gets only features a policymaker could actually move: twenty levers, residualized against demographics so the model has to find lever signal independent of who lives there.</p>
+          <p>The Diagnostic lens gives the best forecast, but won&rsquo;t tell you what to do. The Influenceable lens is a quieter forecast, but every signal in it is something you could fund or build.</p>
+        </div>
       </div>
       <div class="meth__viz">
         <table class="kvtbl">
@@ -283,51 +311,67 @@
       </div>
     </article>
 
-    <article class="meth__sec">
+    <article class="meth__sec" data-accordion>
       <div class="meth__num">02</div>
       <div class="meth__body">
         <h3 class="meth__h">Importance is not impact.</h3>
-        <p>How much the model leans on a feature is not the same as how much the forecast suffers when that feature is removed. They disagree. <b>Branch access</b> ranks high in the lean-on measure, but if you drop it from the model average precision barely moves. Distance to a branch is correlated with everything else; the model can route around it.</p>
-        <p>The honest read: at the active horizon, only one or two lever groups do meaningful predictive work alone. The rest are decoration. The slider readouts above show this plainly.</p>
-        <p class="meth__inlinenote mono" id="ablNote">Removed-feature impact: <span id="ablHzLabel">2027 forecast</span></p>
+        <p class="accordion__hook">A feature the model leans on heavily isn't necessarily one that moves the forecast when removed; branch access ranks high but is so correlated with other signals the model routes around it.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>How much the model leans on a feature is not the same as how much the forecast suffers when that feature is removed. They disagree. <b>Branch access</b> ranks high in the lean-on measure, but if you drop it from the model average precision barely moves. Distance to a branch is correlated with everything else; the model can route around it.</p>
+          <p>The honest read: at the active horizon, only one or two lever groups do meaningful predictive work alone. The rest are decoration. The slider readouts above show this plainly.</p>
+          <p class="meth__inlinenote mono" id="ablNote">Removed-feature impact: <span id="ablHzLabel">2027 forecast</span></p>
+        </div>
       </div>
       <div class="meth__viz">
         <div class="ablchart" id="ablChart" aria-label="Ablation impact by lever group"></div>
       </div>
     </article>
 
-    <article class="meth__sec">
+    <article class="meth__sec" data-accordion>
       <div class="meth__num">02b</div>
       <div class="meth__body">
         <h3 class="meth__h">Top features at this horizon.</h3>
-        <p>How much the model leans on each feature, averaged across 8 time-split tests. Different from the removed-feature view. Leaning asks &ldquo;how much does the model use this feature when it&rsquo;s present?&rdquo; Removing asks &ldquo;what happens if we drop this feature group entirely?&rdquo; A heavily-leaned-on feature with low removal impact is a feature the model could route around.</p>
-        <p class="meth__inlinenote mono">Top 8 · <span id="topFeatHzLabel">2027 forecast</span></p>
-        <p class="meth__resnote">A name ending in <span class="mono">_resid</span> means the feature was residualized against demographics. We regressed out the part of it that&rsquo;s explained by who lives in the tract (in other words, the lender-count effect has been mathematically removed), so the model has to find lever signal independent of population.</p>
+        <p class="accordion__hook">The chart shows how much the model weights each feature across 8 time-split tests; names ending in <span class="mono">_resid</span> had their demographic component mathematically removed before training.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>How much the model leans on each feature, averaged across 8 time-split tests. Different from the removed-feature view. Leaning asks &ldquo;how much does the model use this feature when it&rsquo;s present?&rdquo; Removing asks &ldquo;what happens if we drop this feature group entirely?&rdquo; A heavily-leaned-on feature with low removal impact is a feature the model could route around.</p>
+          <p class="meth__inlinenote mono">Top 8 · <span id="topFeatHzLabel">2027 forecast</span></p>
+          <p class="meth__resnote">A name ending in <span class="mono">_resid</span> means the feature was residualized against demographics. We regressed out the part of it that&rsquo;s explained by who lives in the tract (in other words, the lender-count effect has been mathematically removed), so the model has to find lever signal independent of population.</p>
+        </div>
       </div>
       <div class="meth__viz">
         <ol class="topfeats" id="topFeats"></ol>
       </div>
     </article>
 
-    <article class="meth__sec">
+    <article class="meth__sec" data-accordion>
       <div class="meth__num">03</div>
       <div class="meth__body">
         <h3 class="meth__h">The COVID break.</h3>
-        <p>We trained the same architecture on pre-COVID data and on post-COVID data and asked which features the model reached for. The answer changed. <b>Distance to a bank branch</b> dominated the pre-COVID model. Post-COVID, <b>lender concentration</b> and MDI presence move up the list.</p>
-        <p>This is not the model getting smarter. It&rsquo;s the world changing under it. Branch closures during COVID rewired what scarcity even means at the tract level.</p>
-        <p class="meth__inlinenote mono" id="regNote">Regime split: <span id="regHzLabel">2027 forecast</span></p>
+        <p class="accordion__hook">Training the same architecture on pre- vs. post-COVID data shows distance-to-branch dominated before; lender concentration and MDI presence dominate after — the world changed, not the model.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>We trained the same architecture on pre-COVID data and on post-COVID data and asked which features the model reached for. The answer changed. <b>Distance to a bank branch</b> dominated the pre-COVID model. Post-COVID, <b>lender concentration</b> and MDI presence move up the list.</p>
+          <p>This is not the model getting smarter. It&rsquo;s the world changing under it. Branch closures during COVID rewired what scarcity even means at the tract level.</p>
+          <p class="meth__inlinenote mono" id="regNote">Regime split: <span id="regHzLabel">2027 forecast</span></p>
+        </div>
       </div>
       <div class="meth__viz">
         <div class="regimerow" id="regimeRow"></div>
       </div>
     </article>
 
-    <article class="meth__sec">
+    <article class="meth__sec" data-accordion>
       <div class="meth__num">04</div>
       <div class="meth__body">
         <h3 class="meth__h">What this map can&rsquo;t see.</h3>
-        <p>The unit is the census tract; the horizon is multi-year. Anything operating below that resolution (the closure of one branch, a new microlender opening, a single program rule change) is invisible. The model also can&rsquo;t see the future of the world it was trained on: another COVID-scale shock would land in the Influenceable lens&rsquo;s blind spot first.</p>
-        <p>Use it like a forecast, not a verdict. The colors on the map say <em>where the lens points</em>, not where intervention will work.</p>
+        <p class="accordion__hook">The unit is a census tract over multiple years, so anything finer (one branch closing, one new program) is invisible, and future shocks outside the training distribution aren't foreseeable.</p>
+        <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
+        <div class="accordion__body">
+          <p>The unit is the census tract; the horizon is multi-year. Anything operating below that resolution (the closure of one branch, a new microlender opening, a single program rule change) is invisible. The model also can&rsquo;t see the future of the world it was trained on: another COVID-scale shock would land in the Influenceable lens&rsquo;s blind spot first.</p>
+          <p>Use it like a forecast, not a verdict. The colors on the map say <em>where the lens points</em>, not where intervention will work.</p>
+        </div>
       </div>
       <div class="meth__viz meth__viz--note">
         <div class="lim">
