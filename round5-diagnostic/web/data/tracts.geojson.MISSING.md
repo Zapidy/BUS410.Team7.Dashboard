@@ -1,0 +1,1 @@
+Note: replaced by reference. The current round 7 dashboard at ../web/ uses its own tracts.geojson with predictions baked in. Run round 5/web/build_dashboard_data.py to regenerate this file from round 5 data if reproducing the original round 5 dashboard.

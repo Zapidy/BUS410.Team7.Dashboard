@@ -1,0 +1,9 @@
+num_leaves,75.0
+max_depth,9.0
+learning_rate,0.015349637962170008
+min_child_samples,30.0
+subsample,0.823119096013993
+colsample_bytree,0.5165870680467335
+reg_alpha,0.033608872821702905
+reg_lambda,0.00026262548417621686
+n_estimators,509.0

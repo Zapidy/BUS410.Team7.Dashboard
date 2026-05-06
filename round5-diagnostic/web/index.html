@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Round 5 · Credit-Desert Forecast</title>
+  <meta name="description" content="Tract-level credit-desert forecast. Walk-forward XGBoost across 2009–2024. AUC 0.857.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=funnel-display@600,700,500&f[]=funnel-sans@400,500,600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="styles.css?v=h3-3">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <!-- Map fills the page -->
+  <div id="map" role="img" aria-label="US census tract credit-desert risk choropleth"></div>
+
+  <!-- Edge-tab affordances — hint that drawers exist -->
+  <button class="edge-tab edge-tab--left" id="edgeTabLeft" type="button" aria-label="Open filters drawer">FILTERS</button>
+  <button class="edge-tab edge-tab--right" id="edgeTabRight" type="button" aria-label="Open stats drawer">STATS</button>
+
+  <!-- Top bar: title + single headline metric + drawer toggles -->
+  <header class="masthead" aria-label="Dashboard masthead">
+    <div class="masthead__title">
+      <span class="masthead__round">R5</span>
+      <h1>Credit-Desert Forecast</h1>
+    </div>
+
+    <!-- Model layer switch — Diagnostic (H1, ~2026) vs Forecast (H3, ~2030) -->
+    <div class="layer-switch" role="tablist" aria-label="Model layer">
+      <button class="layer-switch__btn is-active" id="modelLayerDiag" role="tab" type="button"
+              aria-selected="true" data-layer="diag" data-gloss="layer_diag">
+        <span class="layer-switch__num">01</span>
+        <span class="layer-switch__lbl">DIAGNOSTIC<span class="layer-switch__yr">· 2026</span></span>
+      </button>
+      <button class="layer-switch__btn" id="modelLayerFore" role="tab" type="button"
+              aria-selected="false" data-layer="fore" data-gloss="layer_fore">
+        <span class="layer-switch__num">02</span>
+        <span class="layer-switch__lbl">FORECAST<span class="layer-switch__yr">· 2030</span></span>
+      </button>
+    </div>
+
+    <div class="masthead__metrics" aria-label="Headline model metrics">
+      <div class="metric metric--inline">
+        <span class="metric__label" id="hAucLabel" data-gloss="auc">AUC</span>
+        <span class="metric__value metric__value--accent" id="hAuc">0.857</span>
+        <span class="metric__band" id="hAucBand">±0.044 · n=<span id="hNTracts">—</span></span>
+      </div>
+      <button class="rail-toggle" id="toggleFilters" type="button" aria-expanded="false" aria-controls="rail-left" aria-label="Filters">
+        <span class="rail-toggle__icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        FILTERS
+      </button>
+      <button class="rail-toggle" id="toggleStats" type="button" aria-expanded="false" aria-controls="rail-right" aria-label="Filtered statistics">
+        STATS
+        <span class="rail-toggle__icon rail-toggle__icon--rail" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <button class="docs-pill" id="docsBtn" type="button" aria-expanded="false" aria-controls="docsPanel" aria-label="Open methodology and glossary">METHODS</button>
+    </div>
+  </header>
+
+  <!-- Left rail: filters (slide-out drawer) -->
+  <aside class="rail rail--left" id="rail-left" aria-label="Filters">
+    <div class="rail__head">
+      <span>FILTERS</span>
+      <span class="rail__head-actions">
+        <button class="rail__reset" id="filterReset" type="button">RESET</button>
+        <button class="rail__close" id="closeFilters" type="button" aria-label="Close filters">×</button>
+      </span>
+    </div>
+
+    <fieldset class="filter">
+      <legend data-gloss="filter_state">STATE</legend>
+      <select id="filterState" class="filter__select">
+        <option value="ALL">ALL · 50 + DC</option>
+      </select>
+    </fieldset>
+
+    <fieldset class="filter filter--toggle">
+      <legend data-gloss="static_flags">STATIC FLAGS</legend>
+      <label class="check"><input type="checkbox" id="filterRural"> RURAL TRACTS ONLY</label>
+      <label class="check"><input type="checkbox" id="filterPersistentPov"> PERSISTENT-POVERTY COUNTY ONLY</label>
+    </fieldset>
+
+    <fieldset class="filter filter--toggle">
+      <legend data-gloss="layers">OVERLAYS &amp; BOUNDARIES</legend>
+      <label class="check"><input type="checkbox" id="layerBranches"> BANK BRANCHES <span class="check__hint">2024 · FDIC SoD</span></label>
+      <label class="check"><input type="checkbox" id="layerCounties"> COUNTY OUTLINES</label>
+      <label class="check"><input type="checkbox" id="layerPlaces"> CITY OUTLINES <span class="check__hint">incorporated places</span></label>
+      <label class="check"><input type="checkbox" id="layerStates" checked> STATE OUTLINES</label>
+      <label class="check check--peer"><input type="checkbox" id="layerPeers" checked> PEER FINDER <span class="check__hint">click any tract</span></label>
+    </fieldset>
+
+    <section class="advanced">
+      <button type="button" class="advanced__head" id="advancedToggle"
+              aria-expanded="false" aria-controls="advancedBody">
+        <span class="advanced__label">
+          <span class="advanced__dot" aria-hidden="true"></span>
+          ADVANCED · DEMOGRAPHIC FILTERS
+        </span>
+        <span class="advanced__chev" aria-hidden="true">+</span>
+      </button>
+      <div class="advanced__body" id="advancedBody" role="region" aria-labelledby="advancedToggle">
+        <div class="advanced__inner">
+
+          <fieldset class="filter">
+            <legend>POPULATION</legend>
+            <div class="filter__rangerow">
+              <input type="range" id="popMin" min="0" max="20000" value="0" step="500">
+              <span class="filter__rangeval" id="popMinVal">0</span>
+            </div>
+            <div class="filter__rangerow">
+              <input type="range" id="popMax" min="0" max="20000" value="20000" step="500">
+              <span class="filter__rangeval" id="popMaxVal">20k+</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter">
+            <legend>MEDIAN HH INCOME</legend>
+            <div class="filter__rangerow">
+              <input type="range" id="incMin" min="0" max="200000" value="0" step="2500">
+              <span class="filter__rangeval" id="incMinVal">$0</span>
+            </div>
+            <div class="filter__rangerow">
+              <input type="range" id="incMax" min="0" max="200000" value="200000" step="2500">
+              <span class="filter__rangeval" id="incMaxVal">$200k+</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter">
+            <legend>POVERTY RATE</legend>
+            <div class="filter__rangerow">
+              <input type="range" id="povMin" min="0" max="60" value="0" step="1">
+              <span class="filter__rangeval" id="povMinVal">0%</span>
+            </div>
+            <div class="filter__rangerow">
+              <input type="range" id="povMax" min="0" max="60" value="60" step="1">
+              <span class="filter__rangeval" id="povMaxVal">60%+</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter">
+            <legend>NON-WHITE / HISPANIC %</legend>
+            <div class="filter__rangerow">
+              <input type="range" id="minMin" min="0" max="100" value="0" step="1">
+              <span class="filter__rangeval" id="minMinVal">0%</span>
+            </div>
+            <div class="filter__rangerow">
+              <input type="range" id="minMax" min="0" max="100" value="100" step="1">
+              <span class="filter__rangeval" id="minMaxVal">100%</span>
+            </div>
+          </fieldset>
+
+        </div>
+      </div>
+    </section>
+
+    <fieldset class="filter">
+      <legend data-gloss="risk">PREDICTED RISK</legend>
+      <div class="filter__rangerow">
+        <input type="range" id="riskMin" min="0" max="100" value="0" step="1">
+        <span class="filter__rangeval" id="riskMinVal">0%</span>
+      </div>
+    </fieldset>
+  </aside>
+
+  <!-- Right rail: stats (slide-out drawer) -->
+  <aside class="rail rail--right" id="rail-right" aria-label="Live statistics">
+    <div class="rail__head">
+      <span>FILTERED SET</span>
+      <button class="rail__close" id="closeStats" type="button" aria-label="Close stats">×</button>
+    </div>
+
+    <dl class="stats">
+      <div class="stats__row">
+        <dt data-gloss="filtered_tracts">TRACTS</dt><dd id="sNTracts">—</dd>
+      </div>
+      <div class="stats__row">
+        <dt data-gloss="mean_risk">MEAN RISK</dt><dd id="sMeanRisk">—</dd>
+      </div>
+      <div class="stats__row">
+        <dt data-gloss="max_risk">MAX RISK</dt><dd id="sMaxRisk">—</dd>
+      </div>
+      <div class="stats__row">
+        <dt data-gloss="pos_rate">POSITIVE RATE</dt><dd id="sPosRate">—</dd>
+      </div>
+      <div class="stats__row stats__row--accent">
+        <dt data-gloss="pooled_auc">POOLED AUC</dt><dd id="sAuc">—</dd>
+      </div>
+    </dl>
+
+    <div class="rail__head rail__head--secondary"><span>TOP 25 RISK</span></div>
+    <ol class="toplist" id="topList" aria-label="Highest-risk tracts in current filter"></ol>
+
+    <div class="rail__head rail__head--secondary"><span>STATE AUC</span></div>
+    <table class="statetable">
+      <thead><tr><th>STATE</th><th>AUC</th><th>RISK</th></tr></thead>
+      <tbody id="stateTable"></tbody>
+    </table>
+  </aside>
+
+  <!-- METHODS panel — slides in from right, overlays stats rail -->
+  <aside class="docs" id="docsPanel" hidden aria-label="Methodology and glossary" tabindex="-1">
+    <header class="docs__head">
+      <span class="docs__eyebrow">METHODOLOGY · GLOSSARY</span>
+      <button class="docs__close" id="docsClose" type="button" aria-label="Close">×</button>
+    </header>
+
+    <section class="docs__section">
+      <h2>THE FORECASTING PROBLEM</h2>
+      <p>The model predicts whether a US census tract that is <em>not currently a credit desert</em> will <em>become one</em> within the next year (the H1 transition target). A "credit desert" here means a tract whose CRA-reporter lender count falls in the bottom decile of its (year × rural-or-urban peer group) distribution. We deliberately exclude already-deserts from the supervised set — predicting "will stay a desert" is trivially correct ~95% of the time, so it inflates AUC without doing real forecasting work.</p>
+      <p class="docs__num">Positive rate in the labeled set: <b>2.75%</b> · Test predictions: <b>1.21M</b> across 8 folds.</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>WALK-FORWARD VALIDATION</h2>
+      <p>Eight chronological folds. Each trains on years 2009→T, validates on T+1, tests on T+2 to T+3 (T ranges 2014→2021). This mirrors deployment: fit on everything we know, predict next year. No future leaks into training.</p>
+      <table class="docs__table">
+        <thead><tr><th>FOLD</th><th>TRAIN</th><th>VAL</th><th>TEST</th><th>AUC</th></tr></thead>
+        <tbody>
+          <tr><td>F1</td><td>2009-14</td><td>2015</td><td>2016-17</td><td>0.882</td></tr>
+          <tr><td>F2</td><td>2009-15</td><td>2016</td><td>2017-18</td><td>0.884</td></tr>
+          <tr><td>F3</td><td>2009-16</td><td>2017</td><td>2018-19</td><td>0.904</td></tr>
+          <tr><td>F4</td><td>2009-17</td><td>2018</td><td>2019-20</td><td>0.913</td></tr>
+          <tr><td>F5</td><td>2009-18</td><td>2019</td><td>2020-21</td><td>0.826</td></tr>
+          <tr><td>F6</td><td>2009-19</td><td>2020</td><td>2021-22</td><td>0.823</td></tr>
+          <tr><td>F7</td><td>2009-20</td><td>2021</td><td>2022-23</td><td>0.794</td></tr>
+          <tr><td>F8</td><td>2009-21</td><td>2022</td><td>2023-24</td><td>0.826</td></tr>
+        </tbody>
+      </table>
+      <p>Mean test AUC <b>0.857 ± 0.044</b>. The ~0.08 drop from F4 to F7 is the COVID-era regime shift showing up where it should — F5-F8 test through PPP-distorted years.</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>LEAKAGE PATHS CLOSED</h2>
+      <ul class="docs__list">
+        <li><b>Target autocorrelation</b> — switched from "is desert" (sticky, AUC 0.93) to "becomes desert" (genuine forecast, AUC 0.83).</li>
+        <li><b>11 CRA circular features dropped</b> — n_cra_lenders directly defines the target; entries/exits/churn at year T leak too.</li>
+        <li><b>14 FDIC proxy features dropped</b> — banks <em>are</em> CRA reporters, so fdic_bank_count cross-correlates ~0.85 with n_cra_lenders. Kept HHI / top-share (concentration shape, not level).</li>
+        <li><b>ACS publication-lag tightened</b> — vintage ≤ year - 2 (was year - 1). ACS 5-year vintage V is published autumn of V+1.</li>
+        <li><b>PR / VI excluded</b> from training (small samples, different rural-urban geography).</li>
+        <li><b>Test windows standardized</b> to 2 years across all folds (was 3 for F1-F7, 2 for F8).</li>
+      </ul>
+      <p>39 features survive after the 25 circular drops. Honest mean AUC: <b>0.857</b>.</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>CALIBRATION</h2>
+      <p>Per fold, we fit an isotonic regressor on val-set predictions and apply it to test. On Round 5 it was effectively a no-op — Brier moved 0.0203 (raw) → 0.0201 (calibrated). The model is already well-calibrated post-FDIC-drop. The infrastructure exists for future runs where it might matter more.</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>WHY POOLED AUC ≠ HEADLINE AUC</h2>
+      <p>The two numbers measure different things and are not expected to match — even with no filters applied.</p>
+      <ul class="docs__list">
+        <li><b>Masthead AUC 0.857 ± 0.044</b> — arithmetic mean of 8 walk-forward fold AUCs (F1=0.882, F2=0.884, F3=0.904, F4=0.913, F5=0.826, F6=0.823, F7=0.794, F8=0.826). Each fold's AUC is computed on its own test set; we average those 8 numbers to get the headline. This is the canonical metric reported in the methodology brief.</li>
+        <li><b>Right-rail POOLED AUC ≈ 0.75</b> at default — single AUC across the union of ~84k unique-tract predictions (one prediction per tract, dominated by F8's 2023 test window plus a smaller tail from earlier folds). It treats all visible tracts as one rank-ordering instead of averaging across folds.</li>
+      </ul>
+      <p>The pooled number is lower because mixing F1→F8 predictions in one rank shifts the positive/negative ratio relative to any single fold. As you filter (state, race, risk band), the pooled AUC moves further as the positive count and the score variance change.</p>
+      <p>If POOLED AUC reads <b>n=37 · too few</b>, that means n_labeled ≤ 50 — Mann-Whitney AUC becomes too noisy to report below that threshold.</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>DATA PANEL</h2>
+      <p>Tract-year panel covering 2009–2024 (16 years). Sources: FFIEC CRA disclosure (full backfill 2009–2024, 5.5 GB); FDIC Summary of Deposits via API (1.43M branch-years); FFIEC HMDA via CFPB Data Browser API (121.7M LAR rows aggregated to 550k tract-state-years, 2018–2024 only); Census ACS 5-year (245k tract-vintages); USDA RUCA + County Typology; Census tract crosswalks (2000↔2010 + 2010↔2020) for vintage harmonization onto the 2020 baseline.</p>
+      <p>Round 4 used a 6-year panel with one chronological split → AUC 0.751. Round 5's <b>+0.106 AUC</b> comes from longer panel + walk-forward + closed leakage paths, not from architecture (we ran XGBoost + LightGBM + Optuna; tuning was a wash).</p>
+    </section>
+
+    <section class="docs__section">
+      <h2>GLOSSARY</h2>
+      <dl class="docs__defs" id="glossaryDefs"></dl>
+    </section>
+
+    <section class="docs__section docs__section--quiet">
+      <p>Reference: <a href="../CHANGES.md" target="_blank" rel="noopener">CHANGES.md</a> · <a href="../notes/00_methodology.md" target="_blank" rel="noopener">methodology brief</a> · <a href="../README.md" target="_blank" rel="noopener">README</a>.</p>
+    </section>
+  </aside>
+
+  <!-- Glossary hover-tooltip — small, follows cursor -->
+  <div class="gtip" id="gtip" hidden role="tooltip"></div>
+
+  <!-- Tract tooltip -->
+  <div class="tip" id="tip" hidden role="status" aria-live="polite">
+    <header class="tip__head">
+      <div class="tip__head-row">
+        <span class="tip__state" id="tipState">—</span>
+        <span class="tip__county" id="tipCounty">—</span>
+      </div>
+      <div class="tip__head-row tip__head-row--meta">
+        <span class="tip__fips" id="tipFips">—</span>
+        <span class="tip__zip" id="tipZip">—</span>
+      </div>
+    </header>
+    <div class="tip__risk">
+      <span class="tip__risknum" id="tipRisk">—</span>
+      <span class="tip__risklbl" id="tipRiskLbl">PREDICTED RISK</span>
+    </div>
+    <dl class="tip__grid">
+      <div><dt>POP</dt><dd id="tipPop">—</dd></div>
+      <div><dt>MED INC</dt><dd id="tipInc">—</dd></div>
+      <div><dt>POVERTY</dt><dd id="tipPov">—</dd></div>
+      <div><dt>NON-WHITE</dt><dd id="tipMin">—</dd></div>
+      <div><dt>RURAL</dt><dd id="tipRural">—</dd></div>
+      <div><dt>PERS POV</dt><dd id="tipPp">—</dd></div>
+      <div><dt>SBA / 1K</dt><dd id="tipSba">—</dd></div>
+      <div><dt>SBA RANK</dt><dd id="tipSbaRank">—</dd></div>
+    </dl>
+    <section class="peers" id="peerCard" hidden>
+      <header class="peers__head">
+        <span class="peers__eyebrow">PEERS · SAME STATE · THRIVING SBA</span>
+        <span class="peers__hint">demographics aren't destiny</span>
+      </header>
+      <ol class="peers__list" id="peerList"></ol>
+    </section>
+    <p class="tip__hint" id="tipHint">CLICK TO PIN · ESC TO RELEASE</p>
+  </div>
+
+  <!-- Bank-branch popup -->
+  <div class="bpop" id="bpop" hidden role="status">
+    <span class="bpop__label">BRANCH · CERT</span>
+    <span class="bpop__cert" id="bpopCert">—</span>
+    <span class="bpop__sep">·</span>
+    <span class="bpop__dep" id="bpopDep">—</span>
+  </div>
+
+  <!-- Bottom colophon — single line, dim -->
+  <footer class="colophon">
+    <div class="colophon__info">
+      <b>walk_forward_audit_fixed</b>
+      <span class="colophon__sep">·</span>panel <b>2009–24</b>
+      <span class="colophon__sep">·</span><b>39</b> features
+      <span class="colophon__sep">·</span>brier <b>0.020</b>
+    </div>
+    <div class="colophon__keys" aria-label="Keyboard shortcuts">
+      <span class="colophon__key"><kbd>F</kbd>FILTERS</span>
+      <span class="colophon__sep">·</span>
+      <span class="colophon__key"><kbd>S</kbd>STATS</span>
+      <span class="colophon__sep">·</span>
+      <span class="colophon__key"><kbd>D</kbd>METHODS</span>
+      <span class="colophon__sep">·</span>
+      <span class="colophon__key"><kbd>ESC</kbd>CLOSE</span>
+    </div>
+  </footer>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-live="polite">
+    <div class="loader__bar"><span></span></div>
+    <p class="loader__txt">LOADING <span id="loaderStatus">79,000 tracts</span></p>
+  </div>
+
+  <noscript>
+    <div class="noscript">This dashboard needs JavaScript. Underlying data: <code>data/tracts.geojson</code> + <code>data/state_stats.json</code>.</div>
+  </noscript>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="app.js?v=h3-3"></script>
+</body>
+</html>

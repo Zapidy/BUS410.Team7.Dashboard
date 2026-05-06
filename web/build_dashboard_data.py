@@ -2,18 +2,18 @@
 """Build dashboard data files for the Round-7 two-layer credit-desert dashboard.
 
 Two models × two horizons (h+3 = 2027, h+6 = 2030):
-    Model 1 — diagnostic (Round 5) — full 39-feature stack including supply-side.
-    Model 2 — influenceable (Round 7) — 20 lever features, residualized.
+    Model 1, diagnostic (Round 5): full 39-feature stack including supply-side.
+    Model 2, influenceable (Round 7): 20 lever features, residualized.
 
-Inputs (all on disk):
-    ../../round5/diagnostics/walk_forward_h3/test_predictions.parquet
-    ../../round5/diagnostics/walk_forward_h6/test_predictions.parquet
+Inputs (all on disk; ROUND5 is bundled into the repo as round5-diagnostic/):
+    ../round5-diagnostic/diagnostics/walk_forward_h3/test_predictions.parquet
+    ../round5-diagnostic/diagnostics/walk_forward_h6/test_predictions.parquet
     ../diagnostics/round7_phaseA_h3/test_predictions.parquet
     ../diagnostics/round7_phaseA_h6/test_predictions.parquet
     ../diagnostics/round7_ablation_h{3,6}/ablation_summary.csv
     ../diagnostics/round7_pruned_h{3,6}/sweep_results.csv + feature_ranking.csv
     ../diagnostics/round7_regime_split_h{3,6}/...
-    ../../round5/web/data/tracts.geojson  (re-using simplified geometry)
+    ../round5-diagnostic/web/data/tracts.geojson  (simplified geometry; download via scripts/download-data.sh)
 
 Outputs (web/data/):
     tracts.geojson                  per tract: m1_h3, m2_h3, m1_h6, m2_h6 + ranks
@@ -36,7 +36,10 @@ from sklearn.metrics import roc_auc_score, average_precision_score
 ROOT = Path(__file__).resolve().parent
 ROUND7 = ROOT.parent
 SHIVANI = ROUND7.parent
-ROUND5 = SHIVANI / "round5"
+# Round 5 (diagnostic-model) source ships in this repo at round7/round5-diagnostic/.
+# Some processed/raw data is gitignored and lives in tarballs uploaded as
+# GitHub Release assets. See scripts/download-data.sh for retrieval.
+ROUND5 = ROUND7 / "round5-diagnostic"
 
 DATA = ROOT / "data"
 DATA.mkdir(parents=True, exist_ok=True)

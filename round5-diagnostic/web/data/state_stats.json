@@ -1,0 +1,418 @@
+{
+  "states": [
+    {
+      "state": "VT",
+      "state_fips": "50",
+      "n": 201,
+      "pos_rate": 0.0746,
+      "mean_risk": 0.042,
+      "auc": 0.9552
+    },
+    {
+      "state": "SD",
+      "state_fips": "46",
+      "n": 244,
+      "pos_rate": 0.0615,
+      "mean_risk": 0.0553,
+      "auc": 0.9432
+    },
+    {
+      "state": "ME",
+      "state_fips": "23",
+      "n": 413,
+      "pos_rate": 0.063,
+      "mean_risk": 0.0452,
+      "auc": 0.9267
+    },
+    {
+      "state": "RI",
+      "state_fips": "44",
+      "n": 251,
+      "pos_rate": 0.0359,
+      "mean_risk": 0.0229,
+      "auc": 0.9233
+    },
+    {
+      "state": "NH",
+      "state_fips": "33",
+      "n": 358,
+      "pos_rate": 0.0419,
+      "mean_risk": 0.0266,
+      "auc": 0.9197
+    },
+    {
+      "state": "ND",
+      "state_fips": "38",
+      "n": 231,
+      "pos_rate": 0.0779,
+      "mean_risk": 0.056,
+      "auc": 0.9167
+    },
+    {
+      "state": "MT",
+      "state_fips": "30",
+      "n": 328,
+      "pos_rate": 0.0701,
+      "mean_risk": 0.0619,
+      "auc": 0.913
+    },
+    {
+      "state": "ID",
+      "state_fips": "16",
+      "n": 468,
+      "pos_rate": 0.0577,
+      "mean_risk": 0.0366,
+      "auc": 0.9059
+    },
+    {
+      "state": "AR",
+      "state_fips": "05",
+      "n": 838,
+      "pos_rate": 0.0525,
+      "mean_risk": 0.0475,
+      "auc": 0.8981
+    },
+    {
+      "state": "NJ",
+      "state_fips": "34",
+      "n": 2185,
+      "pos_rate": 0.0357,
+      "mean_risk": 0.0178,
+      "auc": 0.8823
+    },
+    {
+      "state": "GA",
+      "state_fips": "13",
+      "n": 2794,
+      "pos_rate": 0.0598,
+      "mean_risk": 0.0345,
+      "auc": 0.882
+    },
+    {
+      "state": "MA",
+      "state_fips": "25",
+      "n": 1603,
+      "pos_rate": 0.0474,
+      "mean_risk": 0.0169,
+      "auc": 0.8779
+    },
+    {
+      "state": "SC",
+      "state_fips": "45",
+      "n": 1310,
+      "pos_rate": 0.0802,
+      "mean_risk": 0.0363,
+      "auc": 0.8741
+    },
+    {
+      "state": "FL",
+      "state_fips": "12",
+      "n": 5103,
+      "pos_rate": 0.0294,
+      "mean_risk": 0.0184,
+      "auc": 0.8672
+    },
+    {
+      "state": "DE",
+      "state_fips": "10",
+      "n": 259,
+      "pos_rate": 0.027,
+      "mean_risk": 0.0251,
+      "auc": 0.8659
+    },
+    {
+      "state": "CO",
+      "state_fips": "08",
+      "n": 1450,
+      "pos_rate": 0.0566,
+      "mean_risk": 0.0237,
+      "auc": 0.8626
+    },
+    {
+      "state": "MD",
+      "state_fips": "24",
+      "n": 1467,
+      "pos_rate": 0.0825,
+      "mean_risk": 0.0244,
+      "auc": 0.8567
+    },
+    {
+      "state": "NC",
+      "state_fips": "37",
+      "n": 2667,
+      "pos_rate": 0.0551,
+      "mean_risk": 0.034,
+      "auc": 0.8523
+    },
+    {
+      "state": "MS",
+      "state_fips": "28",
+      "n": 879,
+      "pos_rate": 0.0762,
+      "mean_risk": 0.0578,
+      "auc": 0.8449
+    },
+    {
+      "state": "AK",
+      "state_fips": "02",
+      "n": 177,
+      "pos_rate": 0.2034,
+      "mean_risk": 0.0704,
+      "auc": 0.8368
+    },
+    {
+      "state": "LA",
+      "state_fips": "22",
+      "n": 1378,
+      "pos_rate": 0.0994,
+      "mean_risk": 0.0572,
+      "auc": 0.8323
+    },
+    {
+      "state": "TX",
+      "state_fips": "48",
+      "n": 6889,
+      "pos_rate": 0.0597,
+      "mean_risk": 0.032,
+      "auc": 0.8149
+    },
+    {
+      "state": "MO",
+      "state_fips": "29",
+      "n": 1670,
+      "pos_rate": 0.0838,
+      "mean_risk": 0.0408,
+      "auc": 0.8134
+    },
+    {
+      "state": "TN",
+      "state_fips": "47",
+      "n": 1690,
+      "pos_rate": 0.0935,
+      "mean_risk": 0.0317,
+      "auc": 0.8114
+    },
+    {
+      "state": "IL",
+      "state_fips": "17",
+      "n": 3261,
+      "pos_rate": 0.1368,
+      "mean_risk": 0.0308,
+      "auc": 0.8072
+    },
+    {
+      "state": "PA",
+      "state_fips": "42",
+      "n": 3429,
+      "pos_rate": 0.091,
+      "mean_risk": 0.0329,
+      "auc": 0.8027
+    },
+    {
+      "state": "NE",
+      "state_fips": "31",
+      "n": 555,
+      "pos_rate": 0.0847,
+      "mean_risk": 0.0375,
+      "auc": 0.8003
+    },
+    {
+      "state": "WA",
+      "state_fips": "53",
+      "n": 1772,
+      "pos_rate": 0.0576,
+      "mean_risk": 0.0212,
+      "auc": 0.7855
+    },
+    {
+      "state": "VA",
+      "state_fips": "51",
+      "n": 2176,
+      "pos_rate": 0.1062,
+      "mean_risk": 0.0318,
+      "auc": 0.7843
+    },
+    {
+      "state": "OR",
+      "state_fips": "41",
+      "n": 1012,
+      "pos_rate": 0.0623,
+      "mean_risk": 0.0276,
+      "auc": 0.7718
+    },
+    {
+      "state": "OH",
+      "state_fips": "39",
+      "n": 3146,
+      "pos_rate": 0.1685,
+      "mean_risk": 0.0393,
+      "auc": 0.7618
+    },
+    {
+      "state": "NY",
+      "state_fips": "36",
+      "n": 5297,
+      "pos_rate": 0.1138,
+      "mean_risk": 0.0417,
+      "auc": 0.7576
+    },
+    {
+      "state": "WY",
+      "state_fips": "56",
+      "n": 170,
+      "pos_rate": 0.1471,
+      "mean_risk": 0.0544,
+      "auc": 0.7541
+    },
+    {
+      "state": "AL",
+      "state_fips": "01",
+      "n": 1435,
+      "pos_rate": 0.1338,
+      "mean_risk": 0.0491,
+      "auc": 0.7497
+    },
+    {
+      "state": "HI",
+      "state_fips": "15",
+      "n": 407,
+      "pos_rate": 0.1179,
+      "mean_risk": 0.057,
+      "auc": 0.7494
+    },
+    {
+      "state": "KY",
+      "state_fips": "21",
+      "n": 1268,
+      "pos_rate": 0.1877,
+      "mean_risk": 0.0532,
+      "auc": 0.7449
+    },
+    {
+      "state": "IN",
+      "state_fips": "18",
+      "n": 1699,
+      "pos_rate": 0.1183,
+      "mean_risk": 0.0356,
+      "auc": 0.7432
+    },
+    {
+      "state": "CA",
+      "state_fips": "06",
+      "n": 9082,
+      "pos_rate": 0.0516,
+      "mean_risk": 0.0263,
+      "auc": 0.743
+    },
+    {
+      "state": "UT",
+      "state_fips": "49",
+      "n": 717,
+      "pos_rate": 0.0739,
+      "mean_risk": 0.0271,
+      "auc": 0.7404
+    },
+    {
+      "state": "OK",
+      "state_fips": "40",
+      "n": 1217,
+      "pos_rate": 0.1298,
+      "mean_risk": 0.0535,
+      "auc": 0.7366
+    },
+    {
+      "state": "AZ",
+      "state_fips": "04",
+      "n": 1697,
+      "pos_rate": 0.0943,
+      "mean_risk": 0.0259,
+      "auc": 0.7303
+    },
+    {
+      "state": "NV",
+      "state_fips": "32",
+      "n": 772,
+      "pos_rate": 0.0855,
+      "mean_risk": 0.028,
+      "auc": 0.7177
+    },
+    {
+      "state": "MI",
+      "state_fips": "26",
+      "n": 2909,
+      "pos_rate": 0.1805,
+      "mean_risk": 0.0459,
+      "auc": 0.7005
+    },
+    {
+      "state": "WI",
+      "state_fips": "55",
+      "n": 1548,
+      "pos_rate": 0.166,
+      "mean_risk": 0.0382,
+      "auc": 0.6987
+    },
+    {
+      "state": "WV",
+      "state_fips": "54",
+      "n": 554,
+      "pos_rate": 0.2581,
+      "mean_risk": 0.0642,
+      "auc": 0.6725
+    },
+    {
+      "state": "KS",
+      "state_fips": "20",
+      "n": 823,
+      "pos_rate": 0.147,
+      "mean_risk": 0.04,
+      "auc": 0.6716
+    },
+    {
+      "state": "MN",
+      "state_fips": "27",
+      "n": 1501,
+      "pos_rate": 0.1366,
+      "mean_risk": 0.0266,
+      "auc": 0.6689
+    },
+    {
+      "state": "NM",
+      "state_fips": "35",
+      "n": 578,
+      "pos_rate": 0.1938,
+      "mean_risk": 0.0549,
+      "auc": 0.6669
+    },
+    {
+      "state": "DC",
+      "state_fips": "11",
+      "n": 205,
+      "pos_rate": 0.1854,
+      "mean_risk": 0.0363,
+      "auc": 0.6356
+    },
+    {
+      "state": "CT",
+      "state_fips": "09",
+      "n": 878,
+      "pos_rate": 0.0433,
+      "mean_risk": 0.0238,
+      "auc": 0.5926
+    },
+    {
+      "state": "IA",
+      "state_fips": "19",
+      "n": 892,
+      "pos_rate": 0.1469,
+      "mean_risk": 0.0413,
+      "auc": 0.5573
+    }
+  ],
+  "national": {
+    "n_tracts": 83853,
+    "pos_rate": 0.0905,
+    "mean_risk": 0.0338,
+    "auc": 0.7857
+  }
+}

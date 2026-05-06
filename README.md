@@ -19,8 +19,8 @@ The dashboard is vanilla HTML/CSS/JS + MapLibre GL via CDN. No build step. Any s
 
 ```bash
 # 1. Clone
-git clone <REPO_URL> round7
-cd round7
+git clone https://github.com/Zapidy/BUS410.Team7.Dashboard.git
+cd BUS410.Team7.Dashboard
 
 # 2. Decompress the SHAP attribution cache
 #    (shap_top.json.gz is checked in; the uncompressed file is gitignored
@@ -36,6 +36,18 @@ open http://localhost:8009
 ```
 
 First paint takes ~2 seconds because of the 30 MB tract geojson. Subsequent loads use browser cache.
+
+## Optional: download the bundled data archives
+
+If you want to re-run the ETL or retrain the models, download the processed-data tarballs from this repo's GitHub Release:
+
+```bash
+./scripts/download-data.sh
+```
+
+This fetches three archives (`r5-data-processed.tar.gz`, `r7-data-processed.tar.gz`, `r7-data-raw.tar.gz` — ~780 MB total) and extracts them into `round5-diagnostic/data/`, `data/processed/`, and `data/raw/` respectively. Skip this step if you only want to USE the dashboard.
+
+The largest federal sources (Round 5 raw CRA, ACS, HMDA, FDIC SoD; ~6.6 GB) are NOT in the archive because they're publicly re-downloadable from federal sites; URLs are documented in `round5-diagnostic/notes/` and `etl/`.
 
 ### What you can do in the dashboard
 
@@ -127,12 +139,22 @@ round7/
 │   ├── round7_regime_split_h{3,6}/     ← pre/post-COVID metrics
 │   └── round7_bolton/                  ← bolt-on auxiliary variant
 │
+├── round5-diagnostic/                  ← Model 1 source (the diagnostic-layer codebase)
+│   ├── etl/                            ← round 5's federal-data ingestion
+│   ├── features/                       ← round 5 feature engineering
+│   ├── train/                          ← walk_forward_audit_fixed.py + variants
+│   ├── notes/                          ← round 5 methodology docs
+│   ├── diagnostics/                    ← walk_forward_h{1,3,6} test predictions parquets (~71 MB)
+│   ├── web/                            ← original Round 5 dashboard
+│   └── README.md, HANDOFF.md, CHANGES.md, .impeccable.md
+│
 ├── scripts/
-│   └── prepare-data.sh                 ← run this once after clone
+│   ├── prepare-data.sh                 ← run once after clone (decompresses shap_top.json)
+│   └── download-data.sh                ← optional: pulls processed-data tarballs from GitHub Release
 │
 └── data/                               ← gitignored. ~2.4 GB of intermediate ETL outputs.
-    ├── raw/                            ← downloaded source data (FDIC SoD, CRA, ACS, etc.)
-    └── processed/                      ← parsed CSVs + the merged training panel
+    ├── raw/                            ← downloaded source data (FDIC SoD, CRA, ACS, etc.); see download-data.sh
+    └── processed/                      ← parsed CSVs + the merged training panel; see download-data.sh
 ```
 
 ---

@@ -23,15 +23,23 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Big intermediate data — regenerate via the ETL pipeline.
-# These directories hold gigabytes of raw/processed data from federal sources.
+# Big intermediate data — distributed via GitHub Release tarballs (see
+# scripts/download-data.sh) rather than checked into git. These directories
+# hold gigabytes of raw + processed data.
 data/raw/
 data/processed/
 data/raw/geocode_cache/
+round5-diagnostic/data/
 
 # Decompressed SHAP cache. The compressed .gz is checked in.
 # Run scripts/prepare-data.sh after clone to decompress.
 web/data/shap_top.json
+
+# Release-staging tarballs (built locally, uploaded as GitHub Release assets,
+# downloaded back via scripts/download-data.sh). Don't commit them; they're
+# regeneratable from the data/ trees.
+release-staging/
+.release-cache/
 
 # Local server logs
 *.log

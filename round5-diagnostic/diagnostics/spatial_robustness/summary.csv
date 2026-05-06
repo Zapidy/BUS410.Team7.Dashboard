@@ -1,0 +1,7 @@
+,0
+random_5fold_mean_auc,0.8926628885318738
+walk_forward_mean_auc,0.849376764987579
+leave_one_state_out_mean_auc,0.8886785294126557
+leave_one_state_out_median_auc,0.8874013564279051
+leave_one_state_out_iqr_low,0.8645466414275544
+leave_one_state_out_iqr_high,0.9171895484393722
