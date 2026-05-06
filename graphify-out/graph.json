@@ -154,27 +154,27 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L101",
-      "id": "build_dashboard_data_rationale_101",
       "community": 9,
-      "norm_label": "per tract, take the most-recent (year, fold) calibrated probability."
+      "norm_label": "per tract, take the most-recent (year, fold) calibrated probability.",
+      "id": "build_dashboard_data_rationale_101"
     },
     {
       "label": "Mean across folds \u2014 the canonical AUC/AP for this project.",
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L123",
-      "id": "build_dashboard_data_rationale_123",
       "community": 9,
-      "norm_label": "mean across folds \u2014 the canonical auc/ap for this project."
+      "norm_label": "mean across folds \u2014 the canonical auc/ap for this project.",
+      "id": "build_dashboard_data_rationale_123"
     },
     {
       "label": "Build city search index from Census Gazetteer + decennial place-pop API.     Fal",
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L176",
-      "id": "build_dashboard_data_rationale_176",
       "community": 9,
-      "norm_label": "build city search index from census gazetteer + decennial place-pop api.     fal"
+      "norm_label": "build city search index from census gazetteer + decennial place-pop api.     fal",
+      "id": "build_dashboard_data_rationale_176"
     },
     {
       "label": "app.js",
@@ -2404,9 +2404,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/web/scripts/build_sba_tract.py",
       "source_location": "L42",
-      "id": "build_sba_tract_rationale_42",
       "community": 32,
-      "norm_label": "return a dataframe [zcta, tract_fips, weight] where weight is the     share of t"
+      "norm_label": "return a dataframe [zcta, tract_fips, weight] where weight is the     share of t",
+      "id": "build_sba_tract_rationale_42"
     },
     {
       "label": "schema_eda.py",
@@ -2494,9 +2494,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/schema_eda.py",
       "source_location": "L34",
-      "id": "schema_eda_rationale_34",
       "community": 8,
-      "norm_label": "return record-type \u2192 row count + sample line length."
+      "norm_label": "return record-type \u2192 row count + sample line length.",
+      "id": "schema_eda_rationale_34"
     },
     {
       "label": "pull_hmda.py",
@@ -2539,18 +2539,18 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/hmda/pull_hmda.py",
       "source_location": "L60",
-      "id": "pull_hmda_rationale_60",
       "community": 19,
-      "norm_label": "yield dict-rows from the cfpb csv endpoint, streaming."
+      "norm_label": "yield dict-rows from the cfpb csv endpoint, streaming.",
+      "id": "pull_hmda_rationale_60"
     },
     {
       "label": "Stream LAR, aggregate to tract-year, write CSV. Return summary.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/hmda/pull_hmda.py",
       "source_location": "L81",
-      "id": "pull_hmda_rationale_81",
       "community": 19,
-      "norm_label": "stream lar, aggregate to tract-year, write csv. return summary."
+      "norm_label": "stream lar, aggregate to tract-year, write csv. return summary.",
+      "id": "pull_hmda_rationale_81"
     },
     {
       "label": "pull_macro.py",
@@ -2629,9 +2629,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/acs/pivot_acs.py",
       "source_location": "L46",
-      "id": "pivot_acs_rationale_46",
       "community": 33,
-      "norm_label": "acs uses -666666666 etc. as null sentinels; convert to ''."
+      "norm_label": "acs uses -666666666 etc. as null sentinels; convert to ''.",
+      "id": "pivot_acs_rationale_46"
     },
     {
       "label": "pull_acs_early.py",
@@ -2692,9 +2692,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/sba/parse_sba.py",
       "source_location": "L31",
-      "id": "parse_sba_rationale_31",
       "community": 34,
-      "norm_label": "sba dates are usually yyyy-mm-dd or mm/dd/yyyy."
+      "norm_label": "sba dates are usually yyyy-mm-dd or mm/dd/yyyy.",
+      "id": "parse_sba_rationale_31"
     },
     {
       "label": "parse_cra.py",
@@ -2791,27 +2791,27 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/cra/parse_cra.py",
       "source_location": "L115",
-      "id": "parse_cra_rationale_115",
       "community": 5,
-      "norm_label": "return {year: {'discl': [...], 'trans': [...], 'aggr': [...]}}."
+      "norm_label": "return {year: {'discl': [...], 'trans': [...], 'aggr': [...]}}.",
+      "id": "parse_cra_rationale_115"
     },
     {
       "label": "Return (tract_lenders, county_lender_loans) for this year.      tract_lenders[(t",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/cra/parse_cra.py",
       "source_location": "L136",
-      "id": "parse_cra_rationale_136",
       "community": 5,
-      "norm_label": "return (tract_lenders, county_lender_loans) for this year.      tract_lenders[(t"
+      "norm_label": "return (tract_lenders, county_lender_loans) for this year.      tract_lenders[(t",
+      "id": "parse_cra_rationale_136"
     },
     {
       "label": "Return list of reporter records for this year.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/cra/parse_cra.py",
       "source_location": "L189",
-      "id": "parse_cra_rationale_189",
       "community": 5,
-      "norm_label": "return list of reporter records for this year."
+      "norm_label": "return list of reporter records for this year.",
+      "id": "parse_cra_rationale_189"
     },
     {
       "label": "parse_sod.py",
@@ -2863,9 +2863,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/fdic/pull_sod.py",
       "source_location": "L38",
-      "id": "pull_sod_rationale_38",
       "community": 35,
-      "norm_label": "pull all sod records for a single year and write a single csv. returns row count"
+      "norm_label": "pull all sod records for a single year and write a single csv. returns row count",
+      "id": "pull_sod_rationale_38"
     },
     {
       "label": "harmonize_tracts.py",
@@ -2971,27 +2971,27 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/harmonize_tracts.py",
       "source_location": "L135",
-      "id": "harmonize_tracts_rationale_135",
       "community": 3,
-      "norm_label": "multiply through: 2000 \u2192 2010 \u2192 2020."
+      "norm_label": "multiply through: 2000 \u2192 2010 \u2192 2020.",
+      "id": "harmonize_tracts_rationale_135"
     },
     {
       "label": "For ANY source tract, return its 2020-vintage destination(s) with weights.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/harmonize_tracts.py",
       "source_location": "L159",
-      "id": "harmonize_tracts_rationale_159",
       "community": 3,
-      "norm_label": "for any source tract, return its 2020-vintage destination(s) with weights."
+      "norm_label": "for any source tract, return its 2020-vintage destination(s) with weights.",
+      "id": "harmonize_tracts_rationale_159"
     },
     {
       "label": "Return [(tract_2020, weight), ...]. Identity for unknowns.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/harmonize_tracts.py",
       "source_location": "L177",
-      "id": "harmonize_tracts_rationale_177",
       "community": 3,
-      "norm_label": "return [(tract_2020, weight), ...]. identity for unknowns."
+      "norm_label": "return [(tract_2020, weight), ...]. identity for unknowns.",
+      "id": "harmonize_tracts_rationale_177"
     },
     {
       "label": "define_target.py",
@@ -3052,27 +3052,27 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/define_target.py",
       "source_location": "L40",
-      "id": "define_target_rationale_40",
       "community": 12,
-      "norm_label": "bottom-decile lender count, computed within (year \u00d7 peer-group)."
+      "norm_label": "bottom-decile lender count, computed within (year \u00d7 peer-group).",
+      "id": "define_target_rationale_40"
     },
     {
       "label": "Bottom-decile origination per capita (HMDA, post-2018 only).",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/define_target.py",
       "source_location": "L66",
-      "id": "define_target_rationale_66",
       "community": 12,
-      "norm_label": "bottom-decile origination per capita (hmda, post-2018 only)."
+      "norm_label": "bottom-decile origination per capita (hmda, post-2018 only).",
+      "id": "define_target_rationale_66"
     },
     {
       "label": "For each (tract, year), compute target families at H1, H3, H6.      H1: 1-year h",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/define_target.py",
       "source_location": "L102",
-      "id": "define_target_rationale_102",
       "community": 12,
-      "norm_label": "for each (tract, year), compute target families at h1, h3, h6.      h1: 1-year h"
+      "norm_label": "for each (tract, year), compute target families at h1, h3, h6.      h1: 1-year h",
+      "id": "define_target_rationale_102"
     },
     {
       "label": "build_panel.py",
@@ -3178,27 +3178,27 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/build_panel.py",
       "source_location": "L72",
-      "id": "build_panel_rationale_72",
       "community": 4,
-      "norm_label": "for each (tract_fips, year), pick the latest acs vintage whose end-year < year."
+      "norm_label": "for each (tract_fips, year), pick the latest acs vintage whose end-year < year.",
+      "id": "build_panel_rationale_72"
     },
     {
       "label": "Concat all per-state HMDA aggregate CSVs into one tract-year.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/build_panel.py",
       "source_location": "L114",
-      "id": "build_panel_rationale_114",
       "community": 4,
-      "norm_label": "concat all per-state hmda aggregate csvs into one tract-year."
+      "norm_label": "concat all per-state hmda aggregate csvs into one tract-year.",
+      "id": "build_panel_rationale_114"
     },
     {
       "label": "Load Opportunity Zones tract list. Tries CSV then xlsx; falls back to skip.",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/features/build_panel.py",
       "source_location": "L134",
-      "id": "build_panel_rationale_134",
       "community": 4,
-      "norm_label": "load opportunity zones tract list. tries csv then xlsx; falls back to skip."
+      "norm_label": "load opportunity zones tract list. tries csv then xlsx; falls back to skip.",
+      "id": "build_panel_rationale_134"
     },
     {
       "label": "walk_forward_lgbm_optuna.py",
@@ -3349,27 +3349,27 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/diagnostics.py",
       "source_location": "L31",
-      "id": "diagnostics_rationale_31",
       "community": 13,
-      "norm_label": "return a dataframe with per-decile (mean predicted, mean observed, n)."
+      "norm_label": "return a dataframe with per-decile (mean predicted, mean observed, n).",
+      "id": "diagnostics_rationale_31"
     },
     {
       "label": "Net-benefit decision-curve analysis (Vickers-Elkin).      NB(t) = (TP / N) - (FP",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/diagnostics.py",
       "source_location": "L65",
-      "id": "diagnostics_rationale_65",
       "community": 13,
-      "norm_label": "net-benefit decision-curve analysis (vickers-elkin).      nb(t) = (tp / n) - (fp"
+      "norm_label": "net-benefit decision-curve analysis (vickers-elkin).      nb(t) = (tp / n) - (fp",
+      "id": "diagnostics_rationale_65"
     },
     {
       "label": "Per-state AUC across all folds \u2014 a cheap leave-one-state-out signal.      If exc",
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/diagnostics.py",
       "source_location": "L93",
-      "id": "diagnostics_rationale_93",
       "community": 13,
-      "norm_label": "per-state auc across all folds \u2014 a cheap leave-one-state-out signal.      if exc"
+      "norm_label": "per-state auc across all folds \u2014 a cheap leave-one-state-out signal.      if exc",
+      "id": "diagnostics_rationale_93"
     },
     {
       "label": "spatial_robustness.py",
@@ -3421,9 +3421,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/spatial_robustness.py",
       "source_location": "L88",
-      "id": "spatial_robustness_rationale_88",
       "community": 20,
-      "norm_label": "quick model \u2014 half the trees of full run for speed across 50+ folds."
+      "norm_label": "quick model \u2014 half the trees of full run for speed across 50+ folds.",
+      "id": "spatial_robustness_rationale_88"
     },
     {
       "label": "walk_forward_clean.py",
@@ -3529,9 +3529,9 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L69",
-      "id": "walk_forward_rationale_69",
       "community": 26,
-      "norm_label": "coerce numeric, fill hmda nan for pre-2018 with 0 (since has_hmda tracks it)."
+      "norm_label": "coerce numeric, fill hmda nan for pre-2018 with 0 (since has_hmda tracks it).",
+      "id": "walk_forward_rationale_69"
     },
     {
       "label": "walk_forward_h3.py",
