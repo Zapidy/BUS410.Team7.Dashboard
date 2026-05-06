@@ -51,3 +51,4 @@ nohup.out
 # Graphify ignores --> local configs and stuff that breaks on clone.
 graphify-out/manifest.json    # mtime-based, breaks after git clone
 graphify-out/cost.json        # local only
+CLAUDE.md

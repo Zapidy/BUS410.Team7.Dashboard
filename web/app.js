@@ -545,6 +545,20 @@
     bindFocusClose();
     bindDrawerClose();
     syncHorizonAffordances();
+    initAccordions();
+  }
+
+  function initAccordions() {
+    document.querySelectorAll(".accordion__toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const container = btn.closest("[data-accordion]");
+        if (!container) return;
+        const bodies = container.querySelectorAll(".accordion__body");
+        const isOpen = btn.getAttribute("aria-expanded") === "true";
+        bodies.forEach(b => b.classList.toggle("is-open", !isOpen));
+        btn.setAttribute("aria-expanded", String(!isOpen));
+      });
+    });
   }
 
   async function fetchOptional(path) {

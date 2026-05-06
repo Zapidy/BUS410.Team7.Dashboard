@@ -1136,10 +1136,10 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .meth__h {
   font-family: var(--ff-disp);
   font-weight: 700;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  letter-spacing: -0.025em;
   line-height: 1.05;
-  margin: 0 0 var(--s-4);
+  margin: 0 0 var(--s-3);
   color: var(--tx);
   text-wrap: balance;
 }
@@ -1906,4 +1906,69 @@ body[data-model="m2"] .drawshap__v.neg { color: var(--m1); }
 
 @media (prefers-reduced-motion: reduce) {
   .drawer { transition: none; }
+}
+
+/* ── Accordion disclosure ──────────────────────────────────────────────── */
+
+.accordion__hook {
+  font-family: var(--ff-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--tx-2);
+  margin: var(--s-2) 0 0;
+}
+
+.accordion__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-top: var(--s-2);
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--ff-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--tx-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.accordion__toggle:hover { color: var(--tx); }
+
+.accordion__chevron {
+  display: inline-block;
+  font-style: normal;
+  font-size: 0.6em;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+.accordion__toggle[aria-expanded="true"] .accordion__chevron {
+  transform: rotate(90deg);
+}
+
+.accordion__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.accordion__body.is-open {
+  max-height: 1000px;
+}
+
+/* Guide cards: add top margin to body so it doesn't crowd the toggle */
+.guide__card .accordion__body { margin-top: var(--s-2); }
+
+/* Methodology: larger heading and hook, detail text stays at base size */
+.meth__body .accordion__hook {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--tx-2);
+  margin: var(--s-3) 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion__body { transition: none; }
+  .accordion__chevron { transition: none; }
 }
