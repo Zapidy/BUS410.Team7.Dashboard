@@ -17,9 +17,9 @@
 
   /* Text */
   --tx:        oklch(0.96 0.012 80);     /* warm off-white */
-  --tx-2:      oklch(0.78 0.020 240);
-  --tx-3:      oklch(0.80 0.018 240);
-  --tx-4:      oklch(0.70 0.018 240);
+  --tx-2:      oklch(0.88 0.012 80);
+  --tx-3:      oklch(0.78 0.010 80);
+  --tx-4:      oklch(0.66 0.010 80);
 
   /* Accents */
   --m1:        oklch(0.80 0.165 85);     /* mustard */
@@ -84,7 +84,7 @@ a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
 .kicker {
   font-family: var(--ff-body);
   font-weight: 500;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--tx-3);
@@ -197,7 +197,8 @@ body.is-drawer-open .ovl--title {
 .toggrp__lbl {
   text-align: right;
   color: var(--tx-4);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0.14em;
 }
 .toggrp__pills {
@@ -304,6 +305,7 @@ body.is-drawer-open .ovl--title {
   display: flex; gap: var(--s-3); align-items: baseline;
   font-family: var(--ff-mono);
   font-size: 0.6875rem;
+  font-weight: 500;
   font-variation-settings: "MONO" 1, "CASL" 0.85;
   color: var(--tx-3);
   background: oklch(0.15 0.020 240 / 0.7);
@@ -319,7 +321,7 @@ body.is-drawer-open .ovl--title {
 body.is-drawer-open .ovl--meta {
   left: calc(480px + var(--s-6));
 }
-.meta__cell .meta__k { color: var(--tx-4); font-weight: 400; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+.meta__cell .meta__k { color: var(--tx-4); font-weight: 500; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
 .meta__cell .num { color: var(--tx-2); font-weight: 600; font-family: var(--ff-disp); }
 .meta__sep { color: var(--tx-4); }
 .meta__d { color: var(--acc); padding: 0 0.2em; }
@@ -365,12 +367,14 @@ body[data-model="m2"] .legend__bar {
 .legend__ticks {
   display: flex; justify-content: space-between;
   margin-top: 6px;
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-4);
 }
 .legend__foot {
   font-family: var(--ff-body);
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-3);
   margin-top: 8px;
   letter-spacing: 0.01em;
@@ -421,6 +425,7 @@ body[data-model="m2"] .legend__bar {
 .rail__horizon-desc {
   font-family: var(--ff-body);
   font-size: 0.75rem;
+  font-weight: 500;
   line-height: 1.55;
   color: var(--tx-3);
   margin: var(--s-2) 0 0;
@@ -552,6 +557,7 @@ body[data-model="m2"] .legend__bar {
 .rail__hint {
   font-family: var(--ff-body);
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--tx-3);
   margin: 0 0 var(--s-4);
   line-height: 1.5;
@@ -642,6 +648,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-top: 5px;
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-4);
 }
 .slider__abl {
@@ -828,6 +835,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   font-family: var(--ff-mono);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--tx-3);
   letter-spacing: 0.02em;
 }
@@ -862,7 +870,8 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .focuscell__head {
   display: flex; align-items: baseline; justify-content: space-between;
   font-family: var(--ff-body);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--tx-3);
@@ -902,7 +911,8 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .focuscell__sub {
   font-family: var(--ff-mono);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: var(--tx-4);
   letter-spacing: 0.02em;
 }
@@ -926,7 +936,8 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   font-size: 0.75rem;
 }
 .toptract__rk {
-  font-family: var(--ff-mono); font-size: 0.625rem;
+  font-family: var(--ff-mono); font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-4);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
 }
@@ -1017,6 +1028,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   font-family: var(--ff-mono);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-4);
 }
 .topfeat__nm {
@@ -1313,6 +1325,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   font-family: var(--ff-mono);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--tx-4);
 }
 .regime__metrics { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); }
@@ -1325,7 +1338,8 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 }
 .regime__ml {
   font-family: var(--ff-body);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--tx-3);
@@ -1334,7 +1348,8 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .regime__top { margin-top: 2px; }
 .regime__top-h {
   font-family: var(--ff-body);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--tx-4);
@@ -1347,6 +1362,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   gap: 8px;
   font-family: var(--ff-mono);
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-3);
   font-variation-settings: "MONO" 1, "CASL" 0.85;
 }
@@ -1653,6 +1669,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .drawer__meta {
   font-family: var(--ff-body);
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--tx-3);
   margin-top: 6px;
 }
@@ -1667,6 +1684,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .drawer__hint {
   font-family: var(--ff-body);
   font-size: 0.8125rem;
+  font-weight: 500;
   line-height: 1.55;
   color: var(--tx-3);
   margin: 0;
@@ -1680,6 +1698,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .drawcell__sub {
   font-family: var(--ff-body);
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--tx-4);
   font-style: italic;
   line-height: 1.35;
