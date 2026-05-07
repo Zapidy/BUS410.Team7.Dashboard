@@ -200,7 +200,7 @@
       <!-- Scenario sliders -->
       <div class="rail__sliders">
         <div class="kicker rail__sect">Scenario levers</div>
-        <p class="rail__hint">Move a lever to push national means. The map recolors live for the active model and horizon. Each lever shows its honest impact at this horizon; we don't pretend.</p>
+        <p class="rail__hint">Move a lever to push national means. The map recolors live for the active model and horizon. Scenario levers are model sensitivity estimates, not causal guarantees.</p>
         <div id="sliders"></div>
         <button class="reset" id="resetBtn" type="button">Reset all levers</button>
       </div>
@@ -250,10 +250,10 @@
       <article class="guide__card" data-accordion>
         <div class="guide__num">04</div>
         <h3 class="guide__h">Scenario explorer</h3>
-        <p class="accordion__hook">Drag a lever slider and the map recolors live; most levers have modest impact, and the readout will tell you so honestly.</p>
+        <p class="accordion__hook">Drag a lever slider and the map recolors live; each readout shows modeled sensitivity for the active horizon.</p>
         <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
         <div class="accordion__body">
-          <p>Drag a slider; the map recolors live. Each lever shifts its feature within historically observed ranges. Each slider shows its own honest impact (what this lever actually moves). Most levers are low-impact, absorbed by other features. We don&rsquo;t pretend.</p>
+          <p>Drag a slider; the map recolors live. Each lever asks two plain questions: how much does the model depend on this category, and how important is this exact feature inside that category? The result is a sensitivity estimate, not a causal guarantee.</p>
         </div>
       </article>
 
@@ -329,16 +329,16 @@
       <div class="meth__num">02</div>
       <div class="meth__body">
         <h3 class="meth__h">Importance is not impact.</h3>
-        <p class="accordion__hook">A feature the model leans on heavily isn't necessarily one that moves the forecast when removed; branch access ranks high but is so correlated with other signals the model routes around it.</p>
+        <p class="accordion__hook">A feature the model notices heavily is not always the same as a feature that changes the final forecast by itself.</p>
         <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
         <div class="accordion__body">
-          <p>How much the model leans on a feature is not the same as how much the forecast suffers when that feature is removed. They disagree. <b>Branch access</b> ranks high in the lean-on measure, but if you drop it from the model average precision barely moves. Distance to a branch is correlated with everything else; the model can route around it.</p>
-          <p>The honest read: at the active horizon, only one or two lever groups do meaningful predictive work alone. The rest are decoration. The slider readouts above show this plainly.</p>
-          <p class="meth__inlinenote mono" id="ablNote">Removed-feature impact: <span id="ablHzLabel">2027 forecast</span></p>
+          <p>We check each category by asking: if the model loses this category, how much worse does its ranking of high-risk places get? That tells us whether the category is carrying unique signal or whether other variables can mostly stand in for it.</p>
+          <p>The honest read: some lever categories carry stronger unique signal than others, and the active horizon matters. The slider readouts above show this plainly.</p>
+          <p class="meth__inlinenote mono" id="ablNote">Category-dependence check: <span id="ablHzLabel">2027 forecast</span></p>
         </div>
       </div>
       <div class="meth__viz">
-        <div class="ablchart" id="ablChart" aria-label="Ablation impact by lever group"></div>
+        <div class="ablchart" id="ablChart" aria-label="Category-dependence impact by lever group"></div>
       </div>
     </article>
 
@@ -349,7 +349,7 @@
         <p class="accordion__hook">The chart shows how much the model weights each feature across 8 time-split tests; names ending in <span class="mono">_resid</span> had their demographic component mathematically removed before training.</p>
         <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i> Details</button>
         <div class="accordion__body">
-          <p>How much the model leans on each feature, averaged across 8 time-split tests. Different from the removed-feature view. Leaning asks &ldquo;how much does the model use this feature when it&rsquo;s present?&rdquo; Removing asks &ldquo;what happens if we drop this feature group entirely?&rdquo; A heavily-leaned-on feature with low removal impact is a feature the model could route around.</p>
+          <p>How much the model leans on each feature, averaged across 8 time-split tests. This is different from the category-dependence check above. One asks &ldquo;how much does the model use this feature when it&rsquo;s present?&rdquo; The other asks &ldquo;how much does the model miss this category when it is gone?&rdquo; A heavily used feature with low category dependence is a feature the model can route around.</p>
           <p class="meth__inlinenote mono">Top 8 · <span id="topFeatHzLabel">2027 forecast</span></p>
           <p class="meth__resnote">A name ending in <span class="mono">_resid</span> means the feature was residualized against demographics. We regressed out the part of it that&rsquo;s explained by who lives in the tract (in other words, the lender-count effect has been mathematically removed), so the model has to find lever signal independent of population.</p>
         </div>

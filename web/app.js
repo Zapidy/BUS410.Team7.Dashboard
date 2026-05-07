@@ -398,39 +398,45 @@
     },
   };
 
-  // Plain-language tooltips for the 5 scenario sliders (right rail).
+  // Plain-language tooltips for the scenario sliders (right rail).
   // Keyed by the actual data-key on each slider (matches LEVERS[].key).
-  // Each entry: name, what it represents, what moving it does, honest impact.
+  // Each entry: name, what it represents, and what moving it does.
   const LEVER_TOOLTIP_CONTENT = {
     distance_to_nearest_bank_branch: {
       nm: "Bank branch distance",
       what: "How far the typical neighborhood resident has to travel to a bank branch.",
       does: "Pulling the slider makes branches closer or farther in the model's view. Reflects branch-retention or new-branch policies.",
-      impact: "Removing this signal entirely barely changes the forecast (-0.001 odds-equivalent), because the model has overlapping ways to detect access friction. Slider effect on the map is therefore subtle.",
+      note: "Distance receives most of the branch-access scenario weight because it is the strongest branch-access feature.",
     },
     branches_within_5mi: {
       nm: "Branches within 5 miles",
       what: "The count of bank branches within five miles of the neighborhood.",
       does: "Pulling the slider raises or lowers the local-options count. Maps to branch additions or closures.",
-      impact: "Same as Bank branch distance, removing doesn't move the forecast much, because branch-distance and lender-mix signals overlap.",
+      note: "This shares the branch-access group weight with distance, but gets a smaller share because its feature importance is lower.",
     },
     mdi_branches_within_25mi: {
       nm: "MDI branch reach",
       what: "How accessible Minority Depository Institution branches are. MDIs are mission-driven banks serving underserved markets.",
       does: "Pulling the slider models a stronger or weaker MDI presence in the area.",
-      impact: "Removing MDI signal lowers forecast accuracy by a small, real amount (-0.028 at the 2027 horizon, slightly less at 2030). Slider has visible map impact.",
+      note: "The effect comes from how much the model depends on the MDI / mission-lender category, then this feature's share of that category.",
     },
     ssbci_active: {
       nm: "SSBCI program coverage",
       what: "Whether the state has the federal-state Small Business Credit Initiative active and how many program types are running.",
       does: "Slider toggles or expands the state-program presence.",
-      impact: "The model treats this as background context, not a real lever. Removing it slightly improves accuracy at long horizons. Don't expect the slider to move much.",
+      note: "This is a broad state-policy signal, so the scenario effect is contextual and should be read cautiously.",
     },
     microloan_intermediary_within_25mi: {
       nm: "Microlender ecosystem",
       what: "How dense the local SBA-microlender network is. Microlenders are non-bank organizations that disburse small SBA-backed loans.",
       does: "Slider models stronger or weaker microlender presence in a 25-mile radius.",
-      impact: "Removing it lowers accuracy by a small, real amount (-0.019 at 2027). Slider has visible but modest map impact.",
+      note: "The effect comes from how much the model depends on the microlender-ecosystem category and is strongest at the 2027 horizon.",
+    },
+    lender_hhi_tract_resid: {
+      nm: "Lender concentration",
+      what: "How concentrated small-business lending is after accounting for peer-group and year context.",
+      does: "Pulling the slider models a more or less concentrated lender market. More concentration generally raises risk.",
+      note: "This is the strongest sensitivity group, but it is less directly policy-actionable than branch, MDI, or microlender access.",
     },
   };
 
@@ -1151,14 +1157,13 @@
   //     Δlogit  = Σ_L Δshap_f                              (sum of the shifts)
   //     new_p   = sigmoid(logit(p) + Δlogit · k)
   //
-  // The polarity sign matches the existing global slider math: a higher
-  // slider value moves the lever in the "more credit access" direction,
-  // which (for protective levers like MDI reach) lowers risk. We dampen
-  // by k = 1.0 here; calibration is handled implicitly by the importance
-  // values in feature_stats.json which were normalized so the global
-  // shift in computeShift() reads as percentage points of risk.
+  // The polarity sign matches the scenario math: a higher slider value moves
+  // the lever in the "more credit access" direction, which lowers risk for
+  // protective levers like MDI reach. Removed-category dependence scores are
+  // converted into a bounded logit sensitivity so every surface shares one unit.
   // ---------------------------------------------------------------------
   const SCENARIO_DAMP = 1.0;
+  const SCENARIO_AP_TO_LOGIT = 10;
   const PROB_CLIP = 1e-4;
 
   function logit(p) {
@@ -1173,25 +1178,6 @@
       const e = Math.exp(z);
       return e / (1 + e);
     }
-  }
-
-  // Read the active slider deltas (z-units) and produce the per-feature
-  // SHAP shift for each lever. Returns { feat: Δshap, ... }.
-  function leverShiftsByFeature() {
-    const shifts = {};
-    LEVERS.forEach(l => {
-      const z = STATE.sliderShifts[l.key] || 0;
-      if (Math.abs(z) < 1e-6) return;
-      const fs = STATE.feat ? STATE.feat[l.key] : null;
-      if (!fs) return;
-      const imp = fs.importance || 0;
-      // Match the sign convention in computeShift(): -polarity * z moves
-      // risk DOWN when slider raises a "more access" lever. SHAP δ for the
-      // lever's feature is the same logit-scale shift.
-      const dShap = -1 * l.polarity * z * imp * SCENARIO_DAMP;
-      shifts[l.key] = (shifts[l.key] || 0) + dShap;
-    });
-    return shifts;
   }
 
   // List of {label, z} for the plain-language scenario note in the drawer.
@@ -1209,6 +1195,99 @@
       out.push({ label: l.label, descriptor, z });
     });
     return out;
+  }
+
+  function totalLeverImportance() {
+    if (!STATE.feat) return 1;
+    const total = LEVERS.reduce((sum, l) => {
+      const fs = STATE.feat[l.key];
+      return sum + (fs ? (fs.importance || 0) : 0);
+    }, 0);
+    return total || 1;
+  }
+
+  function leverGroupImportance(lever) {
+    if (!STATE.feat) return 0;
+    return LEVERS
+      .filter(l => l.group === lever.group)
+      .reduce((sum, l) => {
+        const fs = STATE.feat[l.key];
+        return sum + (fs ? (fs.importance || 0) : 0);
+      }, 0);
+  }
+
+  function scenarioLeverEffect(lever, z = STATE.sliderShifts[lever.key] || 0, horizon = STATE.activeHorizon) {
+    if (!STATE.feat || Math.abs(z) < 1e-6) return 0;
+    const fs = STATE.feat[lever.key];
+    if (!fs) return 0;
+
+    const groupImp = leverGroupImportance(lever);
+    const featureShare = groupImp > 0 ? (fs.importance || 0) / groupImp : 1;
+    const ablImp = abImpactByGroup(horizon, lever.group);
+    const apDrop = ablImp ? Math.max(0, -1 * (Number(ablImp.delta_ap) || 0)) : 0;
+    const fallback = Math.min(0.04, ((fs.importance || 0) / totalLeverImportance()) * 0.16);
+    const groupStrength = apDrop > 0.005
+      ? Math.min(0.42, apDrop * SCENARIO_AP_TO_LOGIT)
+      : fallback;
+
+    return -1 * lever.polarity * z * groupStrength * featureShare * SCENARIO_DAMP;
+  }
+
+  function scenarioLogitEffect(model = STATE.activeModel) {
+    const raw = LEVERS.reduce((sum, l) => sum + scenarioLeverEffect(l), 0);
+    return model === "m2" ? raw : raw * 0.4;
+  }
+
+  function applyScenarioToRisk(base, model = STATE.activeModel) {
+    if (base == null || isNaN(base)) return null;
+    return sigmoid(logit(base) + scenarioLogitEffect(model));
+  }
+
+  function scenarioRiskExpr(prop, effect) {
+    const oddsMultiplier = Math.exp(effect);
+    return [
+      "let", "p", ["max", 0.000001, ["min", 0.999999, ["get", prop]]],
+      ["let", "odds", ["/", ["var", "p"], ["-", 1, ["var", "p"]]],
+        ["/",
+          ["*", ["var", "odds"], oddsMultiplier],
+          ["+", 1, ["*", ["var", "odds"], oddsMultiplier]]
+        ]
+      ]
+    ];
+  }
+
+  function scenarioLeverSummary(lever) {
+    const horizon = STATE.activeHorizon;
+    const base = 0.10;
+    const farRightEffect = scenarioLeverEffect(lever, 2, horizon);
+    const farRightRisk = sigmoid(logit(base) + farRightEffect);
+    const deltaPp = (farRightRisk - base) * 100;
+    const ablImp = abImpactByGroup(horizon, lever.group);
+    const dAp = ablImp ? Number(ablImp.delta_ap) : null;
+    const dir = deltaPp >= 0 ? "increases" : "decreases";
+    const strength = Math.abs(deltaPp) >= 2 ? "clear" : (Math.abs(deltaPp) >= 0.75 ? "modest" : "small");
+    const dependencyText = dAp == null
+      ? "No category-dependence score is available for this horizon."
+      : (dAp < -0.01
+        ? "The model depends on this category at this horizon."
+        : "The model only weakly depends on this category at this horizon.");
+    return {
+      deltaPp,
+      row: `${HZ_LABEL[horizon]} sensitivity: far right ${dir} Influenceable risk by about ${Math.abs(deltaPp).toFixed(2)} percentage points from a 10% baseline (${strength}).`,
+      tip: `At the ${HZ_LABEL[horizon]}, far right ${dir} Influenceable risk by about ${Math.abs(deltaPp).toFixed(2)} percentage points from a 10% baseline. Diagnostic uses a damped version. ${dependencyText}`,
+    };
+  }
+
+  // Read active slider deltas and produce per-feature logit shifts.
+  function leverShiftsByFeature() {
+    const shifts = {};
+    LEVERS.forEach(l => {
+      const z = STATE.sliderShifts[l.key] || 0;
+      if (Math.abs(z) < 1e-6) return;
+      const dShap = scenarioLeverEffect(l, z);
+      shifts[l.key] = (shifts[l.key] || 0) + dShap;
+    });
+    return shifts;
   }
 
   // Apply linearized scenario adjustment to the pinned tract's risks and SHAP.
@@ -1231,9 +1310,6 @@
     }
 
     const dShapByFeat = leverShiftsByFeature();
-    // The total log-odds shift is the sum across the lever features.
-    let dLogit = 0;
-    Object.values(dShapByFeat).forEach(v => { dLogit += v; });
 
     // 1) Adjusted risks per (model × horizon).
     const num = (v) => (v == null || v === "null") ? null : Number(v);
@@ -1246,14 +1322,8 @@
     const adjRisks = {};
     Object.entries(baseRisks).forEach(([k, base]) => {
       if (base == null) { adjRisks[k] = null; return; }
-      // M2 (Influenceable) is the model the levers were chosen against; M1
-      // (Diagnostic) doesn't contain most of these features. Apply the full
-      // shift to M2 and a damped echo to M1 (since the levers correlate with
-      // demographic context). The damping is conservative — the spec calls
-      // for a linear approximation, not a calibrated lift.
       const isM2 = k.startsWith("m2_");
-      const localDLogit = isM2 ? dLogit : (dLogit * 0.4);
-      adjRisks[k] = sigmoid(logit(base) + localDLogit);
+      adjRisks[k] = applyScenarioToRisk(base, isM2 ? "m2" : "m1");
     });
     STATE.scenarioAdjustedRisks = adjRisks;
     STATE.scenarioActiveLevers = activeLeversForNote();
@@ -1663,12 +1733,15 @@
     if (!tip) return;
     const c = LEVER_TOOLTIP_CONTENT[leverKey];
     if (!c) return;
+    const lever = LEVERS.find(l => l.key === leverKey);
+    const summary = lever ? scenarioLeverSummary(lever) : null;
     tip.innerHTML = `
       <div class="featTip__nm">${c.nm}</div>
       <div class="featTip__rule"></div>
       <div class="featTip__what"><span class="featTip__lbl">What it represents</span>${c.what}</div>
       <div class="featTip__read"><span class="featTip__lbl">What moving it does</span>${c.does}</div>
-      <div class="featTip__impact"><span class="featTip__lbl">Honest impact</span>${c.impact}</div>
+      <div class="featTip__impact"><span class="featTip__lbl">Modeled sensitivity</span>${summary ? summary.tip : c.note}</div>
+      <div class="featTip__read"><span class="featTip__lbl">How to read it</span>${c.note}</div>
       <div class="featTip__key mono">${leverKey}</div>
     `;
     // Position to the LEFT of the slider row (sliders live on the right rail,
@@ -1961,19 +2034,8 @@
       if (!fs) return;
       // Preserve any existing slider value on rerender
       const existingZ = STATE.sliderShifts[lev.key] || 0;
-      const ablImp = abImpactByGroup(STATE.activeHorizon, lev.group);
-      const dAp = ablImp ? ablImp.delta_ap : null;
-      const isReal = dAp != null && Math.abs(dAp) > 0.01;
-      // Plain-language honest-impact line. Spec replaces ΔAP / decoy / real impact
-      // with reader-first phrasing about what removing the signal does.
-      let ablLine;
-      if (dAp == null) {
-        ablLine = "Honest impact still being computed for this horizon.";
-      } else if (isReal) {
-        ablLine = `Removing this signal noticeably lowers forecast accuracy (${dAp >= 0 ? "+" : ""}${dAp.toFixed(3)} change in average precision).`;
-      } else {
-        ablLine = `Removing this signal barely changes the forecast (${dAp >= 0 ? "+" : ""}${dAp.toFixed(3)}); other features fill in.`;
-      }
+      const summary = scenarioLeverSummary(lev);
+      const isReal = Math.abs(summary.deltaPp) >= 0.75;
 
       const div = document.createElement("div");
       div.className = "slider";
@@ -1988,8 +2050,8 @@
                data-key="${lev.key}"
                aria-label="${lev.label} (move above or below average)">
         <div class="slider__foot">
-          <span class="slider__abl ${dAp == null ? "is-pending" : (isReal ? "is-real" : "is-decoy")}">
-            ${ablLine}
+          <span class="slider__abl ${isReal ? "is-real" : "is-decoy"}">
+            ${summary.row}
           </span>
         </div>
       `;
@@ -2067,33 +2129,18 @@
     });
   }
 
-  // Compute a per-tract risk shift from slider z-scores.
+  // Compute the active-model national mean risk shift from slider z-scores.
   function computeShift() {
-    let shift = 0;
-    let totalImp = 0;
-    LEVERS.forEach(l => {
-      const fs = STATE.feat ? STATE.feat[l.key] : null;
-      if (fs) totalImp += fs.importance || 0;
-    });
-    if (totalImp === 0) return 0;
-    LEVERS.forEach(l => {
-      const z = STATE.sliderShifts[l.key] || 0;
-      const fs = STATE.feat ? STATE.feat[l.key] : null;
-      if (!fs) return;
-      const ablImp = abImpactByGroup(STATE.activeHorizon, l.group);
-      const w = (ablImp && Math.abs(ablImp.delta_ap) > 0.005)
-        ? Math.min(0.04, Math.abs(ablImp.delta_ap) * 1.2)
-        : ((fs.importance || 0) / totalImp) * 0.015;
-      shift += -1 * l.polarity * z * w;
-    });
-    return shift;
+    const baseline = baselineMeanRisk(STATE.activeModel, STATE.activeHorizon);
+    const adjusted = applyScenarioToRisk(baseline, STATE.activeModel);
+    return adjusted == null ? 0 : adjusted - baseline;
   }
 
   function computeColorExpr() {
     const ramp = RAMPS[STATE.activeModel];
     const m = riskProp();
-    const shift = computeShift();
-    if (Math.abs(shift) < 0.0005) {
+    const effect = scenarioLogitEffect(STATE.activeModel);
+    if (Math.abs(effect) < 0.0005) {
       return rampToExpr();
     }
     const stops = ramp.flatMap(([t, c]) => [t, c]);
@@ -2101,7 +2148,7 @@
       "case",
       ["==", ["get", m], null], "#0c1318",
       ["interpolate", ["linear"],
-        ["max", 0, ["min", 1, ["+", ["get", m], shift]]],
+        scenarioRiskExpr(m, effect),
         ...stops
       ]
     ];
@@ -2247,8 +2294,8 @@
     if (!abl || !abl.levers) {
       wrap.innerHTML = `
         <div class="ablempty">
-          <div class="kicker">Removed-feature impact pending</div>
-          <p>The ${STATE.activeHorizon === "h3" ? "2027 forecast" : "2030 scenario"} removed-feature table is being regenerated. Reload after <span class="mono">build_dashboard_data.py</span> picks up the new <span class="mono">round7_ablation_${STATE.activeHorizon}</span> output.</p>
+          <div class="kicker">Category-dependence check pending</div>
+          <p>The ${STATE.activeHorizon === "h3" ? "2027 forecast" : "2030 scenario"} category-dependence table is being regenerated. Reload after <span class="mono">build_dashboard_data.py</span> picks up the new scenario-weight output.</p>
         </div>
       `;
       return;
