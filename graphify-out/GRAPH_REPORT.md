@@ -1,11 +1,11 @@
 # Graph Report - 410DB  (2026-05-07)
 
 ## Corpus Check
-- 54 files · ~1,899,540 words
+- 54 files · ~1,899,511 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 495 nodes · 738 edges · 79 communities detected
+- 496 nodes · 739 edges · 79 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
@@ -97,8 +97,8 @@
 4. `runPendingGeoSwitch()` - 12 edges
 5. `$()` - 11 edges
 6. `main()` - 10 edges
-7. `ensureTractLayers()` - 9 edges
-8. `log()` - 9 edges
+7. `log()` - 9 edges
+8. `ensureTractLayers()` - 8 edges
 9. `main()` - 8 edges
 10. `main()` - 7 edges
 
@@ -126,7 +126,7 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
-Nodes (92): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+84 more)
+Nodes (93): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+85 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.08
@@ -313,12 +313,12 @@ Cohesion: 1.0
 Nodes (2): main(), prepare()
 
 ### Community 48 - "Community 48"
-Cohesion: 0.67
-Nodes (3): Credit Union NCUA Join (bypass FDIC, agency_code=4, ~10K institutions), 01_rssd_cra_crosswalk.md — RSSD to CRA Respondent ID Crosswalk (94.6% match), RSSD-CRA Match Rate: 94.6% volume-weighted; success criterion ≥ 95%
-
-### Community 49 - "Community 49"
 Cohesion: 1.0
 Nodes (3): 03_decision_rule.md — Phase B AP Threshold Decision Rule, Phase B Decision Rule: AP threshold STRONG ≥ 0.10 (not PR-AUC ≥ 0.6), Random Baseline AP ≈ 1.7% (equals positive rate for rare-event target)
+
+### Community 49 - "Community 49"
+Cohesion: 0.67
+Nodes (3): Credit Union NCUA Join (bypass FDIC, agency_code=4, ~10K institutions), 01_rssd_cra_crosswalk.md — RSSD to CRA Respondent ID Crosswalk (94.6% match), RSSD-CRA Match Rate: 94.6% volume-weighted; success criterion ≥ 95%
 
 ### Community 56 - "Community 56"
 Cohesion: 1.0

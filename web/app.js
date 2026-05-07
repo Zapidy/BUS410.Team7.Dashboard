@@ -453,13 +453,65 @@
 
 
   // ---------------------------------------------------------------------
-  // BASE MAP STYLE — dark, no labels on basemap, hairline borders
+  // THEME HELPERS
+  // ---------------------------------------------------------------------
+  const isDarkTheme = () => document.documentElement.dataset.theme !== "light";
+  const nullFillColor = () => isDarkTheme() ? "#0c1318" : "#f2f1ee";
+  const coralColor    = () => isDarkTheme() ? "#fc5855" : "#cc3d3a";
+  const edgeColor     = () => isDarkTheme() ? "#0a1319" : "#c2cad4";
+  const bgColor       = () => isDarkTheme() ? "#040c13" : "#f7f5f0";
+
+  // Choropleth ramps — paper→deep-accent for light, dark→bright-accent for dark.
+  const RAMPS_DARK = {
+    m1: [
+      [0.00, "#0e171e"],
+      [0.02, "#332e12"],
+      [0.05, "#655406"],
+      [0.10, "#987500"],
+      [0.20, "#c89600"],
+      [0.40, "#eeb300"],
+      [1.00, "#ffd046"],
+    ],
+    m2: [
+      [0.00, "#0e171e"],
+      [0.02, "#193b22"],
+      [0.05, "#336627"],
+      [0.10, "#56932b"],
+      [0.20, "#78bb2f"],
+      [0.40, "#a4e550"],
+      [1.00, "#c3ff68"],
+    ],
+  };
+  const RAMPS_LIGHT = {
+    m1: [
+      [0.00, "#f7f5f0"],
+      [0.02, "#f0e8c9"],
+      [0.05, "#e8d480"],
+      [0.10, "#d6b333"],
+      [0.20, "#a87f00"],
+      [0.40, "#7a5800"],
+      [1.00, "#523900"],
+    ],
+    m2: [
+      [0.00, "#f7f5f0"],
+      [0.02, "#dde8c4"],
+      [0.05, "#bcd385"],
+      [0.10, "#92b245"],
+      [0.20, "#6c8a1d"],
+      [0.40, "#4a6210"],
+      [1.00, "#2e3e08"],
+    ],
+  };
+  const ramps = () => isDarkTheme() ? RAMPS_DARK : RAMPS_LIGHT;
+
+  // ---------------------------------------------------------------------
+  // BASE MAP STYLE — dual basemap sources for dark/light switching
   // ---------------------------------------------------------------------
   const BASE_STYLE = {
     version: 8,
     glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
     sources: {
-      carto: {
+      "carto-dark": {
         type: "raster",
         tiles: [
           "https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
@@ -470,16 +522,26 @@
         tileSize: 256,
         attribution: "© OpenStreetMap contributors © CARTO",
       },
+      "carto-light": {
+        type: "raster",
+        tiles: [
+          "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+          "https://b.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+          "https://c.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+          "https://d.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+        ],
+        tileSize: 256,
+        attribution: "© OpenStreetMap contributors © CARTO",
+      },
     },
     layers: [
-      { id: "bg", type: "background", paint: { "background-color": "#040c13" } },
-      { id: "base", type: "raster", source: "carto",
-        paint: {
-          "raster-opacity": 0.55,
-          "raster-saturation": -0.4,
-          "raster-contrast": -0.05,
-          "raster-brightness-min": 0.02,
-        }
+      { id: "bg", type: "background", paint: { "background-color": bgColor() } },
+      { id: "base-dark", type: "raster", source: "carto-dark",
+        paint: { "raster-opacity": 0.55, "raster-saturation": -0.4, "raster-contrast": -0.05, "raster-brightness-min": 0.02 }
+      },
+      { id: "base-light", type: "raster", source: "carto-light",
+        layout: { visibility: "none" },
+        paint: { "raster-opacity": 0.50, "raster-saturation": -0.20, "raster-contrast": 0.05 }
       },
     ],
   };
@@ -565,11 +627,11 @@
   }
 
   const rampToExpr = () => {
-    const ramp = RAMPS[STATE.activeModel];
+    const ramp = ramps()[STATE.activeModel];
     const m = riskProp();
     return [
       "case",
-      ["==", ["get", m], null], "#0c1318",
+      ["==", ["get", m], null], nullFillColor(),
       ["interpolate", ["linear"], ["get", m], ...ramp.flat()]
     ];
   };
@@ -590,6 +652,48 @@
   // ---------------------------------------------------------------------
   // BOOT
   // ---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
+  // THEME SWITCHING
+  // ---------------------------------------------------------------------
+  function applyThemeToMap() {
+    if (!map) return;
+    const dark = isDarkTheme();
+    map.setPaintProperty("bg", "background-color", bgColor());
+    map.setLayoutProperty("base-dark",  "visibility", dark ? "visible" : "none");
+    map.setLayoutProperty("base-light", "visibility", dark ? "none" : "visible");
+    const outline = coralColor();
+    const edge    = edgeColor();
+    ["counties-outline-hover", "counties-outline-pinned",
+     "tracts-outline-hover",   "tracts-outline-pinned"].forEach(id => {
+      if (map.getLayer(id)) map.setPaintProperty(id, "line-color", outline);
+    });
+    ["counties-edge", "tracts-edge"].forEach(id => {
+      if (map.getLayer(id)) map.setPaintProperty(id, "line-color", edge);
+    });
+    // Repaint choropleth fill with theme-appropriate ramp
+    const fillExpr = computeColorExpr();
+    ["counties-fill", "tracts-fill"].forEach(id => {
+      if (map.getLayer(id)) map.setPaintProperty(id, "fill-color", fillExpr);
+    });
+  }
+
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    const meta = document.querySelector("meta[name='theme-color']");
+    if (meta) meta.content = t === "dark" ? "#1c2230" : "#f7f5f0";
+    applyThemeToMap();
+  }
+
+  function initTheme() {
+    const toggle = document.querySelector("[data-theme-toggle]");
+    if (!toggle) return;
+    toggle.addEventListener("click", () => {
+      const next = isDarkTheme() ? "light" : "dark";
+      setTheme(next);
+      localStorage.setItem("theme", next);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", boot);
 
   async function boot() {
@@ -621,6 +725,7 @@
     if (!states)        document.getElementById('topStates')?.insertAdjacentHTML('beforebegin', '<p class="data-missing">State data unavailable</p>');
     if (!ablH3 && !ablH6) document.getElementById('ablChart')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Ablation data unavailable</p>');
 
+    initTheme();
     initMap();
     initToggles();
     renderHeadline();
@@ -1277,7 +1382,7 @@
         source: "counties",
         filter: ["==", ["get", "f"], "__none__"],
         paint: {
-          "line-color": "#fc5855",
+          "line-color": coralColor(),
           "line-width": 1.4,
           "line-opacity": 1,
         },
@@ -1288,7 +1393,7 @@
         source: "counties",
         filter: ["==", ["get", "f"], "__none__"],
         paint: {
-          "line-color": "#fc5855",
+          "line-color": coralColor(),
           "line-width": 1.8,
           "line-opacity": 1,
         },
@@ -1298,7 +1403,7 @@
         type: "line",
         source: "counties",
         paint: {
-          "line-color": "#0a1319",
+          "line-color": edgeColor(),
           "line-width": 0.45,
           "line-opacity": 0.5,
         },
@@ -1363,7 +1468,7 @@
       source: "tracts",
       filter: ["==", ["get", "f"], "__none__"],
       paint: {
-        "line-color": "#fc5855",
+        "line-color": coralColor(),
         "line-width": 1.2,
         "line-opacity": 1,
       },
@@ -1375,7 +1480,7 @@
       source: "tracts",
       filter: ["==", ["get", "f"], "__none__"],
       paint: {
-        "line-color": "#fc5855",
+        "line-color": coralColor(),
         "line-width": 1.5,
         "line-opacity": 1,
       },
@@ -1386,7 +1491,7 @@
       type: "line",
       source: "tracts",
       paint: {
-        "line-color": "#0a1319",
+        "line-color": edgeColor(),
         "line-width": 0.3,
         "line-opacity": [
           "interpolate", ["linear"], ["zoom"],
@@ -1477,8 +1582,7 @@
       document.getElementById("tipState").textContent = p.st || "–";
       document.getElementById("tipFips").textContent = p.f || "–";
       document.getElementById("tipCounty").textContent = p.cn || "–";
-      const chip = document.getElementById("tipChip");
-      if (chip) chip.style.background = "#1c2a34";
+      // tipChip background is handled by CSS (uses var(--s2))
 
       // Active row vs other row
       const active = STATE.activeModel;
@@ -2816,7 +2920,7 @@
   }
 
   function computeColorExpr() {
-    const ramp = RAMPS[STATE.activeModel];
+    const ramp = ramps()[STATE.activeModel];
     const m = riskProp();
     const effect = scenarioLogitEffect(STATE.activeModel);
     if (Math.abs(effect) < 0.0005) {
@@ -2825,7 +2929,7 @@
     const stops = ramp.flatMap(([t, c]) => [t, c]);
     return [
       "case",
-      ["==", ["get", m], null], "#0c1318",
+      ["==", ["get", m], null], nullFillColor(),
       ["interpolate", ["linear"],
         scenarioRiskExpr(m, effect),
         ...stops
