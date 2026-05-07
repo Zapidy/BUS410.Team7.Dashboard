@@ -1216,7 +1216,7 @@
   // them when the scenario is at baseline. Caller should renderDrawer() after.
   function applyScenarioToDrawer() {
     const p = STATE.pinnedFeature;
-    if (!p || isCountyMode()) {
+    if (!p) {
       STATE.scenarioAdjustedRisks = null;
       STATE.scenarioAdjustedShap = null;
       STATE.scenarioActiveLevers = null;
@@ -1256,6 +1256,12 @@
       adjRisks[k] = sigmoid(logit(base) + localDLogit);
     });
     STATE.scenarioAdjustedRisks = adjRisks;
+    STATE.scenarioActiveLevers = activeLeversForNote();
+
+    if (isCountyMode()) {
+      STATE.scenarioAdjustedShap = null;
+      return;
+    }
 
     // 2) Adjusted SHAP top-N for the active (model × horizon).
     // We apply per-feature shifts to the existing top-8 list, then re-rank.
@@ -1295,7 +1301,6 @@
       STATE.scenarioAdjustedShap = null;
     }
 
-    STATE.scenarioActiveLevers = activeLeversForNote();
   }
 
   function refreshScenarioDrawer() {

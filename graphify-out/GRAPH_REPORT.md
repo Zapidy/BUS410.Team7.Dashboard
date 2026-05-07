@@ -1,11 +1,11 @@
 # Graph Report - 410DB  (2026-05-06)
 
 ## Corpus Check
-- 54 files · ~1,894,175 words
+- 54 files · ~1,893,878 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 469 nodes · 662 edges · 79 communities detected
+- 470 nodes · 666 edges · 79 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
@@ -99,8 +99,8 @@
 6. `log()` - 9 edges
 7. `main()` - 8 edges
 8. `main()` - 7 edges
-9. `renderDrawer()` - 7 edges
-10. `renderMethodology()` - 7 edges
+9. `renderMethodology()` - 7 edges
+10. `parse_year()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Residualized Concentration Features (HHI, top1, top3 residuals)` --semantically_similar_to--> `Lender Concentration / Market Depth Variables (HHI, top1, top3, unique lenders)`  [INFERRED] [semantically similar]
@@ -126,7 +126,7 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (64): activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId(), activeStateTopList() (+56 more)
+Nodes (65): activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId(), activeStateTopList() (+57 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.08
