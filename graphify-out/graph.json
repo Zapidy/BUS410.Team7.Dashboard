@@ -216,7 +216,7 @@
       "label": "riskProp()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L519",
+      "source_location": "L520",
       "id": "app_riskprop",
       "community": 0,
       "norm_label": "riskprop()"
@@ -225,7 +225,7 @@
       "label": "rankProp()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L520",
+      "source_location": "L521",
       "id": "app_rankprop",
       "community": 0,
       "norm_label": "rankprop()"
@@ -234,7 +234,7 @@
       "label": "isCountyMode()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L521",
+      "source_location": "L522",
       "id": "app_iscountymode",
       "community": 0,
       "norm_label": "iscountymode()"
@@ -243,7 +243,7 @@
       "label": "activeGeoMeta()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L522",
+      "source_location": "L523",
       "id": "app_activegeometa",
       "community": 0,
       "norm_label": "activegeometa()"
@@ -252,7 +252,7 @@
       "label": "activeFillLayerId()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L523",
+      "source_location": "L524",
       "id": "app_activefilllayerid",
       "community": 0,
       "norm_label": "activefilllayerid()"
@@ -261,7 +261,7 @@
       "label": "activeHoverLayerId()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L524",
+      "source_location": "L525",
       "id": "app_activehoverlayerid",
       "community": 0,
       "norm_label": "activehoverlayerid()"
@@ -270,7 +270,7 @@
       "label": "activePinnedLayerId()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L525",
+      "source_location": "L526",
       "id": "app_activepinnedlayerid",
       "community": 0,
       "norm_label": "activepinnedlayerid()"
@@ -279,7 +279,7 @@
       "label": "geoMeanKey()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L526",
+      "source_location": "L527",
       "id": "app_geomeankey",
       "community": 0,
       "norm_label": "geomeankey()"
@@ -288,7 +288,7 @@
       "label": "activeStateTopList()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L527",
+      "source_location": "L528",
       "id": "app_activestatetoplist",
       "community": 0,
       "norm_label": "activestatetoplist()"
@@ -297,7 +297,7 @@
       "label": "setText()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L531",
+      "source_location": "L532",
       "id": "app_settext",
       "community": 0,
       "norm_label": "settext()"
@@ -306,7 +306,7 @@
       "label": "activeFeatureCount()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L536",
+      "source_location": "L537",
       "id": "app_activefeaturecount",
       "community": 0,
       "norm_label": "activefeaturecount()"
@@ -315,7 +315,7 @@
       "label": "activeHistogramStore()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L543",
+      "source_location": "L544",
       "id": "app_activehistogramstore",
       "community": 0,
       "norm_label": "activehistogramstore()"
@@ -324,7 +324,7 @@
       "label": "renderGeoCopy()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L551",
+      "source_location": "L552",
       "id": "app_rendergeocopy",
       "community": 0,
       "norm_label": "rendergeocopy()"
@@ -333,7 +333,7 @@
       "label": "rampToExpr()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L576",
+      "source_location": "L577",
       "id": "app_ramptoexpr",
       "community": 0,
       "norm_label": "ramptoexpr()"
@@ -342,7 +342,7 @@
       "label": "tintOpacityExpr()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L587",
+      "source_location": "L588",
       "id": "app_tintopacityexpr",
       "community": 0,
       "norm_label": "tintopacityexpr()"
@@ -351,7 +351,7 @@
       "label": "boot()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L603",
+      "source_location": "L604",
       "id": "app_boot",
       "community": 0,
       "norm_label": "boot()"
@@ -360,7 +360,7 @@
       "label": "initGuideStrip()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L648",
+      "source_location": "L652",
       "id": "app_initguidestrip",
       "community": 0,
       "norm_label": "initguidestrip()"
@@ -369,7 +369,7 @@
       "label": "initSpotlight()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L680",
+      "source_location": "L684",
       "id": "app_initspotlight",
       "community": 0,
       "norm_label": "initspotlight()"
@@ -378,16 +378,25 @@
       "label": "initAccordions()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L830",
+      "source_location": "L834",
       "id": "app_initaccordions",
       "community": 0,
       "norm_label": "initaccordions()"
     },
     {
+      "label": "initFeatureDictionary()",
+      "file_type": "code",
+      "source_file": "web/app.js",
+      "source_location": "L847",
+      "id": "app_initfeaturedictionary",
+      "community": 0,
+      "norm_label": "initfeaturedictionary()"
+    },
+    {
       "label": "fetchOptional()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L843",
+      "source_location": "L951",
       "id": "app_fetchoptional",
       "community": 0,
       "norm_label": "fetchoptional()"
@@ -396,7 +405,7 @@
       "label": "ensureLayerInteractions()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L859",
+      "source_location": "L967",
       "id": "app_ensurelayerinteractions",
       "community": 0,
       "norm_label": "ensurelayerinteractions()"
@@ -405,7 +414,7 @@
       "label": "initMap()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L874",
+      "source_location": "L982",
       "id": "app_initmap",
       "community": 0,
       "norm_label": "initmap()"
@@ -414,7 +423,7 @@
       "label": "ensureTractLayers()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L954",
+      "source_location": "L1062",
       "id": "app_ensuretractlayers",
       "community": 0,
       "norm_label": "ensuretractlayers()"
@@ -423,7 +432,7 @@
       "label": "syncGeoLayers()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1049",
+      "source_location": "L1157",
       "id": "app_syncgeolayers",
       "community": 0,
       "norm_label": "syncgeolayers()"
@@ -432,7 +441,7 @@
       "label": "resetHover()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1074",
+      "source_location": "L1182",
       "id": "app_resethover",
       "community": 0,
       "norm_label": "resethover()"
@@ -441,7 +450,7 @@
       "label": "bindHoverForLayer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1084",
+      "source_location": "L1192",
       "id": "app_bindhoverforlayer",
       "community": 0,
       "norm_label": "bindhoverforlayer()"
@@ -450,7 +459,7 @@
       "label": "bindClickForLayer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1156",
+      "source_location": "L1264",
       "id": "app_bindclickforlayer",
       "community": 0,
       "norm_label": "bindclickforlayer()"
@@ -459,7 +468,7 @@
       "label": "ensureCountyStats()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1169",
+      "source_location": "L1277",
       "id": "app_ensurecountystats",
       "community": 0,
       "norm_label": "ensurecountystats()"
@@ -468,9 +477,9 @@
       "label": "fetchGzipJson()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1179",
+      "source_location": "L1287",
       "id": "app_fetchgzipjson",
-      "community": 0,
+      "community": 21,
       "norm_label": "fetchgzipjson()"
     },
     {
@@ -479,14 +488,14 @@
       "source_file": "round5-diagnostic/web/app.js",
       "source_location": "L656",
       "id": "app_flytostate",
-      "community": 1,
+      "community": 0,
       "norm_label": "flytostate()"
     },
     {
       "label": "setFocusedState()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1199",
+      "source_location": "L1307",
       "id": "app_setfocusedstate",
       "community": 0,
       "norm_label": "setfocusedstate()"
@@ -495,7 +504,7 @@
       "label": "bindFocusClose()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1207",
+      "source_location": "L1315",
       "id": "app_bindfocusclose",
       "community": 0,
       "norm_label": "bindfocusclose()"
@@ -504,7 +513,7 @@
       "label": "renderFocusPanel()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1222",
+      "source_location": "L1330",
       "id": "app_renderfocuspanel",
       "community": 0,
       "norm_label": "renderfocuspanel()"
@@ -513,7 +522,7 @@
       "label": "pinFeature()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1308",
+      "source_location": "L1416",
       "id": "app_pinfeature",
       "community": 0,
       "norm_label": "pinfeature()"
@@ -522,7 +531,7 @@
       "label": "unpinFeature()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1322",
+      "source_location": "L1430",
       "id": "app_unpinfeature",
       "community": 0,
       "norm_label": "unpinfeature()"
@@ -531,7 +540,7 @@
       "label": "openDrawer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1333",
+      "source_location": "L1441",
       "id": "app_opendrawer",
       "community": 0,
       "norm_label": "opendrawer()"
@@ -540,7 +549,7 @@
       "label": "closeDrawer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1345",
+      "source_location": "L1453",
       "id": "app_closedrawer",
       "community": 0,
       "norm_label": "closedrawer()"
@@ -549,7 +558,7 @@
       "label": "fmtPct()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1362",
+      "source_location": "L1470",
       "id": "app_fmtpct",
       "community": 0,
       "norm_label": "fmtpct()"
@@ -558,7 +567,7 @@
       "label": "logit()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1387",
+      "source_location": "L1495",
       "id": "app_logit",
       "community": 0,
       "norm_label": "logit()"
@@ -567,7 +576,7 @@
       "label": "sigmoid()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1391",
+      "source_location": "L1499",
       "id": "app_sigmoid",
       "community": 0,
       "norm_label": "sigmoid()"
@@ -576,7 +585,7 @@
       "label": "activeLeversForNote()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1402",
+      "source_location": "L1510",
       "id": "app_activeleversfornote",
       "community": 0,
       "norm_label": "activeleversfornote()"
@@ -585,7 +594,7 @@
       "label": "totalLeverImportance()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1418",
+      "source_location": "L1526",
       "id": "app_totalleverimportance",
       "community": 0,
       "norm_label": "totalleverimportance()"
@@ -594,7 +603,7 @@
       "label": "leverGroupImportance()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1427",
+      "source_location": "L1535",
       "id": "app_levergroupimportance",
       "community": 0,
       "norm_label": "levergroupimportance()"
@@ -603,7 +612,7 @@
       "label": "scenarioLeverEffect()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1437",
+      "source_location": "L1545",
       "id": "app_scenariolevereffect",
       "community": 0,
       "norm_label": "scenariolevereffect()"
@@ -612,7 +621,7 @@
       "label": "scenarioLogitEffect()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1454",
+      "source_location": "L1562",
       "id": "app_scenariologiteffect",
       "community": 0,
       "norm_label": "scenariologiteffect()"
@@ -621,7 +630,7 @@
       "label": "applyScenarioToRisk()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1459",
+      "source_location": "L1567",
       "id": "app_applyscenariotorisk",
       "community": 0,
       "norm_label": "applyscenariotorisk()"
@@ -630,7 +639,7 @@
       "label": "scenarioRiskExpr()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1464",
+      "source_location": "L1572",
       "id": "app_scenarioriskexpr",
       "community": 0,
       "norm_label": "scenarioriskexpr()"
@@ -639,7 +648,7 @@
       "label": "scenarioLeverSummary()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1477",
+      "source_location": "L1585",
       "id": "app_scenarioleversummary",
       "community": 0,
       "norm_label": "scenarioleversummary()"
@@ -648,7 +657,7 @@
       "label": "leverShiftsByFeature()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1500",
+      "source_location": "L1608",
       "id": "app_levershiftsbyfeature",
       "community": 0,
       "norm_label": "levershiftsbyfeature()"
@@ -657,7 +666,7 @@
       "label": "applyScenarioToDrawer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1514",
+      "source_location": "L1622",
       "id": "app_applyscenariotodrawer",
       "community": 0,
       "norm_label": "applyscenariotodrawer()"
@@ -666,7 +675,7 @@
       "label": "refreshScenarioDrawer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1594",
+      "source_location": "L1702",
       "id": "app_refreshscenariodrawer",
       "community": 0,
       "norm_label": "refreshscenariodrawer()"
@@ -675,7 +684,7 @@
       "label": "renderDrawer()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1600",
+      "source_location": "L1708",
       "id": "app_renderdrawer",
       "community": 0,
       "norm_label": "renderdrawer()"
@@ -684,7 +693,7 @@
       "label": "renderCountyTopTracts()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1687",
+      "source_location": "L1795",
       "id": "app_rendercountytoptracts",
       "community": 0,
       "norm_label": "rendercountytoptracts()"
@@ -693,7 +702,7 @@
       "label": "divergenceCopy()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1725",
+      "source_location": "L1833",
       "id": "app_divergencecopy",
       "community": 0,
       "norm_label": "divergencecopy()"
@@ -702,7 +711,7 @@
       "label": "renderDivergenceBlock()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1758",
+      "source_location": "L1866",
       "id": "app_renderdivergenceblock",
       "community": 0,
       "norm_label": "renderdivergenceblock()"
@@ -711,7 +720,7 @@
       "label": "ordinal()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1797",
+      "source_location": "L1905",
       "id": "app_ordinal",
       "community": 0,
       "norm_label": "ordinal()"
@@ -720,7 +729,7 @@
       "label": "renderDrawerShap()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1804",
+      "source_location": "L1912",
       "id": "app_renderdrawershap",
       "community": 0,
       "norm_label": "renderdrawershap()"
@@ -729,7 +738,7 @@
       "label": "showFeatureTip()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1899",
+      "source_location": "L2007",
       "id": "app_showfeaturetip",
       "community": 0,
       "norm_label": "showfeaturetip()"
@@ -738,7 +747,7 @@
       "label": "hideFeatureTip()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1938",
+      "source_location": "L2046",
       "id": "app_hidefeaturetip",
       "community": 0,
       "norm_label": "hidefeaturetip()"
@@ -747,7 +756,7 @@
       "label": "showLeverTip()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1949",
+      "source_location": "L2057",
       "id": "app_showlevertip",
       "community": 0,
       "norm_label": "showlevertip()"
@@ -756,7 +765,7 @@
       "label": "hideLeverTip()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1991",
+      "source_location": "L2099",
       "id": "app_hidelevertip",
       "community": 0,
       "norm_label": "hidelevertip()"
@@ -765,16 +774,16 @@
       "label": "ensureShap()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L1997",
+      "source_location": "L2105",
       "id": "app_ensureshap",
-      "community": 0,
+      "community": 21,
       "norm_label": "ensureshap()"
     },
     {
       "label": "bindDrawerClose()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2017",
+      "source_location": "L2125",
       "id": "app_binddrawerclose",
       "community": 0,
       "norm_label": "binddrawerclose()"
@@ -783,7 +792,7 @@
       "label": "initToggles()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2031",
+      "source_location": "L2139",
       "id": "app_inittoggles",
       "community": 0,
       "norm_label": "inittoggles()"
@@ -792,7 +801,7 @@
       "label": "applyActive()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2081",
+      "source_location": "L2189",
       "id": "app_applyactive",
       "community": 0,
       "norm_label": "applyactive()"
@@ -801,7 +810,7 @@
       "label": "syncHorizonAffordances()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2103",
+      "source_location": "L2211",
       "id": "app_synchorizonaffordances",
       "community": 0,
       "norm_label": "synchorizonaffordances()"
@@ -810,7 +819,7 @@
       "label": "renderHeadline()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2116",
+      "source_location": "L2224",
       "id": "app_renderheadline",
       "community": 0,
       "norm_label": "renderheadline()"
@@ -819,7 +828,7 @@
       "label": "tweenNumber()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2143",
+      "source_location": "L2251",
       "id": "app_tweennumber",
       "community": 0,
       "norm_label": "tweennumber()"
@@ -828,7 +837,7 @@
       "label": "renderTopStates()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2169",
+      "source_location": "L2277",
       "id": "app_rendertopstates",
       "community": 0,
       "norm_label": "rendertopstates()"
@@ -837,7 +846,7 @@
       "label": "renderHistogram()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2213",
+      "source_location": "L2321",
       "id": "app_renderhistogram",
       "community": 0,
       "norm_label": "renderhistogram()"
@@ -846,7 +855,7 @@
       "label": "abImpactByGroup()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2236",
+      "source_location": "L2344",
       "id": "app_abimpactbygroup",
       "community": 0,
       "norm_label": "abimpactbygroup()"
@@ -855,7 +864,7 @@
       "label": "renderSliders()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2244",
+      "source_location": "L2352",
       "id": "app_rendersliders",
       "community": 0,
       "norm_label": "rendersliders()"
@@ -864,7 +873,7 @@
       "label": "onSliderInput()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2297",
+      "source_location": "L2405",
       "id": "app_onsliderinput",
       "community": 0,
       "norm_label": "onsliderinput()"
@@ -873,7 +882,7 @@
       "label": "scheduleRecolor()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2339",
+      "source_location": "L2447",
       "id": "app_schedulerecolor",
       "community": 0,
       "norm_label": "schedulerecolor()"
@@ -882,7 +891,7 @@
       "label": "computeShift()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2351",
+      "source_location": "L2459",
       "id": "app_computeshift",
       "community": 0,
       "norm_label": "computeshift()"
@@ -891,7 +900,7 @@
       "label": "computeColorExpr()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2357",
+      "source_location": "L2465",
       "id": "app_computecolorexpr",
       "community": 0,
       "norm_label": "computecolorexpr()"
@@ -900,7 +909,7 @@
       "label": "updateCounters()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2378",
+      "source_location": "L2486",
       "id": "app_updatecounters",
       "community": 0,
       "norm_label": "updatecounters()"
@@ -909,7 +918,7 @@
       "label": "baselineMeanRisk()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2399",
+      "source_location": "L2507",
       "id": "app_baselinemeanrisk",
       "community": 0,
       "norm_label": "baselinemeanrisk()"
@@ -918,7 +927,7 @@
       "label": "syncMode()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2407",
+      "source_location": "L2515",
       "id": "app_syncmode",
       "community": 0,
       "norm_label": "syncmode()"
@@ -927,7 +936,7 @@
       "label": "bindReset()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2423",
+      "source_location": "L2531",
       "id": "app_bindreset",
       "community": 0,
       "norm_label": "bindreset()"
@@ -936,7 +945,7 @@
       "label": "renderMethodology()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2443",
+      "source_location": "L2551",
       "id": "app_rendermethodology",
       "community": 0,
       "norm_label": "rendermethodology()"
@@ -945,7 +954,7 @@
       "label": "renderTopFeats()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2479",
+      "source_location": "L2587",
       "id": "app_rendertopfeats",
       "community": 0,
       "norm_label": "rendertopfeats()"
@@ -954,7 +963,7 @@
       "label": "renderAblation()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2506",
+      "source_location": "L2614",
       "id": "app_renderablation",
       "community": 0,
       "norm_label": "renderablation()"
@@ -963,7 +972,7 @@
       "label": "renderRegime()",
       "file_type": "code",
       "source_file": "web/app.js",
-      "source_location": "L2564",
+      "source_location": "L2672",
       "id": "app_renderregime",
       "community": 0,
       "norm_label": "renderregime()"
@@ -974,7 +983,7 @@
       "source_file": "etl/microlender/pull_sba_micro.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_etl_microlender_pull_sba_micro_py",
-      "community": 38,
+      "community": 39,
       "norm_label": "pull_sba_micro.py"
     },
     {
@@ -983,7 +992,7 @@
       "source_file": "etl/microlender/pull_sba_micro.py",
       "source_location": "L35",
       "id": "pull_sba_micro_parse_page",
-      "community": 38,
+      "community": 39,
       "norm_label": "parse_page()"
     },
     {
@@ -992,7 +1001,7 @@
       "source_file": "etl/microlender/pull_sba_micro.py",
       "source_location": "L61",
       "id": "pull_sba_micro_main",
-      "community": 38,
+      "community": 39,
       "norm_label": "main()"
     },
     {
@@ -1001,7 +1010,7 @@
       "source_file": "etl/lender_class/build_rssd_cra_crosswalk.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_etl_lender_class_build_rssd_cra_crosswalk_py",
-      "community": 39,
+      "community": 40,
       "norm_label": "build_rssd_cra_crosswalk.py"
     },
     {
@@ -1010,7 +1019,7 @@
       "source_file": "etl/lender_class/build_rssd_cra_crosswalk.py",
       "source_location": "L59",
       "id": "build_rssd_cra_crosswalk_normalize_name",
-      "community": 39,
+      "community": 40,
       "norm_label": "normalize_name()"
     },
     {
@@ -1019,7 +1028,7 @@
       "source_file": "etl/lender_class/build_rssd_cra_crosswalk.py",
       "source_location": "L66",
       "id": "build_rssd_cra_crosswalk_main",
-      "community": 39,
+      "community": 40,
       "norm_label": "main()"
     },
     {
@@ -1091,7 +1100,7 @@
       "source_file": "etl/lender_class/classify_lenders.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_etl_lender_class_classify_lenders_py",
-      "community": 40,
+      "community": 41,
       "norm_label": "classify_lenders.py"
     },
     {
@@ -1100,7 +1109,7 @@
       "source_file": "etl/lender_class/classify_lenders.py",
       "source_location": "L51",
       "id": "classify_lenders_load_optional_csv",
-      "community": 40,
+      "community": 41,
       "norm_label": "load_optional_csv()"
     },
     {
@@ -1109,7 +1118,7 @@
       "source_file": "etl/lender_class/classify_lenders.py",
       "source_location": "L58",
       "id": "classify_lenders_main",
-      "community": 40,
+      "community": 41,
       "norm_label": "main()"
     },
     {
@@ -1118,7 +1127,7 @@
       "source_file": "etl/mdi/pull_mdi_list.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_etl_mdi_pull_mdi_list_py",
-      "community": 27,
+      "community": 28,
       "norm_label": "pull_mdi_list.py"
     },
     {
@@ -1127,7 +1136,7 @@
       "source_file": "etl/mdi/pull_mdi_list.py",
       "source_location": "L41",
       "id": "pull_mdi_list_load_raw",
-      "community": 27,
+      "community": 28,
       "norm_label": "load_raw()"
     },
     {
@@ -1136,7 +1145,7 @@
       "source_file": "etl/mdi/pull_mdi_list.py",
       "source_location": "L55",
       "id": "pull_mdi_list_normalize",
-      "community": 27,
+      "community": 28,
       "norm_label": "normalize()"
     },
     {
@@ -1145,7 +1154,7 @@
       "source_file": "etl/mdi/pull_mdi_list.py",
       "source_location": "L83",
       "id": "pull_mdi_list_main",
-      "community": 27,
+      "community": 28,
       "norm_label": "main()"
     },
     {
@@ -1253,7 +1262,7 @@
       "source_file": "etl/cdfi/pull_cdfi_list.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_etl_cdfi_pull_cdfi_list_py",
-      "community": 28,
+      "community": 29,
       "norm_label": "pull_cdfi_list.py"
     },
     {
@@ -1262,7 +1271,7 @@
       "source_file": "etl/cdfi/pull_cdfi_list.py",
       "source_location": "L42",
       "id": "pull_cdfi_list_load_raw",
-      "community": 28,
+      "community": 29,
       "norm_label": "load_raw()"
     },
     {
@@ -1271,7 +1280,7 @@
       "source_file": "etl/cdfi/pull_cdfi_list.py",
       "source_location": "L53",
       "id": "pull_cdfi_list_normalize",
-      "community": 28,
+      "community": 29,
       "norm_label": "normalize()"
     },
     {
@@ -1280,7 +1289,7 @@
       "source_file": "etl/cdfi/pull_cdfi_list.py",
       "source_location": "L79",
       "id": "pull_cdfi_list_main",
-      "community": 28,
+      "community": 29,
       "norm_label": "main()"
     },
     {
@@ -1460,7 +1469,7 @@
       "source_file": "features/build_round7_panel.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_round7_panel_py",
-      "community": 41,
+      "community": 42,
       "norm_label": "build_round7_panel.py"
     },
     {
@@ -1469,7 +1478,7 @@
       "source_file": "features/build_round7_panel.py",
       "source_location": "L77",
       "id": "build_round7_panel_load_csv",
-      "community": 41,
+      "community": 42,
       "norm_label": "load_csv()"
     },
     {
@@ -1478,7 +1487,7 @@
       "source_file": "features/build_round7_panel.py",
       "source_location": "L84",
       "id": "build_round7_panel_main",
-      "community": 41,
+      "community": 42,
       "norm_label": "main()"
     },
     {
@@ -1487,7 +1496,7 @@
       "source_file": "features/build_cra_lender_mix.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_cra_lender_mix_py",
-      "community": 50,
+      "community": 51,
       "norm_label": "build_cra_lender_mix.py"
     },
     {
@@ -1496,7 +1505,7 @@
       "source_file": "features/build_cra_lender_mix.py",
       "source_location": "L37",
       "id": "build_cra_lender_mix_main",
-      "community": 50,
+      "community": 51,
       "norm_label": "main()"
     },
     {
@@ -1505,7 +1514,7 @@
       "source_file": "features/build_concentration.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_concentration_py",
-      "community": 51,
+      "community": 52,
       "norm_label": "build_concentration.py"
     },
     {
@@ -1514,7 +1523,7 @@
       "source_file": "features/build_concentration.py",
       "source_location": "L47",
       "id": "build_concentration_main",
-      "community": 51,
+      "community": 52,
       "norm_label": "main()"
     },
     {
@@ -1523,7 +1532,7 @@
       "source_file": "features/build_mission_proximity.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_mission_proximity_py",
-      "community": 29,
+      "community": 30,
       "norm_label": "build_mission_proximity.py"
     },
     {
@@ -1532,7 +1541,7 @@
       "source_file": "features/build_mission_proximity.py",
       "source_location": "L50",
       "id": "build_mission_proximity_to_radians",
-      "community": 29,
+      "community": 30,
       "norm_label": "to_radians()"
     },
     {
@@ -1541,7 +1550,7 @@
       "source_file": "features/build_mission_proximity.py",
       "source_location": "L54",
       "id": "build_mission_proximity_count_within",
-      "community": 29,
+      "community": 30,
       "norm_label": "count_within()"
     },
     {
@@ -1550,7 +1559,7 @@
       "source_file": "features/build_mission_proximity.py",
       "source_location": "L61",
       "id": "build_mission_proximity_main",
-      "community": 29,
+      "community": 30,
       "norm_label": "main()"
     },
     {
@@ -1703,7 +1712,7 @@
       "source_file": "features/build_nmtc_features.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_nmtc_features_py",
-      "community": 52,
+      "community": 53,
       "norm_label": "build_nmtc_features.py"
     },
     {
@@ -1712,7 +1721,7 @@
       "source_file": "features/build_nmtc_features.py",
       "source_location": "L55",
       "id": "build_nmtc_features_main",
-      "community": 52,
+      "community": 53,
       "norm_label": "main()"
     },
     {
@@ -1721,7 +1730,7 @@
       "source_file": "features/build_concentration_residualized.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_features_build_concentration_residualized_py",
-      "community": 30,
+      "community": 31,
       "norm_label": "build_concentration_residualized.py"
     },
     {
@@ -1730,7 +1739,7 @@
       "source_file": "features/build_concentration_residualized.py",
       "source_location": "L53",
       "id": "build_concentration_residualized_residualize_cohort",
-      "community": 30,
+      "community": 31,
       "norm_label": "residualize_cohort()"
     },
     {
@@ -1739,7 +1748,7 @@
       "source_file": "features/build_concentration_residualized.py",
       "source_location": "L82",
       "id": "build_concentration_residualized_main",
-      "community": 30,
+      "community": 31,
       "norm_label": "main()"
     },
     {
@@ -1747,7 +1756,7 @@
       "file_type": "rationale",
       "source_file": "features/build_concentration_residualized.py",
       "source_location": "L54",
-      "community": 30,
+      "community": 31,
       "norm_label": "within a (year, peer_group) cohort, regress each target column on     [log(n_cra",
       "id": "build_concentration_residualized_rationale_54"
     },
@@ -1757,7 +1766,7 @@
       "source_file": "train/_horizon_config.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_horizon_config_py",
-      "community": 21,
+      "community": 22,
       "norm_label": "_horizon_config.py"
     },
     {
@@ -1766,7 +1775,7 @@
       "source_file": "train/_horizon_config.py",
       "source_location": "L22",
       "id": "horizon_config_build_folds",
-      "community": 21,
+      "community": 22,
       "norm_label": "build_folds()"
     },
     {
@@ -1775,7 +1784,7 @@
       "source_file": "train/_horizon_config.py",
       "source_location": "L60",
       "id": "horizon_config_precovid_postcovid_splits",
-      "community": 21,
+      "community": 22,
       "norm_label": "precovid_postcovid_splits()"
     },
     {
@@ -1783,7 +1792,7 @@
       "file_type": "rationale",
       "source_file": "train/_horizon_config.py",
       "source_location": "L1",
-      "community": 21,
+      "community": 22,
       "norm_label": "shared horizon + fold config for all round7 training scripts.  round7_horizon en",
       "id": "horizon_config_rationale_1"
     },
@@ -1792,7 +1801,7 @@
       "file_type": "rationale",
       "source_file": "train/_horizon_config.py",
       "source_location": "L61",
-      "community": 21,
+      "community": 22,
       "norm_label": "for regime_split.py. returns ((train_yrs, val_yr, test_yrs), ...)     pre-covid",
       "id": "horizon_config_rationale_61"
     },
@@ -1802,7 +1811,7 @@
       "source_file": "train/walk_forward_overlay.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_walk_forward_overlay_py",
-      "community": 42,
+      "community": 43,
       "norm_label": "walk_forward_overlay.py"
     },
     {
@@ -1811,7 +1820,7 @@
       "source_file": "train/walk_forward_overlay.py",
       "source_location": "L47",
       "id": "walk_forward_overlay_evaluate",
-      "community": 42,
+      "community": 43,
       "norm_label": "evaluate()"
     },
     {
@@ -1820,7 +1829,7 @@
       "source_file": "train/walk_forward_overlay.py",
       "source_location": "L57",
       "id": "walk_forward_overlay_main",
-      "community": 42,
+      "community": 43,
       "norm_label": "main()"
     },
     {
@@ -1829,7 +1838,7 @@
       "source_file": "train/diagnostics_round7.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_diagnostics_round7_py",
-      "community": 22,
+      "community": 23,
       "norm_label": "diagnostics_round7.py"
     },
     {
@@ -1838,7 +1847,7 @@
       "source_file": "train/diagnostics_round7.py",
       "source_location": "L58",
       "id": "diagnostics_round7_per_fold_stability",
-      "community": 22,
+      "community": 23,
       "norm_label": "per_fold_stability()"
     },
     {
@@ -1847,7 +1856,7 @@
       "source_file": "train/diagnostics_round7.py",
       "source_location": "L77",
       "id": "diagnostics_round7_per_state_ap",
-      "community": 22,
+      "community": 23,
       "norm_label": "per_state_ap()"
     },
     {
@@ -1856,7 +1865,7 @@
       "source_file": "train/diagnostics_round7.py",
       "source_location": "L100",
       "id": "diagnostics_round7_directional_sanity",
-      "community": 22,
+      "community": 23,
       "norm_label": "directional_sanity()"
     },
     {
@@ -1865,7 +1874,7 @@
       "source_file": "train/diagnostics_round7.py",
       "source_location": "L135",
       "id": "diagnostics_round7_main",
-      "community": 22,
+      "community": 23,
       "norm_label": "main()"
     },
     {
@@ -1874,7 +1883,7 @@
       "source_file": "train/walk_forward_round7.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_walk_forward_round7_py",
-      "community": 43,
+      "community": 44,
       "norm_label": "walk_forward_round7.py"
     },
     {
@@ -1883,7 +1892,7 @@
       "source_file": "train/walk_forward_round7.py",
       "source_location": "L87",
       "id": "walk_forward_round7_evaluate",
-      "community": 43,
+      "community": 44,
       "norm_label": "evaluate()"
     },
     {
@@ -1892,7 +1901,7 @@
       "source_file": "train/walk_forward_round7.py",
       "source_location": "L103",
       "id": "walk_forward_round7_main",
-      "community": 43,
+      "community": 44,
       "norm_label": "main()"
     },
     {
@@ -2036,7 +2045,7 @@
       "source_file": "train/ablation_per_lever.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_ablation_per_lever_py",
-      "community": 23,
+      "community": 24,
       "norm_label": "ablation_per_lever.py"
     },
     {
@@ -2045,7 +2054,7 @@
       "source_file": "train/ablation_per_lever.py",
       "source_location": "L111",
       "id": "ablation_per_lever_evaluate",
-      "community": 23,
+      "community": 24,
       "norm_label": "evaluate()"
     },
     {
@@ -2054,7 +2063,7 @@
       "source_file": "train/ablation_per_lever.py",
       "source_location": "L127",
       "id": "ablation_per_lever_run_walk_forward",
-      "community": 23,
+      "community": 24,
       "norm_label": "run_walk_forward()"
     },
     {
@@ -2063,7 +2072,7 @@
       "source_file": "train/ablation_per_lever.py",
       "source_location": "L186",
       "id": "ablation_per_lever_main",
-      "community": 23,
+      "community": 24,
       "norm_label": "main()"
     },
     {
@@ -2071,7 +2080,7 @@
       "file_type": "rationale",
       "source_file": "train/ablation_per_lever.py",
       "source_location": "L128",
-      "community": 23,
+      "community": 24,
       "norm_label": "run all 8 folds with the given feature set; return per-fold metric dicts.",
       "id": "ablation_per_lever_rationale_128"
     },
@@ -2081,7 +2090,7 @@
       "source_file": "train/walk_forward_boltOn.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_train_walk_forward_bolton_py",
-      "community": 31,
+      "community": 32,
       "norm_label": "walk_forward_bolton.py"
     },
     {
@@ -2090,7 +2099,7 @@
       "source_file": "train/walk_forward_boltOn.py",
       "source_location": "L115",
       "id": "walk_forward_bolton_evaluate",
-      "community": 31,
+      "community": 32,
       "norm_label": "evaluate()"
     },
     {
@@ -2099,7 +2108,7 @@
       "source_file": "train/walk_forward_boltOn.py",
       "source_location": "L125",
       "id": "walk_forward_bolton_prepare",
-      "community": 31,
+      "community": 32,
       "norm_label": "prepare()"
     },
     {
@@ -2108,7 +2117,7 @@
       "source_file": "train/walk_forward_boltOn.py",
       "source_location": "L141",
       "id": "walk_forward_bolton_main",
-      "community": 31,
+      "community": 32,
       "norm_label": "main()"
     },
     {
@@ -2180,7 +2189,7 @@
       "source_file": "round5-diagnostic/web/build_dashboard_data.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_web_build_dashboard_data_py",
-      "community": 53,
+      "community": 54,
       "norm_label": "build_dashboard_data.py"
     },
     {
@@ -2189,7 +2198,7 @@
       "source_file": "round5-diagnostic/web/build_dashboard_data.py",
       "source_location": "L278",
       "id": "build_dashboard_data_bbox_from_feature",
-      "community": 53,
+      "community": 54,
       "norm_label": "bbox_from_feature()"
     },
     {
@@ -2612,7 +2621,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_branches.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_web_scripts_build_branches_py",
-      "community": 44,
+      "community": 45,
       "norm_label": "build_branches.py"
     },
     {
@@ -2621,7 +2630,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_branches.py",
       "source_location": "L28",
       "id": "build_branches_parse_money",
-      "community": 44,
+      "community": 45,
       "norm_label": "parse_money()"
     },
     {
@@ -2630,7 +2639,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_branches.py",
       "source_location": "L40",
       "id": "build_branches_main",
-      "community": 44,
+      "community": 45,
       "norm_label": "main()"
     },
     {
@@ -2639,7 +2648,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_peers.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_web_scripts_build_peers_py",
-      "community": 45,
+      "community": 46,
       "norm_label": "build_peers.py"
     },
     {
@@ -2648,7 +2657,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_peers.py",
       "source_location": "L38",
       "id": "build_peers_load_demographics",
-      "community": 45,
+      "community": 46,
       "norm_label": "load_demographics()"
     },
     {
@@ -2657,7 +2666,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_peers.py",
       "source_location": "L52",
       "id": "build_peers_main",
-      "community": 45,
+      "community": 46,
       "norm_label": "main()"
     },
     {
@@ -2666,7 +2675,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_sba_tract.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_web_scripts_build_sba_tract_py",
-      "community": 32,
+      "community": 33,
       "norm_label": "build_sba_tract.py"
     },
     {
@@ -2675,7 +2684,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_sba_tract.py",
       "source_location": "L41",
       "id": "build_sba_tract_load_zcta_tract_weights",
-      "community": 32,
+      "community": 33,
       "norm_label": "load_zcta_tract_weights()"
     },
     {
@@ -2684,7 +2693,7 @@
       "source_file": "round5-diagnostic/web/scripts/build_sba_tract.py",
       "source_location": "L67",
       "id": "build_sba_tract_main",
-      "community": 32,
+      "community": 33,
       "norm_label": "main()"
     },
     {
@@ -2692,7 +2701,7 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/web/scripts/build_sba_tract.py",
       "source_location": "L42",
-      "community": 32,
+      "community": 33,
       "norm_label": "return a dataframe [zcta, tract_fips, weight] where weight is the     share of t",
       "id": "build_sba_tract_rationale_42"
     },
@@ -2846,7 +2855,7 @@
       "source_file": "round5-diagnostic/etl/fred/pull_macro.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_fred_pull_macro_py",
-      "community": 54,
+      "community": 55,
       "norm_label": "pull_macro.py"
     },
     {
@@ -2855,7 +2864,7 @@
       "source_file": "round5-diagnostic/etl/fred/pull_macro.py",
       "source_location": "L45",
       "id": "pull_macro_main",
-      "community": 54,
+      "community": 55,
       "norm_label": "main()"
     },
     {
@@ -2864,7 +2873,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_acs_pull_acs_py",
-      "community": 46,
+      "community": 47,
       "norm_label": "pull_acs.py"
     },
     {
@@ -2873,7 +2882,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs.py",
       "source_location": "L72",
       "id": "pull_acs_fetch_state_year",
-      "community": 46,
+      "community": 47,
       "norm_label": "fetch_state_year()"
     },
     {
@@ -2882,7 +2891,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs.py",
       "source_location": "L91",
       "id": "pull_acs_main",
-      "community": 46,
+      "community": 47,
       "norm_label": "main()"
     },
     {
@@ -2891,7 +2900,7 @@
       "source_file": "round5-diagnostic/etl/acs/pivot_acs.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_acs_pivot_acs_py",
-      "community": 33,
+      "community": 34,
       "norm_label": "pivot_acs.py"
     },
     {
@@ -2900,7 +2909,7 @@
       "source_file": "round5-diagnostic/etl/acs/pivot_acs.py",
       "source_location": "L45",
       "id": "pivot_acs_to_num",
-      "community": 33,
+      "community": 34,
       "norm_label": "to_num()"
     },
     {
@@ -2909,7 +2918,7 @@
       "source_file": "round5-diagnostic/etl/acs/pivot_acs.py",
       "source_location": "L56",
       "id": "pivot_acs_main",
-      "community": 33,
+      "community": 34,
       "norm_label": "main()"
     },
     {
@@ -2917,7 +2926,7 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/acs/pivot_acs.py",
       "source_location": "L46",
-      "community": 33,
+      "community": 34,
       "norm_label": "acs uses -666666666 etc. as null sentinels; convert to ''.",
       "id": "pivot_acs_rationale_46"
     },
@@ -2927,7 +2936,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs_early.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_acs_pull_acs_early_py",
-      "community": 0,
+      "community": 21,
       "norm_label": "pull_acs_early.py"
     },
     {
@@ -2936,7 +2945,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs_early.py",
       "source_location": "L49",
       "id": "pull_acs_early_fetch",
-      "community": 0,
+      "community": 21,
       "norm_label": "fetch()"
     },
     {
@@ -2945,7 +2954,7 @@
       "source_file": "round5-diagnostic/etl/acs/pull_acs_early.py",
       "source_location": "L66",
       "id": "pull_acs_early_main",
-      "community": 0,
+      "community": 21,
       "norm_label": "main()"
     },
     {
@@ -2954,7 +2963,7 @@
       "source_file": "round5-diagnostic/etl/sba/parse_sba.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_sba_parse_sba_py",
-      "community": 34,
+      "community": 35,
       "norm_label": "parse_sba.py"
     },
     {
@@ -2963,7 +2972,7 @@
       "source_file": "round5-diagnostic/etl/sba/parse_sba.py",
       "source_location": "L30",
       "id": "parse_sba_parse_year",
-      "community": 34,
+      "community": 35,
       "norm_label": "parse_year()"
     },
     {
@@ -2972,7 +2981,7 @@
       "source_file": "round5-diagnostic/etl/sba/parse_sba.py",
       "source_location": "L50",
       "id": "parse_sba_main",
-      "community": 34,
+      "community": 35,
       "norm_label": "main()"
     },
     {
@@ -2980,7 +2989,7 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/sba/parse_sba.py",
       "source_location": "L31",
-      "community": 34,
+      "community": 35,
       "norm_label": "sba dates are usually yyyy-mm-dd or mm/dd/yyyy.",
       "id": "parse_sba_rationale_31"
     },
@@ -3107,7 +3116,7 @@
       "source_file": "round5-diagnostic/etl/fdic/parse_sod.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_fdic_parse_sod_py",
-      "community": 55,
+      "community": 56,
       "norm_label": "parse_sod.py"
     },
     {
@@ -3116,7 +3125,7 @@
       "source_file": "round5-diagnostic/etl/fdic/parse_sod.py",
       "source_location": "L22",
       "id": "parse_sod_main",
-      "community": 55,
+      "community": 56,
       "norm_label": "main()"
     },
     {
@@ -3125,7 +3134,7 @@
       "source_file": "round5-diagnostic/etl/fdic/pull_sod.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_etl_fdic_pull_sod_py",
-      "community": 35,
+      "community": 36,
       "norm_label": "pull_sod.py"
     },
     {
@@ -3134,7 +3143,7 @@
       "source_file": "round5-diagnostic/etl/fdic/pull_sod.py",
       "source_location": "L37",
       "id": "pull_sod_fetch_year",
-      "community": 35,
+      "community": 36,
       "norm_label": "fetch_year()"
     },
     {
@@ -3143,7 +3152,7 @@
       "source_file": "round5-diagnostic/etl/fdic/pull_sod.py",
       "source_location": "L92",
       "id": "pull_sod_main",
-      "community": 35,
+      "community": 36,
       "norm_label": "main()"
     },
     {
@@ -3151,7 +3160,7 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/etl/fdic/pull_sod.py",
       "source_location": "L38",
-      "community": 35,
+      "community": 36,
       "norm_label": "pull all sod records for a single year and write a single csv. returns row count",
       "id": "pull_sod_rationale_38"
     },
@@ -3494,7 +3503,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_lgbm_optuna.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_walk_forward_lgbm_optuna_py",
-      "community": 24,
+      "community": 25,
       "norm_label": "walk_forward_lgbm_optuna.py"
     },
     {
@@ -3503,7 +3512,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_lgbm_optuna.py",
       "source_location": "L86",
       "id": "walk_forward_lgbm_optuna_prepare",
-      "community": 24,
+      "community": 25,
       "norm_label": "prepare()"
     },
     {
@@ -3512,7 +3521,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_lgbm_optuna.py",
       "source_location": "L102",
       "id": "walk_forward_lgbm_optuna_evaluate",
-      "community": 24,
+      "community": 25,
       "norm_label": "evaluate()"
     },
     {
@@ -3521,7 +3530,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_lgbm_optuna.py",
       "source_location": "L122",
       "id": "walk_forward_lgbm_optuna_make_objective",
-      "community": 24,
+      "community": 25,
       "norm_label": "make_objective()"
     },
     {
@@ -3530,7 +3539,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_lgbm_optuna.py",
       "source_location": "L156",
       "id": "walk_forward_lgbm_optuna_main",
-      "community": 24,
+      "community": 25,
       "norm_label": "main()"
     },
     {
@@ -3539,7 +3548,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_audit_fixed.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_walk_forward_audit_fixed_py",
-      "community": 25,
+      "community": 26,
       "norm_label": "walk_forward_audit_fixed.py"
     },
     {
@@ -3548,7 +3557,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_audit_fixed.py",
       "source_location": "L57",
       "id": "walk_forward_audit_fixed_build_folds",
-      "community": 25,
+      "community": 26,
       "norm_label": "_build_folds()"
     },
     {
@@ -3557,7 +3566,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_audit_fixed.py",
       "source_location": "L145",
       "id": "walk_forward_audit_fixed_prepare",
-      "community": 25,
+      "community": 26,
       "norm_label": "prepare()"
     },
     {
@@ -3566,7 +3575,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_audit_fixed.py",
       "source_location": "L161",
       "id": "walk_forward_audit_fixed_evaluate",
-      "community": 25,
+      "community": 26,
       "norm_label": "evaluate()"
     },
     {
@@ -3575,7 +3584,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_audit_fixed.py",
       "source_location": "L177",
       "id": "walk_forward_audit_fixed_main",
-      "community": 25,
+      "community": 26,
       "norm_label": "main()"
     },
     {
@@ -3719,7 +3728,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_clean.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_walk_forward_clean_py",
-      "community": 36,
+      "community": 37,
       "norm_label": "walk_forward_clean.py"
     },
     {
@@ -3728,7 +3737,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_clean.py",
       "source_location": "L106",
       "id": "walk_forward_clean_prepare_features",
-      "community": 36,
+      "community": 37,
       "norm_label": "prepare_features()"
     },
     {
@@ -3737,7 +3746,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_clean.py",
       "source_location": "L122",
       "id": "walk_forward_clean_evaluate",
-      "community": 36,
+      "community": 37,
       "norm_label": "evaluate()"
     },
     {
@@ -3746,7 +3755,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_clean.py",
       "source_location": "L137",
       "id": "walk_forward_clean_main",
-      "community": 36,
+      "community": 37,
       "norm_label": "main()"
     },
     {
@@ -3755,7 +3764,7 @@
       "source_file": "round5-diagnostic/train/feature_importance.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_feature_importance_py",
-      "community": 47,
+      "community": 48,
       "norm_label": "feature_importance.py"
     },
     {
@@ -3764,7 +3773,7 @@
       "source_file": "round5-diagnostic/train/feature_importance.py",
       "source_location": "L81",
       "id": "feature_importance_prepare",
-      "community": 47,
+      "community": 48,
       "norm_label": "prepare()"
     },
     {
@@ -3773,7 +3782,7 @@
       "source_file": "round5-diagnostic/train/feature_importance.py",
       "source_location": "L97",
       "id": "feature_importance_main",
-      "community": 47,
+      "community": 48,
       "norm_label": "main()"
     },
     {
@@ -3782,7 +3791,7 @@
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_walk_forward_py",
-      "community": 26,
+      "community": 27,
       "norm_label": "walk_forward.py"
     },
     {
@@ -3791,7 +3800,7 @@
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L68",
       "id": "walk_forward_prepare_features",
-      "community": 26,
+      "community": 27,
       "norm_label": "prepare_features()"
     },
     {
@@ -3800,7 +3809,7 @@
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L87",
       "id": "walk_forward_evaluate",
-      "community": 26,
+      "community": 27,
       "norm_label": "evaluate()"
     },
     {
@@ -3809,7 +3818,7 @@
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L104",
       "id": "walk_forward_main",
-      "community": 26,
+      "community": 27,
       "norm_label": "main()"
     },
     {
@@ -3817,7 +3826,7 @@
       "file_type": "rationale",
       "source_file": "round5-diagnostic/train/walk_forward.py",
       "source_location": "L69",
-      "community": 26,
+      "community": 27,
       "norm_label": "coerce numeric, fill hmda nan for pre-2018 with 0 (since has_hmda tracks it).",
       "id": "walk_forward_rationale_69"
     },
@@ -3827,7 +3836,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_h3.py",
       "source_location": "L1",
       "id": "users_andrew_projects_bus410_sba_final_410db_round5_diagnostic_train_walk_forward_h3_py",
-      "community": 37,
+      "community": 38,
       "norm_label": "walk_forward_h3.py"
     },
     {
@@ -3836,7 +3845,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_h3.py",
       "source_location": "L94",
       "id": "walk_forward_h3_prepare",
-      "community": 37,
+      "community": 38,
       "norm_label": "prepare()"
     },
     {
@@ -3845,7 +3854,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_h3.py",
       "source_location": "L110",
       "id": "walk_forward_h3_evaluate",
-      "community": 37,
+      "community": 38,
       "norm_label": "evaluate()"
     },
     {
@@ -3854,7 +3863,7 @@
       "source_file": "round5-diagnostic/train/walk_forward_h3.py",
       "source_location": "L126",
       "id": "walk_forward_h3_main",
-      "community": 37,
+      "community": 38,
       "norm_label": "main()"
     },
     {
@@ -3862,7 +3871,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L101",
-      "community": 57,
+      "community": 58,
       "norm_label": "per tract, take the most-recent (year, fold) calibrated probability.",
       "id": "build_dashboard_data_rationale_101"
     },
@@ -3871,7 +3880,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L123",
-      "community": 58,
+      "community": 59,
       "norm_label": "mean across folds \u2014 the canonical auc/ap for this project.",
       "id": "build_dashboard_data_rationale_123"
     },
@@ -3880,7 +3889,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L176",
-      "community": 59,
+      "community": 60,
       "norm_label": "build city search index from census gazetteer + decennial place-pop api.     fal",
       "id": "build_dashboard_data_rationale_176"
     },
@@ -3889,7 +3898,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L98",
-      "community": 60,
+      "community": 61,
       "norm_label": "per tract, take the most-recent (year, fold) calibrated probability.",
       "id": "build_dashboard_data_rationale_98"
     },
@@ -3898,7 +3907,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L120",
-      "community": 61,
+      "community": 62,
       "norm_label": "mean across folds \u2014 the canonical auc/ap for this project.",
       "id": "build_dashboard_data_rationale_120"
     },
@@ -3907,7 +3916,7 @@
       "file_type": "rationale",
       "source_file": "web/build_dashboard_data.py",
       "source_location": "L173",
-      "community": 62,
+      "community": 63,
       "norm_label": "build city search index from census gazetteer + decennial place-pop api.     fal",
       "id": "build_dashboard_data_rationale_173"
     },
@@ -3920,7 +3929,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 64,
       "norm_label": "tract_lender_year.csv (cra apportioned)",
       "id": "tract_lender_year_csv"
     },
@@ -3933,7 +3942,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 64,
+      "community": 65,
       "norm_label": "lender_class.csv (lender flags)",
       "id": "lender_class_csv"
     },
@@ -3946,7 +3955,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 66,
       "norm_label": "cra_to_rssd.csv (rssd-cra crosswalk)",
       "id": "cra_to_rssd_csv"
     },
@@ -3959,7 +3968,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 67,
       "norm_label": "mdi_list.csv (mdi roster)",
       "id": "mdi_list_csv"
     },
@@ -3972,7 +3981,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 68,
       "norm_label": "cdfi_list.csv (cdfi certified list)",
       "id": "cdfi_list_csv"
     },
@@ -3985,7 +3994,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 68,
+      "community": 69,
       "norm_label": "microlender_list.csv (sba microlender list)",
       "id": "microlender_list_csv"
     },
@@ -3998,7 +4007,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 69,
+      "community": 70,
       "norm_label": "fdic institutions csv (rssd/cert)",
       "id": "fdic_institutions_csv"
     },
@@ -4011,7 +4020,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 70,
+      "community": 71,
       "norm_label": "assets_by_year.csv (fdic call report)",
       "id": "assets_by_year_csv"
     },
@@ -4024,7 +4033,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 71,
+      "community": 72,
       "norm_label": "cdfi_geocoded.csv (cdfi with lat/lon)",
       "id": "cdfi_geocoded_csv"
     },
@@ -4037,7 +4046,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 72,
+      "community": 73,
       "norm_label": "microlender_geocoded.csv (microlenders with lat/lon)",
       "id": "microlender_geocoded_csv"
     },
@@ -4050,7 +4059,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 73,
+      "community": 74,
       "norm_label": "tract_centroids_2020.csv (census tiger)",
       "id": "tract_centroids_csv"
     },
@@ -4063,7 +4072,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 75,
       "norm_label": "state_year_ssbci.csv (ssbci overlay)",
       "id": "state_year_ssbci_csv"
     },
@@ -4076,7 +4085,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 75,
+      "community": 76,
       "norm_label": "tract_year_mission_proximity.csv",
       "id": "tract_year_mission_proximity_csv"
     },
@@ -4089,7 +4098,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 76,
+      "community": 77,
       "norm_label": "tract_year_with_target_round7.parquet (training panel)",
       "id": "round7_panel_parquet"
     },
@@ -4102,7 +4111,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 56,
+      "community": 57,
       "norm_label": "tracts.geojson (dashboard map data)",
       "id": "tracts_geojson"
     },
@@ -4115,7 +4124,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 77,
+      "community": 78,
       "norm_label": "test_predictions.parquet (walk-forward predictions)",
       "id": "test_predictions_parquet"
     },
@@ -4128,7 +4137,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 78,
+      "community": 79,
       "norm_label": "fdic bankfind api (external)",
       "id": "fdic_api_source"
     },
@@ -4141,7 +4150,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 79,
+      "community": 80,
       "norm_label": "census geocoder api (external)",
       "id": "census_geocoder_api"
     },
@@ -4154,7 +4163,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 80,
+      "community": 81,
       "norm_label": "nominatim (openstreetmap) geocoder",
       "id": "nominatim_api"
     },
@@ -4167,7 +4176,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 81,
+      "community": 82,
       "norm_label": "ffiec cra disclosure flat files (d1/d6)",
       "id": "ffiec_cra_flat_files"
     },
@@ -4180,7 +4189,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 82,
+      "community": 83,
       "norm_label": "fdic summary of deposits (sod)",
       "id": "fdic_sod_data"
     },
@@ -4193,7 +4202,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 83,
+      "community": 84,
       "norm_label": "target: becomes service desert (h+3/h+6)",
       "id": "target_credit_desert"
     },
@@ -4245,7 +4254,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 56,
+      "community": 57,
       "norm_label": "410db readme \u2014 round 7 two-layer credit-desert risk project",
       "id": "410db_readme_doc"
     },
@@ -4258,7 +4267,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 84,
+      "community": 85,
       "norm_label": "web/readme.md \u2014 dashboard build and data documentation",
       "id": "web_readme_doc"
     },
@@ -4284,7 +4293,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 85,
+      "community": 86,
       "norm_label": "00_design_brief.md \u2014 round 7 design brief and feature tiers",
       "id": "design_brief_doc"
     },
@@ -4297,7 +4306,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 86,
+      "community": 87,
       "norm_label": "05_methodology_brief.md \u2014 methodology brief",
       "id": "methodology_brief_doc"
     },
@@ -4323,7 +4332,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 48,
+      "community": 50,
       "norm_label": "03_decision_rule.md \u2014 phase b ap threshold decision rule",
       "id": "decision_rule_doc"
     },
@@ -4544,7 +4553,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 48,
+      "community": 50,
       "norm_label": "phase b decision rule: ap threshold strong \u2265 0.10 (not pr-auc \u2265 0.6)",
       "id": "phase_b_decision_rule"
     },
@@ -4557,7 +4566,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 48,
+      "community": 50,
       "norm_label": "random baseline ap \u2248 1.7% (equals positive rate for rare-event target)",
       "id": "random_baseline_ap"
     },
@@ -4875,7 +4884,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L519",
+      "source_location": "L520",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_riskprop",
@@ -4887,7 +4896,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L520",
+      "source_location": "L521",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rankprop",
@@ -4899,7 +4908,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L521",
+      "source_location": "L522",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_iscountymode",
@@ -4911,7 +4920,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L522",
+      "source_location": "L523",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activegeometa",
@@ -4923,7 +4932,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L523",
+      "source_location": "L524",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activefilllayerid",
@@ -4935,7 +4944,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L524",
+      "source_location": "L525",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activehoverlayerid",
@@ -4947,7 +4956,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L525",
+      "source_location": "L526",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activepinnedlayerid",
@@ -4959,7 +4968,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L526",
+      "source_location": "L527",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_geomeankey",
@@ -4971,7 +4980,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L527",
+      "source_location": "L528",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activestatetoplist",
@@ -4983,7 +4992,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L531",
+      "source_location": "L532",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_settext",
@@ -4995,7 +5004,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L536",
+      "source_location": "L537",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activefeaturecount",
@@ -5007,7 +5016,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L543",
+      "source_location": "L544",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activehistogramstore",
@@ -5019,7 +5028,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L551",
+      "source_location": "L552",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendergeocopy",
@@ -5031,7 +5040,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L576",
+      "source_location": "L577",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ramptoexpr",
@@ -5043,7 +5052,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L587",
+      "source_location": "L588",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_tintopacityexpr",
@@ -5055,7 +5064,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L603",
+      "source_location": "L604",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_boot",
@@ -5067,7 +5076,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L648",
+      "source_location": "L652",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_initguidestrip",
@@ -5079,7 +5088,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L680",
+      "source_location": "L684",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_initspotlight",
@@ -5091,7 +5100,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L830",
+      "source_location": "L834",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_initaccordions",
@@ -5103,7 +5112,19 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L843",
+      "source_location": "L847",
+      "weight": 1.0,
+      "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
+      "_tgt": "app_initfeaturedictionary",
+      "source": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
+      "target": "app_initfeaturedictionary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/app.js",
+      "source_location": "L951",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_fetchoptional",
@@ -5115,7 +5136,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L859",
+      "source_location": "L967",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ensurelayerinteractions",
@@ -5127,7 +5148,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L874",
+      "source_location": "L982",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_initmap",
@@ -5139,7 +5160,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L954",
+      "source_location": "L1062",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ensuretractlayers",
@@ -5151,7 +5172,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1049",
+      "source_location": "L1157",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_syncgeolayers",
@@ -5163,7 +5184,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1074",
+      "source_location": "L1182",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_resethover",
@@ -5175,7 +5196,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1084",
+      "source_location": "L1192",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_bindhoverforlayer",
@@ -5187,7 +5208,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1156",
+      "source_location": "L1264",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_bindclickforlayer",
@@ -5199,7 +5220,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1169",
+      "source_location": "L1277",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ensurecountystats",
@@ -5211,7 +5232,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1179",
+      "source_location": "L1287",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_fetchgzipjson",
@@ -5223,7 +5244,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1188",
+      "source_location": "L1296",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_flytostate",
@@ -5235,7 +5256,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1199",
+      "source_location": "L1307",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_setfocusedstate",
@@ -5247,7 +5268,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1207",
+      "source_location": "L1315",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_bindfocusclose",
@@ -5259,7 +5280,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1222",
+      "source_location": "L1330",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderfocuspanel",
@@ -5271,7 +5292,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1308",
+      "source_location": "L1416",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_pinfeature",
@@ -5283,7 +5304,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1322",
+      "source_location": "L1430",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_unpinfeature",
@@ -5295,7 +5316,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1333",
+      "source_location": "L1441",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_opendrawer",
@@ -5307,7 +5328,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1345",
+      "source_location": "L1453",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_closedrawer",
@@ -5319,7 +5340,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1362",
+      "source_location": "L1470",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_fmtpct",
@@ -5331,7 +5352,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1387",
+      "source_location": "L1495",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_logit",
@@ -5343,7 +5364,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1391",
+      "source_location": "L1499",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_sigmoid",
@@ -5355,7 +5376,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1402",
+      "source_location": "L1510",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_activeleversfornote",
@@ -5367,7 +5388,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1418",
+      "source_location": "L1526",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_totalleverimportance",
@@ -5379,7 +5400,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1427",
+      "source_location": "L1535",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_levergroupimportance",
@@ -5391,7 +5412,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1437",
+      "source_location": "L1545",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_scenariolevereffect",
@@ -5403,7 +5424,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1454",
+      "source_location": "L1562",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_scenariologiteffect",
@@ -5415,7 +5436,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1459",
+      "source_location": "L1567",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_applyscenariotorisk",
@@ -5427,7 +5448,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1464",
+      "source_location": "L1572",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_scenarioriskexpr",
@@ -5439,7 +5460,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1477",
+      "source_location": "L1585",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_scenarioleversummary",
@@ -5451,7 +5472,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1500",
+      "source_location": "L1608",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_levershiftsbyfeature",
@@ -5463,7 +5484,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1514",
+      "source_location": "L1622",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_applyscenariotodrawer",
@@ -5475,7 +5496,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1594",
+      "source_location": "L1702",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_refreshscenariodrawer",
@@ -5487,7 +5508,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1600",
+      "source_location": "L1708",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderdrawer",
@@ -5499,7 +5520,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1687",
+      "source_location": "L1795",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendercountytoptracts",
@@ -5511,7 +5532,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1725",
+      "source_location": "L1833",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_divergencecopy",
@@ -5523,7 +5544,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1758",
+      "source_location": "L1866",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderdivergenceblock",
@@ -5535,7 +5556,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1797",
+      "source_location": "L1905",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ordinal",
@@ -5547,7 +5568,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1804",
+      "source_location": "L1912",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderdrawershap",
@@ -5559,7 +5580,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1899",
+      "source_location": "L2007",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_showfeaturetip",
@@ -5571,7 +5592,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1938",
+      "source_location": "L2046",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_hidefeaturetip",
@@ -5583,7 +5604,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1949",
+      "source_location": "L2057",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_showlevertip",
@@ -5595,7 +5616,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1991",
+      "source_location": "L2099",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_hidelevertip",
@@ -5607,7 +5628,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1997",
+      "source_location": "L2105",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_ensureshap",
@@ -5619,7 +5640,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2017",
+      "source_location": "L2125",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_binddrawerclose",
@@ -5631,7 +5652,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2031",
+      "source_location": "L2139",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_inittoggles",
@@ -5643,7 +5664,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2081",
+      "source_location": "L2189",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_applyactive",
@@ -5655,7 +5676,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2103",
+      "source_location": "L2211",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_synchorizonaffordances",
@@ -5667,7 +5688,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2116",
+      "source_location": "L2224",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderheadline",
@@ -5679,7 +5700,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2143",
+      "source_location": "L2251",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_tweennumber",
@@ -5691,7 +5712,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2169",
+      "source_location": "L2277",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendertopstates",
@@ -5703,7 +5724,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2213",
+      "source_location": "L2321",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderhistogram",
@@ -5715,7 +5736,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2236",
+      "source_location": "L2344",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_abimpactbygroup",
@@ -5727,7 +5748,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2244",
+      "source_location": "L2352",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendersliders",
@@ -5739,7 +5760,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2297",
+      "source_location": "L2405",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_onsliderinput",
@@ -5751,7 +5772,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2339",
+      "source_location": "L2447",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_schedulerecolor",
@@ -5763,7 +5784,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2351",
+      "source_location": "L2459",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_computeshift",
@@ -5775,7 +5796,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2357",
+      "source_location": "L2465",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_computecolorexpr",
@@ -5787,7 +5808,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2378",
+      "source_location": "L2486",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_updatecounters",
@@ -5799,7 +5820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2399",
+      "source_location": "L2507",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_baselinemeanrisk",
@@ -5811,7 +5832,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2407",
+      "source_location": "L2515",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_syncmode",
@@ -5823,7 +5844,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2423",
+      "source_location": "L2531",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_bindreset",
@@ -5835,7 +5856,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2443",
+      "source_location": "L2551",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendermethodology",
@@ -5847,7 +5868,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2479",
+      "source_location": "L2587",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_rendertopfeats",
@@ -5859,7 +5880,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2506",
+      "source_location": "L2614",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderablation",
@@ -5871,7 +5892,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2564",
+      "source_location": "L2672",
       "weight": 1.0,
       "_src": "users_andrew_projects_bus410_sba_final_410db_web_app_js",
       "_tgt": "app_renderregime",
@@ -5883,7 +5904,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L578",
+      "source_location": "L579",
       "weight": 1.0,
       "_src": "app_ramptoexpr",
       "_tgt": "app_riskprop",
@@ -5895,7 +5916,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L972",
+      "source_location": "L1080",
       "weight": 1.0,
       "_src": "app_ensuretractlayers",
       "_tgt": "app_riskprop",
@@ -5907,7 +5928,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2088",
+      "source_location": "L2196",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_riskprop",
@@ -5919,7 +5940,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2359",
+      "source_location": "L2467",
       "weight": 1.0,
       "_src": "app_computecolorexpr",
       "_tgt": "app_riskprop",
@@ -5931,7 +5952,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L523",
+      "source_location": "L524",
       "weight": 1.0,
       "_src": "app_activefilllayerid",
       "_tgt": "app_iscountymode",
@@ -5943,7 +5964,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L524",
+      "source_location": "L525",
       "weight": 1.0,
       "_src": "app_activehoverlayerid",
       "_tgt": "app_iscountymode",
@@ -5955,7 +5976,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L525",
+      "source_location": "L526",
       "weight": 1.0,
       "_src": "app_activepinnedlayerid",
       "_tgt": "app_iscountymode",
@@ -5967,7 +5988,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L526",
+      "source_location": "L527",
       "weight": 1.0,
       "_src": "app_geomeankey",
       "_tgt": "app_iscountymode",
@@ -5979,7 +6000,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L527",
+      "source_location": "L528",
       "weight": 1.0,
       "_src": "app_activestatetoplist",
       "_tgt": "app_iscountymode",
@@ -5991,7 +6012,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L540",
+      "source_location": "L541",
       "weight": 1.0,
       "_src": "app_activefeaturecount",
       "_tgt": "app_iscountymode",
@@ -6003,7 +6024,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L548",
+      "source_location": "L549",
       "weight": 1.0,
       "_src": "app_activehistogramstore",
       "_tgt": "app_iscountymode",
@@ -6015,7 +6036,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1051",
+      "source_location": "L1159",
       "weight": 1.0,
       "_src": "app_syncgeolayers",
       "_tgt": "app_iscountymode",
@@ -6027,7 +6048,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1176",
+      "source_location": "L1284",
       "weight": 1.0,
       "_src": "app_ensurecountystats",
       "_tgt": "app_iscountymode",
@@ -6039,7 +6060,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1249",
+      "source_location": "L1357",
       "weight": 1.0,
       "_src": "app_renderfocuspanel",
       "_tgt": "app_iscountymode",
@@ -6051,7 +6072,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1318",
+      "source_location": "L1426",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_iscountymode",
@@ -6063,7 +6084,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1549",
+      "source_location": "L1657",
       "weight": 1.0,
       "_src": "app_applyscenariotodrawer",
       "_tgt": "app_iscountymode",
@@ -6075,7 +6096,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1622",
+      "source_location": "L1730",
       "weight": 1.0,
       "_src": "app_renderdrawer",
       "_tgt": "app_iscountymode",
@@ -6087,7 +6108,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1692",
+      "source_location": "L1800",
       "weight": 1.0,
       "_src": "app_rendercountytoptracts",
       "_tgt": "app_iscountymode",
@@ -6099,7 +6120,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1809",
+      "source_location": "L1917",
       "weight": 1.0,
       "_src": "app_renderdrawershap",
       "_tgt": "app_iscountymode",
@@ -6111,7 +6132,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L552",
+      "source_location": "L553",
       "weight": 1.0,
       "_src": "app_rendergeocopy",
       "_tgt": "app_activegeometa",
@@ -6123,7 +6144,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1251",
+      "source_location": "L1359",
       "weight": 1.0,
       "_src": "app_renderfocuspanel",
       "_tgt": "app_activegeometa",
@@ -6135,7 +6156,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2396",
+      "source_location": "L2504",
       "weight": 1.0,
       "_src": "app_updatecounters",
       "_tgt": "app_activegeometa",
@@ -6147,7 +6168,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2084",
+      "source_location": "L2192",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_activefilllayerid",
@@ -6159,7 +6180,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1313",
+      "source_location": "L1421",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_activepinnedlayerid",
@@ -6171,7 +6192,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2173",
+      "source_location": "L2281",
       "weight": 1.0,
       "_src": "app_rendertopstates",
       "_tgt": "app_geomeankey",
@@ -6183,7 +6204,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2401",
+      "source_location": "L2509",
       "weight": 1.0,
       "_src": "app_baselinemeanrisk",
       "_tgt": "app_geomeankey",
@@ -6195,7 +6216,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1286",
+      "source_location": "L1394",
       "weight": 1.0,
       "_src": "app_renderfocuspanel",
       "_tgt": "app_activestatetoplist",
@@ -6207,7 +6228,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L555",
+      "source_location": "L556",
       "weight": 1.0,
       "_src": "app_rendergeocopy",
       "_tgt": "app_settext",
@@ -6219,7 +6240,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2460",
+      "source_location": "L2568",
       "weight": 1.0,
       "_src": "app_rendermethodology",
       "_tgt": "app_settext",
@@ -6231,7 +6252,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L554",
+      "source_location": "L555",
       "weight": 1.0,
       "_src": "app_rendergeocopy",
       "_tgt": "app_activefeaturecount",
@@ -6243,7 +6264,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2385",
+      "source_location": "L2493",
       "weight": 1.0,
       "_src": "app_updatecounters",
       "_tgt": "app_activefeaturecount",
@@ -6255,7 +6276,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2219",
+      "source_location": "L2327",
       "weight": 1.0,
       "_src": "app_renderhistogram",
       "_tgt": "app_activehistogramstore",
@@ -6267,7 +6288,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L645",
+      "source_location": "L649",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_rendergeocopy",
@@ -6279,7 +6300,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2099",
+      "source_location": "L2207",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_rendergeocopy",
@@ -6291,7 +6312,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L969",
+      "source_location": "L1077",
       "weight": 1.0,
       "_src": "app_ensuretractlayers",
       "_tgt": "app_ramptoexpr",
@@ -6303,7 +6324,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2362",
+      "source_location": "L2470",
       "weight": 1.0,
       "_src": "app_computecolorexpr",
       "_tgt": "app_ramptoexpr",
@@ -6315,7 +6336,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L991",
+      "source_location": "L1099",
       "weight": 1.0,
       "_src": "app_ensuretractlayers",
       "_tgt": "app_tintopacityexpr",
@@ -6327,7 +6348,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1202",
+      "source_location": "L1310",
       "weight": 1.0,
       "_src": "app_setfocusedstate",
       "_tgt": "app_tintopacityexpr",
@@ -6339,7 +6360,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L609",
+      "source_location": "L610",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_fetchoptional",
@@ -6351,7 +6372,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L630",
+      "source_location": "L633",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_initmap",
@@ -6363,7 +6384,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L631",
+      "source_location": "L634",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_inittoggles",
@@ -6375,7 +6396,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L632",
+      "source_location": "L635",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_renderheadline",
@@ -6387,7 +6408,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L633",
+      "source_location": "L636",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_rendertopstates",
@@ -6399,7 +6420,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L634",
+      "source_location": "L637",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_renderhistogram",
@@ -6411,7 +6432,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L635",
+      "source_location": "L638",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_rendersliders",
@@ -6423,7 +6444,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L636",
+      "source_location": "L639",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_rendermethodology",
@@ -6435,7 +6456,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L637",
+      "source_location": "L640",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_bindreset",
@@ -6447,7 +6468,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L638",
+      "source_location": "L641",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_bindfocusclose",
@@ -6459,7 +6480,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L639",
+      "source_location": "L642",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_binddrawerclose",
@@ -6471,7 +6492,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L640",
+      "source_location": "L643",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_synchorizonaffordances",
@@ -6483,7 +6504,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L641",
+      "source_location": "L644",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_initaccordions",
@@ -6495,7 +6516,19 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L643",
+      "source_location": "L645",
+      "weight": 1.0,
+      "_src": "app_boot",
+      "_tgt": "app_initfeaturedictionary",
+      "source": "app_boot",
+      "target": "app_initfeaturedictionary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "web/app.js",
+      "source_location": "L647",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_initguidestrip",
@@ -6507,7 +6540,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L644",
+      "source_location": "L648",
       "weight": 1.0,
       "_src": "app_boot",
       "_tgt": "app_initspotlight",
@@ -6519,7 +6552,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1172",
+      "source_location": "L1280",
       "weight": 1.0,
       "_src": "app_ensurecountystats",
       "_tgt": "app_fetchoptional",
@@ -6543,7 +6576,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L865",
+      "source_location": "L973",
       "weight": 1.0,
       "_src": "app_ensurelayerinteractions",
       "_tgt": "app_bindhoverforlayer",
@@ -6555,7 +6588,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L869",
+      "source_location": "L977",
       "weight": 1.0,
       "_src": "app_ensurelayerinteractions",
       "_tgt": "app_bindclickforlayer",
@@ -6567,7 +6600,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1046",
+      "source_location": "L1154",
       "weight": 1.0,
       "_src": "app_ensuretractlayers",
       "_tgt": "app_ensurelayerinteractions",
@@ -6579,7 +6612,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1051",
+      "source_location": "L1159",
       "weight": 1.0,
       "_src": "app_syncgeolayers",
       "_tgt": "app_ensuretractlayers",
@@ -6591,7 +6624,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1067",
+      "source_location": "L1175",
       "weight": 1.0,
       "_src": "app_syncgeolayers",
       "_tgt": "app_resethover",
@@ -6603,7 +6636,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1176",
+      "source_location": "L1284",
       "weight": 1.0,
       "_src": "app_ensurecountystats",
       "_tgt": "app_renderdrawer",
@@ -6615,7 +6648,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1318",
+      "source_location": "L1426",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_ensurecountystats",
@@ -6627,7 +6660,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2001",
+      "source_location": "L2109",
       "weight": 1.0,
       "_src": "app_ensureshap",
       "_tgt": "app_fetchgzipjson",
@@ -6651,7 +6684,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1190",
+      "source_location": "L1298",
       "weight": 1.0,
       "_src": "app_flytostate",
       "_tgt": "app_setfocusedstate",
@@ -6687,7 +6720,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1204",
+      "source_location": "L1312",
       "weight": 1.0,
       "_src": "app_setfocusedstate",
       "_tgt": "app_renderfocuspanel",
@@ -6699,7 +6732,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2098",
+      "source_location": "L2206",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_renderfocuspanel",
@@ -6711,7 +6744,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1316",
+      "source_location": "L1424",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_opendrawer",
@@ -6723,7 +6756,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1317",
+      "source_location": "L1425",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_refreshscenariodrawer",
@@ -6735,7 +6768,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1319",
+      "source_location": "L1427",
       "weight": 1.0,
       "_src": "app_pinfeature",
       "_tgt": "app_ensureshap",
@@ -6747,7 +6780,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1330",
+      "source_location": "L1438",
       "weight": 1.0,
       "_src": "app_unpinfeature",
       "_tgt": "app_closedrawer",
@@ -6759,7 +6792,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1461",
+      "source_location": "L1569",
       "weight": 1.0,
       "_src": "app_applyscenariotorisk",
       "_tgt": "app_logit",
@@ -6771,7 +6804,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1481",
+      "source_location": "L1589",
       "weight": 1.0,
       "_src": "app_scenarioleversummary",
       "_tgt": "app_logit",
@@ -6795,7 +6828,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1461",
+      "source_location": "L1569",
       "weight": 1.0,
       "_src": "app_applyscenariotorisk",
       "_tgt": "app_sigmoid",
@@ -6807,7 +6840,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1481",
+      "source_location": "L1589",
       "weight": 1.0,
       "_src": "app_scenarioleversummary",
       "_tgt": "app_sigmoid",
@@ -6819,7 +6852,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1547",
+      "source_location": "L1655",
       "weight": 1.0,
       "_src": "app_applyscenariotodrawer",
       "_tgt": "app_activeleversfornote",
@@ -6831,7 +6864,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1446",
+      "source_location": "L1554",
       "weight": 1.0,
       "_src": "app_scenariolevereffect",
       "_tgt": "app_totalleverimportance",
@@ -6843,7 +6876,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1442",
+      "source_location": "L1550",
       "weight": 1.0,
       "_src": "app_scenariolevereffect",
       "_tgt": "app_levergroupimportance",
@@ -6855,7 +6888,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1444",
+      "source_location": "L1552",
       "weight": 1.0,
       "_src": "app_scenariolevereffect",
       "_tgt": "app_abimpactbygroup",
@@ -6867,7 +6900,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1480",
+      "source_location": "L1588",
       "weight": 1.0,
       "_src": "app_scenarioleversummary",
       "_tgt": "app_scenariolevereffect",
@@ -6879,7 +6912,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1461",
+      "source_location": "L1569",
       "weight": 1.0,
       "_src": "app_applyscenariotorisk",
       "_tgt": "app_scenariologiteffect",
@@ -6891,7 +6924,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2360",
+      "source_location": "L2468",
       "weight": 1.0,
       "_src": "app_computecolorexpr",
       "_tgt": "app_scenariologiteffect",
@@ -6903,7 +6936,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2353",
+      "source_location": "L2461",
       "weight": 1.0,
       "_src": "app_computeshift",
       "_tgt": "app_applyscenariotorisk",
@@ -6915,7 +6948,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2369",
+      "source_location": "L2477",
       "weight": 1.0,
       "_src": "app_computecolorexpr",
       "_tgt": "app_scenarioriskexpr",
@@ -6927,7 +6960,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1483",
+      "source_location": "L1591",
       "weight": 1.0,
       "_src": "app_scenarioleversummary",
       "_tgt": "app_abimpactbygroup",
@@ -6939,7 +6972,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1955",
+      "source_location": "L2063",
       "weight": 1.0,
       "_src": "app_showlevertip",
       "_tgt": "app_scenarioleversummary",
@@ -6951,7 +6984,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1530",
+      "source_location": "L1638",
       "weight": 1.0,
       "_src": "app_applyscenariotodrawer",
       "_tgt": "app_levershiftsbyfeature",
@@ -6963,7 +6996,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1596",
+      "source_location": "L1704",
       "weight": 1.0,
       "_src": "app_refreshscenariodrawer",
       "_tgt": "app_applyscenariotodrawer",
@@ -6975,7 +7008,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1597",
+      "source_location": "L1705",
       "weight": 1.0,
       "_src": "app_refreshscenariodrawer",
       "_tgt": "app_renderdrawer",
@@ -6987,7 +7020,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2100",
+      "source_location": "L2208",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_refreshscenariodrawer",
@@ -6999,7 +7032,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2333",
+      "source_location": "L2441",
       "weight": 1.0,
       "_src": "app_onsliderinput",
       "_tgt": "app_refreshscenariodrawer",
@@ -7011,7 +7044,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1682",
+      "source_location": "L1790",
       "weight": 1.0,
       "_src": "app_renderdrawer",
       "_tgt": "app_renderdivergenceblock",
@@ -7023,7 +7056,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1683",
+      "source_location": "L1791",
       "weight": 1.0,
       "_src": "app_renderdrawer",
       "_tgt": "app_rendercountytoptracts",
@@ -7035,7 +7068,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1684",
+      "source_location": "L1792",
       "weight": 1.0,
       "_src": "app_renderdrawer",
       "_tgt": "app_renderdrawershap",
@@ -7047,7 +7080,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1789",
+      "source_location": "L1897",
       "weight": 1.0,
       "_src": "app_renderdivergenceblock",
       "_tgt": "app_divergencecopy",
@@ -7059,7 +7092,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2000",
+      "source_location": "L2108",
       "weight": 1.0,
       "_src": "app_ensureshap",
       "_tgt": "app_renderdrawershap",
@@ -7071,7 +7104,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L1993",
+      "source_location": "L2101",
       "weight": 1.0,
       "_src": "app_hidelevertip",
       "_tgt": "app_hidefeaturetip",
@@ -7095,7 +7128,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2085",
+      "source_location": "L2193",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_computecolorexpr",
@@ -7107,7 +7140,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2092",
+      "source_location": "L2200",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_synchorizonaffordances",
@@ -7119,7 +7152,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2093",
+      "source_location": "L2201",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_renderheadline",
@@ -7131,7 +7164,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2094",
+      "source_location": "L2202",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_rendertopstates",
@@ -7143,7 +7176,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2095",
+      "source_location": "L2203",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_renderhistogram",
@@ -7155,7 +7188,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2096",
+      "source_location": "L2204",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_rendersliders",
@@ -7167,7 +7200,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2097",
+      "source_location": "L2205",
       "weight": 1.0,
       "_src": "app_applyactive",
       "_tgt": "app_rendermethodology",
@@ -7179,7 +7212,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2137",
+      "source_location": "L2245",
       "weight": 1.0,
       "_src": "app_renderheadline",
       "_tgt": "app_tweennumber",
@@ -7191,7 +7224,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2334",
+      "source_location": "L2442",
       "weight": 1.0,
       "_src": "app_onsliderinput",
       "_tgt": "app_schedulerecolor",
@@ -7203,7 +7236,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2335",
+      "source_location": "L2443",
       "weight": 1.0,
       "_src": "app_onsliderinput",
       "_tgt": "app_syncmode",
@@ -7215,7 +7248,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2352",
+      "source_location": "L2460",
       "weight": 1.0,
       "_src": "app_computeshift",
       "_tgt": "app_baselinemeanrisk",
@@ -7227,7 +7260,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2384",
+      "source_location": "L2492",
       "weight": 1.0,
       "_src": "app_updatecounters",
       "_tgt": "app_computeshift",
@@ -7239,7 +7272,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2383",
+      "source_location": "L2491",
       "weight": 1.0,
       "_src": "app_updatecounters",
       "_tgt": "app_baselinemeanrisk",
@@ -7251,7 +7284,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2412",
+      "source_location": "L2520",
       "weight": 1.0,
       "_src": "app_syncmode",
       "_tgt": "app_updatecounters",
@@ -7263,7 +7296,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2474",
+      "source_location": "L2582",
       "weight": 1.0,
       "_src": "app_rendermethodology",
       "_tgt": "app_renderablation",
@@ -7275,7 +7308,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2475",
+      "source_location": "L2583",
       "weight": 1.0,
       "_src": "app_rendermethodology",
       "_tgt": "app_rendertopfeats",
@@ -7287,7 +7320,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "web/app.js",
-      "source_location": "L2476",
+      "source_location": "L2584",
       "weight": 1.0,
       "_src": "app_rendermethodology",
       "_tgt": "app_renderregime",

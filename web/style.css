@@ -1589,6 +1589,56 @@ body.is-feature-dict-open {
   background: color-mix(in oklch, var(--coral) 10%, transparent);
   outline: none;
 }
+.featureDict__tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--rule);
+  background: oklch(0.18 0.020 240);
+}
+.featureDict__groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.featureDict__group {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--tx-3);
+  cursor: pointer;
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.featureDict__group:hover,
+.featureDict__group:focus-visible {
+  color: var(--tx);
+  border-color: var(--coral);
+  outline: none;
+}
+.featureDict__group[aria-pressed="true"] {
+  color: var(--bg-deep);
+  border-color: var(--m1);
+  background: var(--m1);
+}
+.featureDict[data-model="influenceable"] .featureDict__group[aria-pressed="true"] {
+  border-color: var(--m2);
+  background: var(--m2);
+}
+.featureDict__note {
+  margin: 0;
+  max-width: 78ch;
+  color: var(--tx-2);
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
 .featureDict__body {
   overflow: auto;
   scrollbar-width: thin;
@@ -1616,7 +1666,7 @@ body.is-feature-dict-open {
   background: oklch(0.16 0.020 240);
   color: var(--tx-3);
   font-family: var(--ff-mono);
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -1625,8 +1675,8 @@ body.is-feature-dict-open {
   padding: var(--s-4);
   color: var(--tx-2);
   font-family: var(--ff-body);
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-size: 1.0625rem;
+  line-height: 1.6;
 }
 .featureDict__table th:nth-child(1),
 .featureDict__table td:nth-child(1) {
@@ -1639,7 +1689,7 @@ body.is-feature-dict-open {
 .featureDict__table td:nth-child(1) {
   color: var(--tx);
   font-family: var(--ff-mono);
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   overflow-wrap: anywhere;
 }
 .featureDict__table td:nth-child(2) {
@@ -1651,6 +1701,43 @@ body.is-feature-dict-open {
 }
 .featureDict[data-model="influenceable"] .featureDict__table td:nth-child(2) {
   color: var(--m2);
+}
+.featureDict__catrow td,
+.featureDict[data-model="diagnostic"] .featureDict__catrow td:nth-child(2),
+.featureDict[data-model="influenceable"] .featureDict__catrow td:nth-child(2) {
+  padding: var(--s-4) var(--s-4) var(--s-3);
+  background: oklch(0.20 0.020 240);
+  color: var(--tx);
+  border-bottom: 1px solid var(--rule);
+}
+.featureDict__catrow span {
+  display: inline-block;
+  margin-right: var(--s-2);
+  font-family: var(--ff-disp);
+  font-weight: 700;
+  font-size: 1.3125rem;
+  letter-spacing: -0.005em;
+}
+.featureDict__catrow em {
+  display: inline-block;
+  color: var(--m1);
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.featureDict[data-model="influenceable"] .featureDict__catrow em {
+  color: var(--m2);
+}
+.featureDict__catrow small {
+  display: block;
+  max-width: 78ch;
+  margin-top: 6px;
+  color: var(--tx-2);
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 /* Ablation chart */
@@ -2008,6 +2095,16 @@ body.is-feature-dict-open {
     padding: var(--s-4);
     align-items: flex-start;
   }
+  .featureDict__tools { padding: var(--s-3) var(--s-4); }
+  .featureDict__groups {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .featureDict__group {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
   .featureDict__title { font-size: 2rem; }
   .featureDict__table,
   .featureDict__table thead,
@@ -2029,8 +2126,13 @@ body.is-feature-dict-open {
   }
   .featureDict__table td + td { margin-top: var(--s-2); }
   .featureDict__table td:nth-child(1) {
-    font-size: 0.6875rem;
+    font-size: 0.875rem;
     color: var(--tx-3);
+  }
+  .featureDict__catrow td,
+  .featureDict[data-model="diagnostic"] .featureDict__catrow td:nth-child(2),
+  .featureDict[data-model="influenceable"] .featureDict__catrow td:nth-child(2) {
+    padding: var(--s-4);
   }
 }
 

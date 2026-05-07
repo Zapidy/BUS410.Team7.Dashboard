@@ -849,11 +849,15 @@
     const rowsEl = document.getElementById("featureDictRows");
     const titleEl = document.getElementById("featureDictTitle");
     const kickerEl = document.getElementById("featureDictKicker");
+    const groupsEl = document.getElementById("featureDictGroups");
+    const noteEl = document.getElementById("featureDictNote");
     const closeBtn = document.getElementById("featureDictClose");
     const launchers = Array.from(document.querySelectorAll("[data-feature-dict]"));
-    if (!overlay || !rowsEl || !titleEl || !kickerEl || !closeBtn || !launchers.length) return;
+    if (!overlay || !rowsEl || !titleEl || !kickerEl || !groupsEl || !noteEl || !closeBtn || !launchers.length) return;
 
     let lastTrigger = null;
+    let activeModel = "diagnostic";
+    let activeCategory = "all";
 
     const meta = {
       diagnostic: {
@@ -866,7 +870,163 @@
       },
     };
 
+    const categories = {
+      diagnostic: [
+        { key: "place", label: "Place context", note: "Rurality, tract scale, and persistent-poverty status. These describe what kind of place the tract is before lending behavior enters." },
+        { key: "conditions", label: "People and conditions", note: "Demographics, income, education, unemployment, poverty, and housing vacancy. Diagnostic-only signals, useful for prediction but not policy levers by themselves." },
+        { key: "bank_market", label: "Bank market structure", note: "County-level CRA and FDIC concentration. These capture whether local credit supply is broad or dominated by a few institutions." },
+        { key: "hmda_flow", label: "Mortgage credit flow", note: "HMDA mortgage activity, approvals, denials, withdrawals, purchases, and lender counts. This is adjacent credit-market evidence, not small-business lending itself." },
+        { key: "hmda_applicants", label: "HMDA applicant mix", note: "Race and ethnicity counts among HMDA mortgage applicants. Diagnostic context only; not a recommended intervention target." },
+      ],
+      influenceable: [
+        { key: "lender_mix", label: "Lender mix", note: "Who is making the CRA small-business loans: community banks, top-4 banks, credit unions, and smaller loan-size shares." },
+        { key: "concentration", label: "Lender concentration", note: "Whether a tract's small-business lending depends on one or a few lenders after residualization." },
+        { key: "branch_access", label: "Branch access", note: "Physical branch distance, nearby branch count, and recent branch closures." },
+        { key: "mission_lenders", label: "Mission lenders", note: "Minority Depository Institution branches and SBA microlender intermediaries near the tract." },
+        { key: "state_policy", label: "State policy", note: "State Small Business Credit Initiative program availability and breadth." },
+      ],
+    };
+
+    const categoryByColumn = {
+      diagnostic: {
+        ruca_code: "place",
+        housing_units: "place",
+        is_persistent_poverty: "place",
+        population: "place",
+        is_rural: "place",
+        median_hh_income: "conditions",
+        pct_black: "conditions",
+        pct_minority: "conditions",
+        pct_poverty: "conditions",
+        pct_vacant: "conditions",
+        pct_hispanic: "conditions",
+        pct_bachelor_plus: "conditions",
+        unemployment_rate: "conditions",
+        fdic_deposit_hhi_chg3yr: "bank_market",
+        fdic_deposit_hhi: "bank_market",
+        fdic_top_bank_share_chg3yr: "bank_market",
+        cra_county_amount_hhi: "bank_market",
+        cra_county_top_lender_share_count: "bank_market",
+        cra_county_count_hhi: "bank_market",
+        fdic_top_bank_share: "bank_market",
+        cra_county_top_lender_share_amount: "bank_market",
+        fdic_deposit_hhi_chg1yr: "bank_market",
+        fdic_top_bank_share_chg1yr: "bank_market",
+        has_hmda: "hmda_flow",
+        sum_loan_amount: "hmda_flow",
+        mean_loan_amount: "hmda_flow",
+        n_originated: "hmda_flow",
+        n_withdrawn: "hmda_flow",
+        n_distinct_lenders: "hmda_flow",
+        n_denied: "hmda_flow",
+        approval_rate: "hmda_flow",
+        n_applications: "hmda_flow",
+        denial_rate: "hmda_flow",
+        n_purchased: "hmda_flow",
+        n_white: "hmda_applicants",
+        n_hispanic: "hmda_applicants",
+        n_other_race: "hmda_applicants",
+        n_black: "hmda_applicants",
+        n_asian: "hmda_applicants",
+      },
+      influenceable: {
+        pct_loans_from_community_banks_resid: "lender_mix",
+        pct_loans_from_top4_banks_resid: "lender_mix",
+        pct_loans_from_credit_unions_resid: "lender_mix",
+        pct_loans_under_100k_resid: "lender_mix",
+        pct_loans_under_250k_resid: "lender_mix",
+        top1_lender_share_tract_resid: "concentration",
+        top3_lender_share_tract_resid: "concentration",
+        lender_hhi_tract_resid: "concentration",
+        distance_to_nearest_bank_branch: "branch_access",
+        branches_within_5mi: "branch_access",
+        branch_closures_3y_within_10mi: "branch_access",
+        microloan_intermediary_within_25mi: "mission_lenders",
+        mdi_branches_within_10mi: "mission_lenders",
+        mdi_branches_within_25mi: "mission_lenders",
+        nearest_mdi_branch_miles: "mission_lenders",
+        mdi_active_in_county: "mission_lenders",
+        ssbci_active: "state_policy",
+        ssbci_2_0_active: "state_policy",
+        ssbci_program_count: "state_policy",
+        ssbci_n_capital_programs: "state_policy",
+      },
+    };
+
+    function categoryFor(model, item) {
+      return (categoryByColumn[model] && categoryByColumn[model][item.column]) || "other";
+    }
+
+    function getCategory(model, key) {
+      return (categories[model] || []).find(cat => cat.key === key);
+    }
+
+    function countByCategory(model, items) {
+      const counts = new Map();
+      items.forEach(item => counts.set(categoryFor(model, item), (counts.get(categoryFor(model, item)) || 0) + 1));
+      return counts;
+    }
+
+    function renderCategoryControls(model, items) {
+      const counts = countByCategory(model, items);
+      groupsEl.replaceChildren();
+
+      const allBtn = document.createElement("button");
+      allBtn.type = "button";
+      allBtn.className = "featureDict__group";
+      allBtn.dataset.category = "all";
+      allBtn.setAttribute("aria-pressed", String(activeCategory === "all"));
+      allBtn.textContent = `All ${items.length}`;
+      groupsEl.appendChild(allBtn);
+
+      (categories[model] || []).forEach(cat => {
+        const count = counts.get(cat.key) || 0;
+        if (!count) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "featureDict__group";
+        btn.dataset.category = cat.key;
+        btn.setAttribute("aria-pressed", String(activeCategory === cat.key));
+        btn.textContent = `${cat.label} ${count}`;
+        groupsEl.appendChild(btn);
+      });
+    }
+
+    function renderNote(model, items) {
+      if (activeCategory === "all") {
+        noteEl.textContent = model === "diagnostic"
+          ? "Grouped by feature family so the diagnostic model reads as categories, not a wall of columns."
+          : "Grouped by policy lever family. Every influenceable feature maps to something a policymaker could plausibly fund, build, or support.";
+        return;
+      }
+
+      const cat = getCategory(model, activeCategory);
+      const count = items.filter(item => categoryFor(model, item) === activeCategory).length;
+      noteEl.textContent = cat ? `${cat.label}, ${count} features. ${cat.note}` : "";
+    }
+
+    function appendCategoryRow(frag, cat, count) {
+      const tr = document.createElement("tr");
+      tr.className = "featureDict__catrow";
+      const td = document.createElement("td");
+      td.colSpan = 3;
+      td.innerHTML = `<span>${cat.label}</span><em>${count} features</em><small>${cat.note}</small>`;
+      tr.appendChild(td);
+      frag.appendChild(tr);
+    }
+
+    function appendItemRow(frag, item) {
+      const tr = document.createElement("tr");
+      [item.column, item.label, item.description].forEach(value => {
+        const td = document.createElement("td");
+        td.textContent = value || "Not available";
+        tr.appendChild(td);
+      });
+      frag.appendChild(tr);
+    }
+
     function render(model) {
+      activeModel = model;
       const items = (STATE.featureDictionary && STATE.featureDictionary[model]) || [];
       const modelMeta = meta[model] || meta.diagnostic;
 
@@ -874,6 +1034,8 @@
       titleEl.textContent = modelMeta.title;
       kickerEl.textContent = `${modelMeta.label} · ${items.length} features`;
       rowsEl.replaceChildren();
+      renderCategoryControls(model, items);
+      renderNote(model, items);
 
       if (!items.length) {
         const tr = document.createElement("tr");
@@ -886,20 +1048,24 @@
       }
 
       const frag = document.createDocumentFragment();
-      items.forEach(item => {
-        const tr = document.createElement("tr");
-        [item.column, item.label, item.description].forEach(value => {
-          const td = document.createElement("td");
-          td.textContent = value || "Not available";
-          tr.appendChild(td);
+      if (activeCategory === "all") {
+        (categories[model] || []).forEach(cat => {
+          const groupItems = items.filter(item => categoryFor(model, item) === cat.key);
+          if (!groupItems.length) return;
+          appendCategoryRow(frag, cat, groupItems.length);
+          groupItems.forEach(item => appendItemRow(frag, item));
         });
-        frag.appendChild(tr);
-      });
+      } else {
+        items
+          .filter(item => categoryFor(model, item) === activeCategory)
+          .forEach(item => appendItemRow(frag, item));
+      }
       rowsEl.appendChild(frag);
     }
 
     function open(model, trigger) {
       lastTrigger = trigger || null;
+      activeCategory = "all";
       render(model);
       overlay.hidden = false;
       overlay.setAttribute("aria-hidden", "false");
@@ -918,6 +1084,14 @@
 
     launchers.forEach(btn => {
       btn.addEventListener("click", () => open(btn.dataset.featureDict, btn));
+    });
+
+    groupsEl.addEventListener("click", e => {
+      const btn = e.target.closest("[data-category]");
+      if (!btn) return;
+      activeCategory = btn.dataset.category || "all";
+      render(activeModel);
+      btn.focus();
     });
 
     overlay.querySelectorAll("[data-feature-dict-close]").forEach(btn => {
