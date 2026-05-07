@@ -7,6 +7,7 @@
   <title>Two-Layer Credit-Desert Risk · Round 7</title>
   <meta name="description"
     content="An interactive forecast of small-business credit-desert risk across U.S. counties and census tracts. Two models, two horizons, one map.">
+  <meta name="theme-color" content="#1c2230">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,17 +49,18 @@
 
       <!-- Floating overlay: model + horizon toggles (top-right) -->
       <div class="ovl ovl--toggles">
-        <div class="toggrp" role="tablist" aria-label="Choose model">
+        <!-- JS: update aria-pressed on click, not aria-selected -->
+        <div class="toggrp" aria-label="Choose model">
           <span class="toggrp__lbl kicker">Model</span>
           <div class="toggrp__pills">
-            <button class="model is-active" data-model="m1" role="tab" aria-selected="true">
+            <button class="model is-active" data-model="m1" aria-pressed="true">
               <span class="model__dot" aria-hidden="true"></span>
               <span class="model__label">
                 <span class="model__num">Lens 1</span>
                 <span class="model__name">Diagnostic</span>
               </span>
             </button>
-            <button class="model" data-model="m2" role="tab" aria-selected="false">
+            <button class="model" data-model="m2" aria-pressed="false">
               <span class="model__dot" aria-hidden="true"></span>
               <span class="model__label">
                 <span class="model__num">Lens 2</span>
@@ -68,28 +70,30 @@
           </div>
         </div>
 
-        <div class="toggrp" role="tablist" aria-label="Choose forecast horizon">
+        <!-- JS: update aria-pressed on click, not aria-selected -->
+        <div class="toggrp" aria-label="Choose forecast horizon">
           <span class="toggrp__lbl kicker">Horizon</span>
           <div class="toggrp__pills">
-            <button class="horizon is-active" data-horizon="h3" role="tab" aria-selected="true">
+            <button class="horizon is-active" data-horizon="h3" aria-pressed="true">
               <span class="horizon__num">3 yrs</span>
               <span class="horizon__name">2027 forecast</span>
             </button>
-            <button class="horizon" data-horizon="h6" role="tab" aria-selected="false">
+            <button class="horizon" data-horizon="h6" aria-pressed="false">
               <span class="horizon__num">6 yrs</span>
               <span class="horizon__name">2030 scenario</span>
             </button>
           </div>
         </div>
 
-        <div class="toggrp" role="tablist" aria-label="Choose geography">
+        <!-- JS: update aria-pressed on click, not aria-selected -->
+        <div class="toggrp" aria-label="Choose geography">
           <span class="toggrp__lbl kicker">Geography</span>
           <div class="toggrp__pills">
-            <button class="geo is-active" data-geo="county" role="tab" aria-selected="true">
+            <button class="geo is-active" data-geo="county" aria-pressed="true">
               <span class="geo__num">Default</span>
               <span class="geo__name">County</span>
             </button>
-            <button class="geo" data-geo="tract" role="tab" aria-selected="false">
+            <button class="geo" data-geo="tract" aria-pressed="false">
               <span class="geo__num">Detail</span>
               <span class="geo__name">Tract</span>
             </button>
@@ -245,7 +249,7 @@
         </header>
         <div class="guide__grid">
 
-          <article class="guide__card" data-spotlight-target=".ovl--toggles" role="button" tabindex="0">
+          <button class="guide__card" type="button" data-spotlight-target=".ovl--toggles">
             <div class="guide__num">01</div>
             <h3 class="guide__h">The toggles</h3>
             <span class="guide__caret" aria-hidden="true">&#8250;</span>
@@ -254,9 +258,9 @@
                 Influenceable uses only levers a policymaker could fund or build. <b>Horizon.</b> 2027 is the
                 soonest-actionable forecast; 2030 is a longer-reach scenario.</p>
             </div>
-          </article>
+          </button>
 
-          <article class="guide__card" data-spotlight-target="#map" role="button" tabindex="0">
+          <button class="guide__card" type="button" data-spotlight-target="#map">
             <div class="guide__num">02</div>
             <h3 class="guide__h">The map</h3>
             <span class="guide__caret" aria-hidden="true">&#8250;</span>
@@ -266,9 +270,9 @@
                 The faint hued tints across the country are state boundaries; peripheral context, not a fourth
                 dimension. <b>Click any state to focus.</b></p>
             </div>
-          </article>
+          </button>
 
-          <article class="guide__card" data-spotlight-target=".rail" role="button" tabindex="0">
+          <button class="guide__card" type="button" data-spotlight-target=".rail">
             <div class="guide__num">03</div>
             <h3 class="guide__h">The right rail</h3>
             <span class="guide__caret" aria-hidden="true">&#8250;</span>
@@ -277,9 +281,9 @@
                 weakest. Click a state to swap this panel for a detail view of that state. The tint vanishes for the
                 focused state, so you read its choropleth clean.</p>
             </div>
-          </article>
+          </button>
 
-          <article class="guide__card" data-spotlight-target=".rail__sliders" role="button" tabindex="0">
+          <button class="guide__card" type="button" data-spotlight-target=".rail__sliders">
             <div class="guide__num">04</div>
             <h3 class="guide__h">Scenario explorer</h3>
             <span class="guide__caret" aria-hidden="true">&#8250;</span>
@@ -288,10 +292,9 @@
                 depend on this category, and how important is this exact feature inside that category? The result is a
                 sensitivity estimate, not a causal guarantee.</p>
             </div>
-          </article>
+          </button>
 
-          <article class="guide__card" data-spotlight-target=".ovl--toggles .toggrp:first-child" role="button"
-            tabindex="0">
+          <button class="guide__card" type="button" data-spotlight-target=".ovl--toggles .toggrp:first-child">
             <div class="guide__num">05</div>
             <h3 class="guide__h">What to look for</h3>
             <span class="guide__caret" aria-hidden="true">&#8250;</span>
@@ -301,7 +304,7 @@
                 high on Diagnostic but lower on Influenceable, the levers we have don&rsquo;t reach it; tract mode lets
                 you inspect the neighborhoods inside it.</p>
             </div>
-          </article>
+          </button>
 
         </div>
       </section>
@@ -325,7 +328,7 @@
           <h3 class="meth__h">Why 2027 and 2030, not next year.</h3>
           <p class="accordion__hook">Federal CRA and HMDA data arrives ~2 years late, making 1-year-ahead forecasts
             useless in practice; the models were trained at the two soonest actionable horizons instead.</p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: Why 2027 and 2030, not next year"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>An earlier version of this dashboard predicted one year ahead. That's useless in practice: federal CRA
@@ -357,7 +360,7 @@
           <h3 class="meth__h">Two layers, one panel.</h3>
           <p class="accordion__hook">Model 1 uses every available signal for the best possible forecast; Model 2 uses
             only the 20 features a policymaker could build or fund, residualized against demographics.</p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: Two layers, one panel"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>Both models train on the same tract-year panel, <span class="mono">2009&ndash;2024</span>, averaged
@@ -425,7 +428,7 @@
           <h3 class="meth__h">Importance is not impact.</h3>
           <p class="accordion__hook">A feature the model notices heavily is not always the same as a feature that
             changes the final forecast by itself.</p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: Importance is not impact"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>We check each category by asking: if the model loses this category, how much worse does its ranking of
@@ -449,7 +452,7 @@
           <p class="accordion__hook">The chart shows how much the model weights each feature across 8 time-split tests;
             names ending in <span class="mono">_resid</span> had their demographic component mathematically removed
             before training.</p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: Top features at this horizon"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>How much the model leans on each feature, averaged across 8 time-split tests. This is different from the
@@ -475,7 +478,7 @@
           <p class="accordion__hook">Training the same architecture on pre- vs. post-COVID data shows distance-to-branch
             dominated before; lender concentration and MDI presence dominate after — the world changed, not the model.
           </p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: The COVID break"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>We trained the same architecture on pre-COVID data and on post-COVID data and asked which features the
@@ -498,7 +501,7 @@
           <p class="accordion__hook">The unit is a census tract over multiple years, so anything finer (one branch
             closing, one new program) is invisible, and future shocks outside the training distribution aren't
             foreseeable.</p>
-          <button class="accordion__toggle" aria-expanded="false"><i class="accordion__chevron">&#9658;</i>
+          <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: What this map can&rsquo;t see"><i class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
           <div class="accordion__body">
             <p>The unit is the census tract; the horizon is multi-year. Anything operating below that resolution (the
@@ -696,9 +699,9 @@
       <h3 class="spotlight__title"></h3>
       <div class="spotlight__body"></div>
       <div class="spotlight__nav">
-        <button class="spotlight__prev" type="button">&#8249; Prev</button>
-        <button class="spotlight__next" type="button">Next &#8250;</button>
-        <button class="spotlight__close" type="button">Got it &#8629;</button>
+        <button class="spotlight__prev" type="button" aria-label="Previous"><span aria-hidden="true">&#8249;</span> Prev</button>
+        <button class="spotlight__next" type="button" aria-label="Next">Next <span aria-hidden="true">&#8250;</span></button>
+        <button class="spotlight__close" type="button" aria-label="Close spotlight">Got it <span aria-hidden="true">&#8629;</span></button>
       </div>
     </aside>
   </div>

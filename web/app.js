@@ -660,6 +660,8 @@
     function setState(s) {
       el.classList.toggle("is-expanded", s === "expanded");
       el.classList.toggle("is-collapsed", s === "collapsed");
+      document.body.classList.toggle("is-guide-expanded", s === "expanded");
+      document.body.classList.toggle("is-guide-collapsed", s === "collapsed");
       if (btn) {
         btn.setAttribute("aria-expanded", String(s === "expanded"));
         btn.innerHTML = s === "expanded"
@@ -682,6 +684,18 @@
     });
 
     return { collapse: () => setState("collapsed") };
+  }
+
+  function viewportBottomEdge(pad = 8) {
+    const guide = document.getElementById("useGuide");
+    let inset = 0;
+    if (guide) {
+      const rect = guide.getBoundingClientRect();
+      if (rect.height > 0 && rect.bottom > window.innerHeight - 2) {
+        inset = window.innerHeight - Math.max(0, rect.top);
+      }
+    }
+    return window.innerHeight - inset - pad;
   }
 
   function initSpotlight(stripCtrl) {
@@ -1438,8 +1452,11 @@
       const rect = tip.getBoundingClientRect();
       const w = rect.width || 280, h = rect.height || 160;
       let tx = x + 16, ty = y + 16;
+      const bottomEdge = viewportBottomEdge();
       if (tx + w > innerWidth - 8)  tx = x - w - 16;
-      if (ty + h > innerHeight - 8) ty = y - h - 16;
+      if (ty + h > bottomEdge) ty = y - h - 16;
+      if (ty + h > bottomEdge) ty = bottomEdge - h;
+      if (ty < 8) ty = 8;
       tip.style.left = tx + "px";
       tip.style.top  = ty + "px";
       map.getCanvas().style.cursor = "crosshair";
@@ -2224,9 +2241,11 @@
       }
       if (left < 8) left = 8;
       if (top < 8) top = 8;
-      if (top + tipRect.height > window.innerHeight - 8) {
-        top = window.innerHeight - tipRect.height - 8;
+      const bottomEdge = viewportBottomEdge();
+      if (top + tipRect.height > bottomEdge) {
+        top = bottomEdge - tipRect.height;
       }
+      if (top < 8) top = 8;
       tip.style.left = `${left}px`;
       tip.style.top = `${top}px`;
       tip.style.opacity = "1";
@@ -2276,10 +2295,11 @@
           ? flipped
           : 8;
       }
-      if (top < 8) top = 8;
-      if (top + tipRect.height > window.innerHeight - 8) {
-        top = window.innerHeight - tipRect.height - 8;
+      const bottomEdge = viewportBottomEdge();
+      if (top + tipRect.height > bottomEdge) {
+        top = bottomEdge - tipRect.height;
       }
+      if (top < 8) top = 8;
       tip.style.left = `${left}px`;
       tip.style.top = `${top}px`;
       tip.style.opacity = "1";
@@ -2334,7 +2354,7 @@
         if (m === STATE.activeModel) return;
         document.querySelectorAll(".model").forEach(x => {
           x.classList.toggle("is-active", x.dataset.model === m);
-          x.setAttribute("aria-selected", x.dataset.model === m ? "true" : "false");
+          x.setAttribute("aria-pressed", x.dataset.model === m ? "true" : "false");
         });
         STATE.activeModel = m;
         document.body.dataset.model = m;
@@ -2349,7 +2369,7 @@
         if (h === STATE.activeHorizon) return;
         document.querySelectorAll(".horizon").forEach(x => {
           x.classList.toggle("is-active", x.dataset.horizon === h);
-          x.setAttribute("aria-selected", x.dataset.horizon === h ? "true" : "false");
+          x.setAttribute("aria-pressed", x.dataset.horizon === h ? "true" : "false");
         });
         STATE.activeHorizon = h;
         document.body.dataset.horizon = h;
@@ -2368,7 +2388,7 @@
         STATE.geoMode = g;
         document.querySelectorAll(".geo").forEach(x => {
           x.classList.toggle("is-active", x.dataset.geo === g);
-          x.setAttribute("aria-selected", x.dataset.geo === g ? "true" : "false");
+          x.setAttribute("aria-pressed", x.dataset.geo === g ? "true" : "false");
         });
         document.body.dataset.geo = g;
         unpinFeature();
