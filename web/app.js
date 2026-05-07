@@ -117,6 +117,8 @@
     tractLayersReady: false,
     tractSourceReady: false,
     switching: false,
+    pendingGeoMode: null,
+    geoSwitchToken: 0,
     pinnedFeature: null,          // active geography properties object (or null)
     shap: null,                   // shap_top.json (lazily loaded)
     shapLoading: false,
@@ -1172,6 +1174,77 @@
     }
   }
 
+  function showMapLoading(message) {
+    const el = document.getElementById("map-loading");
+    if (!el) return;
+    const label = el.querySelector("span");
+    if (label && message) label.textContent = message;
+    el.style.display = "";
+  }
+
+  function hideMapLoading() {
+    const el = document.getElementById("map-loading");
+    if (el) el.style.display = "none";
+  }
+
+  function isTractSourceLoaded() {
+    if (!map || !map.getSource("tracts")) return false;
+    if (STATE.tractSourceReady) return true;
+    if (typeof map.isSourceLoaded === "function" && map.isSourceLoaded("tracts")) {
+      STATE.tractSourceReady = true;
+      return true;
+    }
+    return false;
+  }
+
+  function waitForMapIdle(done, timeout = 1800) {
+    if (!map) {
+      done();
+      return;
+    }
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      done();
+    };
+    const timer = setTimeout(finish, timeout);
+    map.once("idle", finish);
+  }
+
+  function waitForTractSource(done) {
+    if (isTractSourceLoaded()) {
+      done(true);
+      return;
+    }
+    const finish = () => {
+      map.off("sourcedata", onSource);
+      clearTimeout(timer);
+      const ready = isTractSourceLoaded();
+      if (ready) hideMapLoading();
+      done(ready);
+    };
+    const onSource = (e) => {
+      if (e.sourceId === "tracts" && e.isSourceLoaded) {
+        STATE.tractSourceReady = true;
+        finish();
+      }
+    };
+    const timer = setTimeout(finish, 9000);
+    map.on("sourcedata", onSource);
+  }
+
+  function warmTractLayers() {
+    if (!map || STATE.tractLayersReady) return;
+    const warm = () => ensureTractLayers({ showLoading: false });
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(warm, { timeout: 2200 });
+    } else {
+      setTimeout(warm, 700);
+    }
+  }
+
   function initMap() {
     map = new maplibregl.Map({
       container: "map",
@@ -1248,16 +1321,15 @@
 
       syncGeoLayers();
       ensureLayerInteractions("counties-fill", "counties-outline-hover");
-      const _lo = document.getElementById('map-loading');
-      if (_lo) _lo.style.display = 'none';
+      hideMapLoading();
+      waitForMapIdle(warmTractLayers, 900);
     });
   }
 
-  function ensureTractLayers() {
+  function ensureTractLayers({ showLoading = true } = {}) {
     if (!map || STATE.tractLayersReady) return;
 
-    const _tlo = document.getElementById('map-loading');
-    if (_tlo) { _tlo.querySelector('span').textContent = 'Loading census tracts…'; _tlo.style.display = ''; }
+    if (showLoading) showMapLoading("Loading census tracts…");
 
     map.addSource("tracts", {
       type: "geojson",
@@ -1354,16 +1426,15 @@
       if (e.sourceId === 'tracts' && e.isSourceLoaded) {
         map.off('sourcedata', onTractSource);
         STATE.tractSourceReady = true;
-        const lo = document.getElementById('map-loading');
-        if (lo) lo.style.display = 'none';
+        hideMapLoading();
       }
     });
   }
 
-  function syncGeoLayers() {
+  function syncGeoLayers({ keepCountyUntilTractsReady = false } = {}) {
     if (!map) return;
     if (!isCountyMode()) ensureTractLayers();
-    const countyVis = isCountyMode() ? "visible" : "none";
+    const countyVis = (isCountyMode() || (keepCountyUntilTractsReady && !isTractSourceLoaded())) ? "visible" : "none";
     const tractVis = isCountyMode() ? "none" : "visible";
     [
       ["counties-fill", countyVis],
@@ -2407,26 +2478,75 @@
 
     // Geography
     document.querySelectorAll(".geo").forEach(b => {
-      b.addEventListener("click", () => {
-        const g = b.dataset.geo;
-        if (!g || g === STATE.geoMode) return;
-        if (STATE.switching) return;
-        STATE.switching = true;
-        document.body.classList.add('is-switching');
-        STATE.geoMode = g;
-        document.querySelectorAll(".geo").forEach(x => {
-          x.classList.toggle("is-active", x.dataset.geo === g);
-          x.setAttribute("aria-pressed", x.dataset.geo === g ? "true" : "false");
-        });
-        document.body.dataset.geo = g;
-        unpinFeature();
-        syncGeoLayers();
-        applyActive();
-        map.once('idle', () => {
-          STATE.switching = false;
-          document.body.classList.remove('is-switching');
-        });
+      b.addEventListener("click", () => requestGeoMode(b.dataset.geo));
+    });
+  }
+
+  function syncGeoButtons(g) {
+    document.querySelectorAll(".geo").forEach(x => {
+      x.classList.toggle("is-active", x.dataset.geo === g);
+      x.setAttribute("aria-pressed", x.dataset.geo === g ? "true" : "false");
+    });
+  }
+
+  function requestGeoMode(g) {
+    if (!g || g === STATE.geoMode && !STATE.switching) return;
+    STATE.pendingGeoMode = g;
+    if (STATE.switching) {
+      syncGeoButtons(g);
+      return;
+    }
+    runPendingGeoSwitch();
+  }
+
+  function runPendingGeoSwitch() {
+    const g = STATE.pendingGeoMode;
+    STATE.pendingGeoMode = null;
+    if (!g || g === STATE.geoMode) return;
+
+    const token = STATE.geoSwitchToken + 1;
+    STATE.geoSwitchToken = token;
+    STATE.switching = true;
+    document.body.classList.add("is-switching");
+
+    STATE.geoMode = g;
+    syncGeoButtons(g);
+    document.body.dataset.geo = g;
+    unpinFeature();
+
+    const needsTracts = !isCountyMode() && !isTractSourceLoaded();
+    if (needsTracts) {
+      showMapLoading("Loading census tracts…");
+      ensureTractLayers({ showLoading: false });
+      syncGeoLayers({ keepCountyUntilTractsReady: true });
+      applyActive();
+      waitForTractSource((ready) => {
+        if (STATE.geoSwitchToken !== token) return;
+        syncGeoLayers({ keepCountyUntilTractsReady: !ready });
+        finishGeoSwitch(token);
       });
+      return;
+    }
+
+    syncGeoLayers();
+    applyActive();
+    finishGeoSwitch(token);
+  }
+
+  function finishGeoSwitch(token) {
+    waitForMapIdle(() => {
+      if (STATE.geoSwitchToken !== token) return;
+      if (isCountyMode() || isTractSourceLoaded()) hideMapLoading();
+      STATE.switching = false;
+      document.body.classList.remove("is-switching");
+
+      const next = STATE.pendingGeoMode;
+      if (next && next !== STATE.geoMode) {
+        runPendingGeoSwitch();
+      } else {
+        STATE.pendingGeoMode = null;
+        syncGeoButtons(STATE.geoMode);
+      }
     });
   }
 
@@ -2797,9 +2917,10 @@
     const btn = document.getElementById('reloadMapBtn');
     if (!btn || !map) return;
     btn.addEventListener('click', () => {
-      const lo = document.getElementById('map-loading');
-      if (lo) { lo.querySelector('span').textContent = 'Reloading map…'; lo.style.display = ''; }
+      showMapLoading("Reloading map…");
       STATE.switching = false;
+      STATE.pendingGeoMode = null;
+      STATE.geoSwitchToken += 1;
       document.body.classList.remove('is-switching');
       unpinFeature();
       if (map.getSource('tracts')) {
@@ -2812,7 +2933,10 @@
       STATE.tractSourceReady = false;
       syncGeoLayers();
       applyActive();
-      map.once('idle', () => { if (lo) lo.style.display = 'none'; });
+      waitForMapIdle(() => {
+        hideMapLoading();
+        if (isCountyMode()) warmTractLayers();
+      });
     });
   }
 

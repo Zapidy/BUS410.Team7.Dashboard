@@ -1,11 +1,11 @@
 # Graph Report - 410DB  (2026-05-07)
 
 ## Corpus Check
-- 54 files · ~1,898,179 words
+- 54 files · ~1,898,686 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 485 nodes · 711 edges · 79 communities detected
+- 495 nodes · 738 edges · 79 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
@@ -92,15 +92,15 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `boot()` - 19 edges
-2. `isCountyMode()` - 16 edges
-3. `applyActive()` - 13 edges
-4. `$()` - 11 edges
-5. `main()` - 10 edges
-6. `log()` - 9 edges
-7. `main()` - 8 edges
-8. `main()` - 7 edges
-9. `pinFeature()` - 7 edges
-10. `renderDrawer()` - 7 edges
+2. `isCountyMode()` - 17 edges
+3. `applyActive()` - 14 edges
+4. `runPendingGeoSwitch()` - 12 edges
+5. `$()` - 11 edges
+6. `main()` - 10 edges
+7. `ensureTractLayers()` - 9 edges
+8. `log()` - 9 edges
+9. `main()` - 8 edges
+10. `main()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Residualized Concentration Features (HHI, top1, top3 residuals)` --semantically_similar_to--> `Lender Concentration / Market Depth Variables (HHI, top1, top3, unique lenders)`  [INFERRED] [semantically similar]
@@ -126,19 +126,19 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
-Nodes (77): activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId(), activeStateTopList() (+69 more)
+Nodes (92): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+84 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.08
-Nodes (36): $(), addLayers(), auc(), bindBranchPopup(), bindLayerToggles(), bindMap(), buildOpacityExpression(), buildRampExpression() (+28 more)
+Nodes (37): $(), addLayers(), auc(), bindBranchPopup(), bindLayerToggles(), bindMap(), buildOpacityExpression(), buildRampExpression() (+29 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.1
 Nodes (26): Ablation Surprise: residualized_concentration drives most signal (−0.096 AUC when dropped), Bolt-On Result: Mean AUC 0.889 (+0.032 over Round 5), AP gain is noise, Branch Access Policy Lever (distance, branches within 5mi, closures), Census Geocoder — Primary Geocoding (~85% hit rate, batch, free, no API key), COVID Regime Shift — Pre-COVID AUC 0.817 vs Post-COVID AUC 0.734, 8-Fold Walk-Forward Cross-Validation Structure, Exploratory Policy Layer Variable Brainstorm.md — Predictor Shortlist, 04_final_results.md — Round 7 Final Performance Results (+18 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.18
-Nodes (20): abImpactByGroup(), leverGroupImportance(), logit(), scenarioLeverEffect(), scenarioLeverSummary(), showLeverTip(), totalLeverImportance(), build_unified_xwalk() (+12 more)
+Cohesion: 0.32
+Nodes (13): build_unified_xwalk(), compose_00_to_20(), harmonize(), harmonize_acs(), harmonize_cra(), load_xwalk_00_to_10(), load_xwalk_10_to_20(), log() (+5 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.24
@@ -313,12 +313,12 @@ Cohesion: 1.0
 Nodes (2): main(), prepare()
 
 ### Community 48 - "Community 48"
-Cohesion: 1.0
-Nodes (3): 03_decision_rule.md — Phase B AP Threshold Decision Rule, Phase B Decision Rule: AP threshold STRONG ≥ 0.10 (not PR-AUC ≥ 0.6), Random Baseline AP ≈ 1.7% (equals positive rate for rare-event target)
-
-### Community 49 - "Community 49"
 Cohesion: 0.67
 Nodes (3): Credit Union NCUA Join (bypass FDIC, agency_code=4, ~10K institutions), 01_rssd_cra_crosswalk.md — RSSD to CRA Respondent ID Crosswalk (94.6% match), RSSD-CRA Match Rate: 94.6% volume-weighted; success criterion ≥ 95%
+
+### Community 49 - "Community 49"
+Cohesion: 1.0
+Nodes (3): 03_decision_rule.md — Phase B AP Threshold Decision Rule, Phase B Decision Rule: AP threshold STRONG ≥ 0.10 (not PR-AUC ≥ 0.6), Random Baseline AP ≈ 1.7% (equals positive rate for rare-event target)
 
 ### Community 56 - "Community 56"
 Cohesion: 1.0
@@ -525,9 +525,11 @@ Nodes (1): 05_methodology_brief.md — Methodology Brief
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `flyToState()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.038) - this node is a cross-community bridge._
-- **Why does `logit()` connect `Community 3` to `Community 0`?**
+- **Why does `flyToState()` connect `Community 1` to `Community 0`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `logit()` connect `Community 0` to `Community 3`?**
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
+- **Why does `log()` connect `Community 3` to `Community 0`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **What connects `Per tract, take the most-recent (year, fold) calibrated probability.`, `Mean across folds — the canonical AUC/AP for this project.`, `Latest non-null tract population for county weighting.` to the rest of the system?**
   _85 weakly-connected nodes found - possible documentation gaps or missing edges._

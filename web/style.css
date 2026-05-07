@@ -136,7 +136,7 @@ a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg);
+  background: oklch(0.15 0.020 240 / 0.78);
   color: var(--tx-3);
   font-family: var(--ff-mono);
   font-size: 0.8125rem;
@@ -376,7 +376,7 @@ body.is-drawer-open .ovl--bl {
   transition: color 140ms ease, background 140ms ease;
 }
 .ovl--reload:hover { color: var(--tx); background: oklch(0.20 0.020 240 / 0.9); }
-body.is-switching .ovl--toggles .geo { opacity: 0.5; pointer-events: none; cursor: not-allowed; }
+body.is-switching .ovl--toggles .geo { opacity: 0.68; cursor: progress; }
 .meta__cell .meta__k { color: var(--tx-4); font-weight: 500; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
 .meta__cell .num { color: var(--tx-2); font-weight: 600; font-family: var(--ff-disp); }
 .meta__sep { color: var(--tx-4); }
