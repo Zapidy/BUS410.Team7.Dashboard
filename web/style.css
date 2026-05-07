@@ -365,19 +365,22 @@ body.is-drawer-open .ovl--title {
 }
 .geo.is-active .geo__num { opacity: 1; }
 
-/* Theme toggle */
+/* Theme toggle — fixed bottom-right, always visible */
 .theme-toggle {
+  position: fixed;
+  bottom: var(--s-5);
+  right: var(--s-5);
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
   border-radius: var(--r-2);
   color: var(--tx-3);
   background: var(--bg-deep);
   border: 1px solid var(--rule);
   transition: color .2s ease, background .2s ease, border-color .2s ease;
-  flex-shrink: 0;
-  align-self: flex-end;
+  box-shadow: 0 2px 8px var(--shadow-lg);
 }
 .theme-toggle:hover { color: var(--tx); border-color: var(--rule-soft); background: var(--s1); }
 .theme-toggle:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }

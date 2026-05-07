@@ -1,11 +1,11 @@
 # Graph Report - 410DB  (2026-05-07)
 
 ## Corpus Check
-- 54 files · ~1,899,511 words
+- 54 files · ~1,900,015 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 496 nodes · 739 edges · 79 communities detected
+- 505 nodes · 766 edges · 79 communities detected
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
@@ -91,16 +91,16 @@
 - [[_COMMUNITY_Community 86|Community 86]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `boot()` - 19 edges
+1. `boot()` - 20 edges
 2. `isCountyMode()` - 17 edges
 3. `applyActive()` - 14 edges
 4. `runPendingGeoSwitch()` - 12 edges
 5. `$()` - 11 edges
-6. `main()` - 10 edges
-7. `log()` - 9 edges
-8. `ensureTractLayers()` - 8 edges
-9. `main()` - 8 edges
-10. `main()` - 7 edges
+6. `ensureTractLayers()` - 10 edges
+7. `main()` - 10 edges
+8. `computeColorExpr()` - 9 edges
+9. `log()` - 9 edges
+10. `main()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Residualized Concentration Features (HHI, top1, top3 residuals)` --semantically_similar_to--> `Lender Concentration / Market Depth Variables (HHI, top1, top3, unique lenders)`  [INFERRED] [semantically similar]
@@ -125,8 +125,8 @@
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.05
-Nodes (93): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+85 more)
+Cohesion: 0.04
+Nodes (102): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+94 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.08
@@ -526,7 +526,7 @@ Nodes (1): 05_methodology_brief.md — Methodology Brief
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `flyToState()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `logit()` connect `Community 0` to `Community 3`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `log()` connect `Community 3` to `Community 0`?**
@@ -534,7 +534,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `Per tract, take the most-recent (year, fold) calibrated probability.`, `Mean across folds — the canonical AUC/AP for this project.`, `Latest non-null tract population for county weighting.` to the rest of the system?**
   _85 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
