@@ -16,27 +16,34 @@ toggles between their tract-level predictions on a single choropleth.
 ## Build the data
 
 ```bash
-cd round7/web
+cd web
 python3 build_dashboard_data.py
 ```
 
 This pulls:
 
-- `../../round5/diagnostics/walk_forward_audit_fixed/test_predictions.parquet`
-- `../diagnostics/round7_phaseA_clean/test_predictions.parquet`
-- `../diagnostics/round7_ablation/ablation_summary.csv`
-- `../diagnostics/round7_pruned_clean/sweep_results.csv` and `feature_ranking.csv`
+- `../round5-diagnostic/diagnostics/walk_forward_h3/test_predictions.parquet`
+- `../round5-diagnostic/diagnostics/walk_forward_h6/test_predictions.parquet`
+- `../diagnostics/round7_phaseA_h3/test_predictions.parquet`
+- `../diagnostics/round7_phaseA_h6/test_predictions.parquet`
+- `../diagnostics/round7_pruned_h{3,6}/sweep_results.csv` and `feature_ranking.csv`
 - `../diagnostics/round7_regime_split/*.csv`
-- `../../round5/web/data/tracts.geojson`  (re-using the simplified geometry)
+- `../round5-diagnostic/web/data/counties.geojson`
+- `../round5-diagnostic/data/processed/acs/tract_year_h2020.csv` for county population weights when the Round 7 panel has no `population` column
+- `data/tracts.geojson` as the tract geometry fallback if the archived Round 5 tract geometry is unavailable
+
+Requires `pandas`, `numpy`, `scikit-learn`, and a parquet engine such as `pyarrow`.
 
 …and writes:
 
 - `data/tracts.geojson`        ~25 MB raw, ~4 MB gzipped
-- `data/state_stats.json`      per-state mean risk + AUC + AP for both models
+- `data/counties.geojson`      county polygons with population-weighted tract-risk rollups
+- `data/county_stats.json`     county drawer payload, including top tracts
+- `data/state_stats.json`      per-state tract/county summaries, histograms, AUC, and AP
 - `data/state_bbox.json`       per-state bbox for fly-to
-- `data/ablation.json`         trimmed lever-group ablation
-- `data/pruning.json`          k-feature sweep + top-10 ranking
-- `data/regime.json`           pre/post-COVID metrics + top features
+- `data/ablation_h{3,6}.json`  trimmed lever-group ablation
+- `data/pruning_h{3,6}.json`   k-feature sweep + top-10 ranking
+- `data/regime_h{3,6}.json`    pre/post-COVID metrics + top features
 
 ## Serve
 
