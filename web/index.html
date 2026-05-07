@@ -27,7 +27,11 @@
     <section class="hero" aria-label="Interactive credit-desert risk map">
 
       <div id="map" class="map" role="application"
-        aria-label="Choropleth map of U.S. counties or census tracts colored by risk"></div>
+        aria-label="Choropleth map of U.S. counties or census tracts colored by risk">
+        <div id="map-loading" aria-live="polite" aria-label="Loading map data">
+          <span>Painting 79k tracts&hellip;</span>
+        </div>
+      </div>
 
       <!-- Floating overlay: title (top-left) -->
       <header class="ovl ovl--title">

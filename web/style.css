@@ -124,6 +124,21 @@ a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
   background: var(--bg-deep);
 }
 
+#map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--tx-3);
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
 /* MapLibre overrides — kill default chrome */
 .maplibregl-ctrl-attrib {
   background: oklch(0.15 0.020 240 / 0.7) !important;
@@ -441,8 +456,8 @@ body[data-model="m2"] .legend__bar {
   color: var(--tx-3);
   margin: var(--s-2) 0 0;
   padding: var(--s-2) var(--s-3);
-  border-left: 2px solid var(--coral-soft);
   background: oklch(0.17 0.020 240 / 0.6);
+  border-radius: 4px;
 }
 
 .rail__model { display: flex; align-items: baseline; gap: 12px; }
@@ -511,14 +526,23 @@ body[data-model="m2"] .legend__bar {
   display: flex; flex-direction: column; gap: 2px;
 }
 .bignum__sub {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 400;
   text-transform: none;
   letter-spacing: 0.02em;
-  color: var(--tx-4);
+  color: var(--tx-2);
 }
 
 .rule { height: 1px; background: var(--rule); width: 100%; }
+
+.data-missing {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  color: var(--coral);
+  opacity: 0.7;
+  margin: var(--s-1) 0;
+  letter-spacing: 0.04em;
+}
 
 .rail__sect { display: block; margin-bottom: var(--s-3); }
 .rail__sect--mid { margin-top: var(--s-5); }
@@ -785,7 +809,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
 .guide__card:hover,
 .guide__card:focus-visible { background: oklch(1 0.005 240 / 0.05); outline: none; }
 .guide__card:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
-.guide__card .accordion__body { display: none; }
+.guide__card .accordion__body { /* max-height system handles initial hidden state */ }
 .guide__caret {
   margin-left: auto;
   flex-shrink: 0;
@@ -805,7 +829,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   text-transform: uppercase;
   font-feature-settings: "tnum" 1;
 }
-.guide__card:nth-child(1) .guide__num { color: var(--m1); }
+.guide__card:nth-child(1) .guide__num { color: var(--coral); }
 .guide__card:nth-child(2) .guide__num { color: var(--m2); }
 .guide__card:nth-child(3) .guide__num { color: var(--coral); }
 .guide__card:nth-child(4) .guide__num { color: var(--m1); }
@@ -1780,7 +1804,7 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   .ovl--toggles .toggrp { grid-template-columns: 1fr; gap: 4px; }
   .ovl--toggles .toggrp__lbl { text-align: left; }
   .ovl--meta { display: none; }
-  .ovl--legend { display: none; }
+  .ovl--legend { transform: scale(0.75); transform-origin: bottom right; }
   .map { height: 60vh; min-height: 360px; }
   .rail__model-name { font-size: 1.5rem; }
   .meth__title { font-size: 2rem; }

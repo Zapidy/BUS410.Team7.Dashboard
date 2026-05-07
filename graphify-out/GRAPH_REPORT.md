@@ -1,12 +1,12 @@
 # Graph Report - 410DB  (2026-05-06)
 
 ## Corpus Check
-- 54 files · ~1,896,075 words
+- 54 files · ~1,896,295 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 479 nodes · 691 edges · 80 communities detected
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.77)
+- 482 nodes · 706 edges · 79 communities detected
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -59,7 +59,7 @@
 - [[_COMMUNITY_Community 47|Community 47]]
 - [[_COMMUNITY_Community 48|Community 48]]
 - [[_COMMUNITY_Community 49|Community 49]]
-- [[_COMMUNITY_Community 50|Community 50]]
+- [[_COMMUNITY_Community 56|Community 56]]
 - [[_COMMUNITY_Community 57|Community 57]]
 - [[_COMMUNITY_Community 58|Community 58]]
 - [[_COMMUNITY_Community 59|Community 59]]
@@ -78,7 +78,7 @@
 - [[_COMMUNITY_Community 72|Community 72]]
 - [[_COMMUNITY_Community 73|Community 73]]
 - [[_COMMUNITY_Community 74|Community 74]]
-- [[_COMMUNITY_Community 75|Community 75]]
+- [[_COMMUNITY_Community 76|Community 76]]
 - [[_COMMUNITY_Community 77|Community 77]]
 - [[_COMMUNITY_Community 78|Community 78]]
 - [[_COMMUNITY_Community 79|Community 79]]
@@ -89,19 +89,18 @@
 - [[_COMMUNITY_Community 84|Community 84]]
 - [[_COMMUNITY_Community 85|Community 85]]
 - [[_COMMUNITY_Community 86|Community 86]]
-- [[_COMMUNITY_Community 87|Community 87]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `boot()` - 17 edges
-2. `isCountyMode()` - 15 edges
+2. `isCountyMode()` - 16 edges
 3. `applyActive()` - 13 edges
 4. `$()` - 11 edges
 5. `main()` - 10 edges
 6. `log()` - 9 edges
 7. `main()` - 8 edges
 8. `main()` - 7 edges
-9. `renderMethodology()` - 7 edges
-10. `parse_year()` - 7 edges
+9. `pinFeature()` - 7 edges
+10. `renderDrawer()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Residualized Concentration Features (HHI, top1, top3 residuals)` --semantically_similar_to--> `Lender Concentration / Market Depth Variables (HHI, top1, top3, unique lenders)`  [INFERRED] [semantically similar]
@@ -127,11 +126,11 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
-Nodes (76): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+68 more)
+Nodes (81): abImpactByGroup(), activeFeatureCount(), activeFillLayerId(), activeGeoMeta(), activeHistogramStore(), activeHoverLayerId(), activeLeversForNote(), activePinnedLayerId() (+73 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.08
-Nodes (36): $(), addLayers(), auc(), bindBranchPopup(), bindLayerToggles(), bindMap(), buildOpacityExpression(), buildRampExpression() (+28 more)
+Nodes (37): $(), addLayers(), auc(), bindBranchPopup(), bindLayerToggles(), bindMap(), buildOpacityExpression(), buildRampExpression() (+29 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.1
@@ -299,149 +298,145 @@ Nodes (2): evaluate(), main()
 
 ### Community 44 - "Community 44"
 Cohesion: 1.0
-Nodes (2): fetch(), main()
+Nodes (2): main(), parse_money()
 
 ### Community 45 - "Community 45"
 Cohesion: 1.0
-Nodes (2): main(), parse_money()
+Nodes (2): load_demographics(), main()
 
 ### Community 46 - "Community 46"
 Cohesion: 1.0
-Nodes (2): load_demographics(), main()
+Nodes (2): fetch_state_year(), main()
 
 ### Community 47 - "Community 47"
 Cohesion: 1.0
-Nodes (2): fetch_state_year(), main()
+Nodes (2): main(), prepare()
 
 ### Community 48 - "Community 48"
 Cohesion: 1.0
-Nodes (2): main(), prepare()
-
-### Community 49 - "Community 49"
-Cohesion: 1.0
 Nodes (3): 03_decision_rule.md — Phase B AP Threshold Decision Rule, Phase B Decision Rule: AP threshold STRONG ≥ 0.10 (not PR-AUC ≥ 0.6), Random Baseline AP ≈ 1.7% (equals positive rate for rare-event target)
 
-### Community 50 - "Community 50"
+### Community 49 - "Community 49"
 Cohesion: 0.67
 Nodes (3): Credit Union NCUA Join (bypass FDIC, agency_code=4, ~10K institutions), 01_rssd_cra_crosswalk.md — RSSD to CRA Respondent ID Crosswalk (94.6% match), RSSD-CRA Match Rate: 94.6% volume-weighted; success criterion ≥ 95%
 
-### Community 57 - "Community 57"
+### Community 56 - "Community 56"
 Cohesion: 1.0
 Nodes (2): 410DB README — Round 7 Two-Layer Credit-Desert Risk Project, tracts.geojson (Dashboard Map Data)
 
-### Community 58 - "Community 58"
+### Community 57 - "Community 57"
 Cohesion: 1.0
 Nodes (1): Per tract, take the most-recent (year, fold) calibrated probability.
+
+### Community 58 - "Community 58"
+Cohesion: 1.0
+Nodes (1): Mean across folds — the canonical AUC/AP for this project.
 
 ### Community 59 - "Community 59"
 Cohesion: 1.0
-Nodes (1): Mean across folds — the canonical AUC/AP for this project.
+Nodes (1): Build city search index from Census Gazetteer + decennial place-pop API.     Fal
 
 ### Community 60 - "Community 60"
 Cohesion: 1.0
-Nodes (1): Build city search index from Census Gazetteer + decennial place-pop API.     Fal
+Nodes (1): Per tract, take the most-recent (year, fold) calibrated probability.
 
 ### Community 61 - "Community 61"
 Cohesion: 1.0
-Nodes (1): Per tract, take the most-recent (year, fold) calibrated probability.
+Nodes (1): Mean across folds — the canonical AUC/AP for this project.
 
 ### Community 62 - "Community 62"
 Cohesion: 1.0
-Nodes (1): Mean across folds — the canonical AUC/AP for this project.
+Nodes (1): Build city search index from Census Gazetteer + decennial place-pop API.     Fal
 
 ### Community 63 - "Community 63"
 Cohesion: 1.0
-Nodes (1): Build city search index from Census Gazetteer + decennial place-pop API.     Fal
+Nodes (1): tract_lender_year.csv (CRA Apportioned)
 
 ### Community 64 - "Community 64"
 Cohesion: 1.0
-Nodes (1): tract_lender_year.csv (CRA Apportioned)
+Nodes (1): lender_class.csv (Lender Flags)
 
 ### Community 65 - "Community 65"
 Cohesion: 1.0
-Nodes (1): lender_class.csv (Lender Flags)
+Nodes (1): cra_to_rssd.csv (RSSD-CRA Crosswalk)
 
 ### Community 66 - "Community 66"
 Cohesion: 1.0
-Nodes (1): cra_to_rssd.csv (RSSD-CRA Crosswalk)
+Nodes (1): mdi_list.csv (MDI Roster)
 
 ### Community 67 - "Community 67"
 Cohesion: 1.0
-Nodes (1): mdi_list.csv (MDI Roster)
+Nodes (1): cdfi_list.csv (CDFI Certified List)
 
 ### Community 68 - "Community 68"
 Cohesion: 1.0
-Nodes (1): cdfi_list.csv (CDFI Certified List)
+Nodes (1): microlender_list.csv (SBA Microlender List)
 
 ### Community 69 - "Community 69"
 Cohesion: 1.0
-Nodes (1): microlender_list.csv (SBA Microlender List)
+Nodes (1): FDIC Institutions CSV (RSSD/CERT)
 
 ### Community 70 - "Community 70"
 Cohesion: 1.0
-Nodes (1): FDIC Institutions CSV (RSSD/CERT)
+Nodes (1): assets_by_year.csv (FDIC Call Report)
 
 ### Community 71 - "Community 71"
 Cohesion: 1.0
-Nodes (1): assets_by_year.csv (FDIC Call Report)
+Nodes (1): cdfi_geocoded.csv (CDFI with lat/lon)
 
 ### Community 72 - "Community 72"
 Cohesion: 1.0
-Nodes (1): cdfi_geocoded.csv (CDFI with lat/lon)
+Nodes (1): microlender_geocoded.csv (Microlenders with lat/lon)
 
 ### Community 73 - "Community 73"
 Cohesion: 1.0
-Nodes (1): microlender_geocoded.csv (Microlenders with lat/lon)
+Nodes (1): tract_centroids_2020.csv (Census TIGER)
 
 ### Community 74 - "Community 74"
 Cohesion: 1.0
-Nodes (1): tract_centroids_2020.csv (Census TIGER)
-
-### Community 75 - "Community 75"
-Cohesion: 1.0
 Nodes (1): state_year_ssbci.csv (SSBCI Overlay)
 
-### Community 77 - "Community 77"
+### Community 76 - "Community 76"
 Cohesion: 1.0
 Nodes (1): tract_year_with_target_round7.parquet (Training Panel)
 
-### Community 78 - "Community 78"
+### Community 77 - "Community 77"
 Cohesion: 1.0
 Nodes (1): test_predictions.parquet (Walk-Forward Predictions)
 
-### Community 79 - "Community 79"
+### Community 78 - "Community 78"
 Cohesion: 1.0
 Nodes (1): FDIC BankFind API (External)
 
-### Community 80 - "Community 80"
+### Community 79 - "Community 79"
 Cohesion: 1.0
 Nodes (1): Census Geocoder API (External)
 
-### Community 81 - "Community 81"
+### Community 80 - "Community 80"
 Cohesion: 1.0
 Nodes (1): Nominatim (OpenStreetMap) Geocoder
 
-### Community 82 - "Community 82"
+### Community 81 - "Community 81"
 Cohesion: 1.0
 Nodes (1): FFIEC CRA Disclosure Flat Files (D1/D6)
 
-### Community 83 - "Community 83"
+### Community 82 - "Community 82"
 Cohesion: 1.0
 Nodes (1): FDIC Summary of Deposits (SoD)
 
-### Community 84 - "Community 84"
+### Community 83 - "Community 83"
 Cohesion: 1.0
 Nodes (1): Target: Becomes Service Desert (h+3/h+6)
 
-### Community 85 - "Community 85"
+### Community 84 - "Community 84"
 Cohesion: 1.0
 Nodes (1): web/README.md — Dashboard Build and Data Documentation
 
-### Community 86 - "Community 86"
+### Community 85 - "Community 85"
 Cohesion: 1.0
 Nodes (1): 00_design_brief.md — Round 7 Design Brief and Feature Tiers
 
-### Community 87 - "Community 87"
+### Community 86 - "Community 86"
 Cohesion: 1.0
 Nodes (1): 05_methodology_brief.md — Methodology Brief
 
@@ -458,82 +453,80 @@ Nodes (1): 05_methodology_brief.md — Methodology Brief
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 43`** (3 nodes): `walk_forward_round7.py`, `evaluate()`, `main()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 44`** (3 nodes): `fetch()`, `main()`, `pull_acs_early.py`
+- **Thin community `Community 44`** (3 nodes): `main()`, `parse_money()`, `build_branches.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 45`** (3 nodes): `main()`, `parse_money()`, `build_branches.py`
+- **Thin community `Community 45`** (3 nodes): `load_demographics()`, `main()`, `build_peers.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 46`** (3 nodes): `load_demographics()`, `main()`, `build_peers.py`
+- **Thin community `Community 46`** (3 nodes): `fetch_state_year()`, `main()`, `pull_acs.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 47`** (3 nodes): `fetch_state_year()`, `main()`, `pull_acs.py`
+- **Thin community `Community 47`** (3 nodes): `main()`, `prepare()`, `feature_importance.py`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 48`** (3 nodes): `main()`, `prepare()`, `feature_importance.py`
+- **Thin community `Community 56`** (2 nodes): `410DB README — Round 7 Two-Layer Credit-Desert Risk Project`, `tracts.geojson (Dashboard Map Data)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 57`** (2 nodes): `410DB README — Round 7 Two-Layer Credit-Desert Risk Project`, `tracts.geojson (Dashboard Map Data)`
+- **Thin community `Community 57`** (1 nodes): `Per tract, take the most-recent (year, fold) calibrated probability.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 58`** (1 nodes): `Per tract, take the most-recent (year, fold) calibrated probability.`
+- **Thin community `Community 58`** (1 nodes): `Mean across folds — the canonical AUC/AP for this project.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 59`** (1 nodes): `Mean across folds — the canonical AUC/AP for this project.`
+- **Thin community `Community 59`** (1 nodes): `Build city search index from Census Gazetteer + decennial place-pop API.     Fal`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 60`** (1 nodes): `Build city search index from Census Gazetteer + decennial place-pop API.     Fal`
+- **Thin community `Community 60`** (1 nodes): `Per tract, take the most-recent (year, fold) calibrated probability.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 61`** (1 nodes): `Per tract, take the most-recent (year, fold) calibrated probability.`
+- **Thin community `Community 61`** (1 nodes): `Mean across folds — the canonical AUC/AP for this project.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 62`** (1 nodes): `Mean across folds — the canonical AUC/AP for this project.`
+- **Thin community `Community 62`** (1 nodes): `Build city search index from Census Gazetteer + decennial place-pop API.     Fal`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 63`** (1 nodes): `Build city search index from Census Gazetteer + decennial place-pop API.     Fal`
+- **Thin community `Community 63`** (1 nodes): `tract_lender_year.csv (CRA Apportioned)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 64`** (1 nodes): `tract_lender_year.csv (CRA Apportioned)`
+- **Thin community `Community 64`** (1 nodes): `lender_class.csv (Lender Flags)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 65`** (1 nodes): `lender_class.csv (Lender Flags)`
+- **Thin community `Community 65`** (1 nodes): `cra_to_rssd.csv (RSSD-CRA Crosswalk)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 66`** (1 nodes): `cra_to_rssd.csv (RSSD-CRA Crosswalk)`
+- **Thin community `Community 66`** (1 nodes): `mdi_list.csv (MDI Roster)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 67`** (1 nodes): `mdi_list.csv (MDI Roster)`
+- **Thin community `Community 67`** (1 nodes): `cdfi_list.csv (CDFI Certified List)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 68`** (1 nodes): `cdfi_list.csv (CDFI Certified List)`
+- **Thin community `Community 68`** (1 nodes): `microlender_list.csv (SBA Microlender List)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 69`** (1 nodes): `microlender_list.csv (SBA Microlender List)`
+- **Thin community `Community 69`** (1 nodes): `FDIC Institutions CSV (RSSD/CERT)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 70`** (1 nodes): `FDIC Institutions CSV (RSSD/CERT)`
+- **Thin community `Community 70`** (1 nodes): `assets_by_year.csv (FDIC Call Report)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 71`** (1 nodes): `assets_by_year.csv (FDIC Call Report)`
+- **Thin community `Community 71`** (1 nodes): `cdfi_geocoded.csv (CDFI with lat/lon)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 72`** (1 nodes): `cdfi_geocoded.csv (CDFI with lat/lon)`
+- **Thin community `Community 72`** (1 nodes): `microlender_geocoded.csv (Microlenders with lat/lon)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 73`** (1 nodes): `microlender_geocoded.csv (Microlenders with lat/lon)`
+- **Thin community `Community 73`** (1 nodes): `tract_centroids_2020.csv (Census TIGER)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 74`** (1 nodes): `tract_centroids_2020.csv (Census TIGER)`
+- **Thin community `Community 74`** (1 nodes): `state_year_ssbci.csv (SSBCI Overlay)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 75`** (1 nodes): `state_year_ssbci.csv (SSBCI Overlay)`
+- **Thin community `Community 76`** (1 nodes): `tract_year_with_target_round7.parquet (Training Panel)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 77`** (1 nodes): `tract_year_with_target_round7.parquet (Training Panel)`
+- **Thin community `Community 77`** (1 nodes): `test_predictions.parquet (Walk-Forward Predictions)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 78`** (1 nodes): `test_predictions.parquet (Walk-Forward Predictions)`
+- **Thin community `Community 78`** (1 nodes): `FDIC BankFind API (External)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 79`** (1 nodes): `FDIC BankFind API (External)`
+- **Thin community `Community 79`** (1 nodes): `Census Geocoder API (External)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 80`** (1 nodes): `Census Geocoder API (External)`
+- **Thin community `Community 80`** (1 nodes): `Nominatim (OpenStreetMap) Geocoder`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 81`** (1 nodes): `Nominatim (OpenStreetMap) Geocoder`
+- **Thin community `Community 81`** (1 nodes): `FFIEC CRA Disclosure Flat Files (D1/D6)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 82`** (1 nodes): `FFIEC CRA Disclosure Flat Files (D1/D6)`
+- **Thin community `Community 82`** (1 nodes): `FDIC Summary of Deposits (SoD)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 83`** (1 nodes): `FDIC Summary of Deposits (SoD)`
+- **Thin community `Community 83`** (1 nodes): `Target: Becomes Service Desert (h+3/h+6)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 84`** (1 nodes): `Target: Becomes Service Desert (h+3/h+6)`
+- **Thin community `Community 84`** (1 nodes): `web/README.md — Dashboard Build and Data Documentation`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 85`** (1 nodes): `web/README.md — Dashboard Build and Data Documentation`
+- **Thin community `Community 85`** (1 nodes): `00_design_brief.md — Round 7 Design Brief and Feature Tiers`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 86`** (1 nodes): `00_design_brief.md — Round 7 Design Brief and Feature Tiers`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 87`** (1 nodes): `05_methodology_brief.md — Methodology Brief`
+- **Thin community `Community 86`** (1 nodes): `05_methodology_brief.md — Methodology Brief`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `flyToState()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.037) - this node is a cross-community bridge._
+- **Why does `flyToState()` connect `Community 1` to `Community 0`?**
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
 - **Why does `logit()` connect `Community 0` to `Community 3`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Why does `log()` connect `Community 3` to `Community 0`?**

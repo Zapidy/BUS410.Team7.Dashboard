@@ -623,6 +623,10 @@
     STATE.regime  = { h3: regH3, h6: regH6 };
     STATE.pruning = { h3: prH3, h6: prH6 };
 
+    if (!feat)          document.getElementById('sliders')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Scenario data unavailable</p>');
+    if (!states)        document.getElementById('topStates')?.insertAdjacentHTML('beforebegin', '<p class="data-missing">State data unavailable</p>');
+    if (!ablH3 && !ablH6) document.getElementById('ablChart')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Ablation data unavailable</p>');
+
     initMap();
     initToggles();
     renderHeadline();
@@ -635,6 +639,7 @@
     bindDrawerClose();
     syncHorizonAffordances();
     initAccordions();
+    document.querySelector('.guide__card:first-child .accordion__toggle')?.click();
     const stripCtrl = initGuideStrip();
     initSpotlight(stripCtrl);
     renderGeoCopy();
@@ -904,7 +909,7 @@
             0.92,
           ],
           "fill-opacity-transition": { duration: 600, delay: 0 },
-          "fill-color-transition": { duration: 500, delay: 0 },
+          "fill-color-transition": { duration: REDUCED ? 0 : 500, delay: 0 },
         },
       });
       map.addLayer({
@@ -942,6 +947,7 @@
 
       syncGeoLayers();
       ensureLayerInteractions("counties-fill", "counties-outline-hover");
+      document.getElementById('map-loading')?.remove();
     });
   }
 
@@ -967,7 +973,7 @@
           REDUCED ? 0.92 : 0,
         ],
         "fill-opacity-transition": { duration: 600, delay: 0 },
-        "fill-color-transition": { duration: 500, delay: 0 },
+        "fill-color-transition": { duration: REDUCED ? 0 : 500, delay: 0 },
       },
     });
 
