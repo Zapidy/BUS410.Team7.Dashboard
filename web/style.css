@@ -149,10 +149,11 @@ a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
   top: var(--s-6);
   left: var(--s-6);
   max-width: min(54ch, 50vw);
-  transition: left 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 body.is-drawer-open .ovl--title {
-  left: calc(480px + var(--s-6));
+  transform: translate3d(480px, 0, 0);
 }
 .ovl--title .kicker { color: var(--acc); margin-bottom: var(--s-3); display:block; }
 
@@ -325,10 +326,11 @@ body.is-drawer-open .ovl--title {
   padding: 8px 14px;
   letter-spacing: 0.02em;
   flex-wrap: wrap;
-  transition: left 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 body.is-drawer-open .ovl--meta {
-  left: calc(480px + var(--s-6));
+  transform: translate3d(480px, 0, 0);
 }
 .meta__cell .meta__k { color: var(--tx-4); font-weight: 500; margin-right: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
 .meta__cell .num { color: var(--tx-2); font-weight: 600; font-family: var(--ff-disp); }

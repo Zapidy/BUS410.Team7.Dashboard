@@ -104,11 +104,14 @@
     feat: null,                   // feature_stats.json (flat: { key: {...} })
     states: null,                 // state_stats.json
     countyStats: null,            // county_stats.json
+    countyStatsLoading: false,
+    countyStatsTried: false,
     bbox: null,                   // state_bbox.json
     abl: { h3: null, h6: null },  // ablation_h{3,6}.json
     pruning: { h3: null, h6: null },
     regime: { h3: null, h6: null },
     rafId: null,
+    tractLayersReady: false,
     pinnedFeature: null,          // active geography properties object (or null)
     shap: null,                   // shap_top.json (lazily loaded)
     shapLoading: false,
@@ -602,10 +605,9 @@
     document.body.dataset.model = "m1";
     document.body.dataset.horizon = "h3";
 
-    const [feat, states, countyStats, bbox, ablH3, ablH6, regH3, regH6, prH3, prH6] = await Promise.all([
+    const [feat, states, bbox, ablH3, ablH6, regH3, regH6, prH3, prH6] = await Promise.all([
       fetchOptional("data/feature_stats.json"),
       fetchOptional("data/state_stats.json"),
-      fetchOptional("data/county_stats.json"),
       fetchOptional("data/state_bbox.json"),
       fetchOptional("data/ablation_h3.json"),
       fetchOptional("data/ablation_h6.json"),
@@ -616,7 +618,6 @@
     ]);
     STATE.feat    = feat;
     STATE.states  = states;
-    STATE.countyStats = countyStats;
     STATE.bbox    = bbox;
     STATE.abl     = { h3: ablH3, h6: ablH6 };
     STATE.regime  = { h3: regH3, h6: regH6 };
@@ -850,6 +851,21 @@
   // ---------------------------------------------------------------------
   let map;
 
+  function ensureLayerInteractions(fillLayerId, hoverLayerId) {
+    if (!map || !map.getLayer(fillLayerId) || !map.getLayer(hoverLayerId)) return;
+    if (!map.__boundHoverLayers) map.__boundHoverLayers = new Set();
+    if (!map.__boundClickLayers) map.__boundClickLayers = new Set();
+
+    if (!map.__boundHoverLayers.has(fillLayerId)) {
+      bindHoverForLayer(fillLayerId, hoverLayerId);
+      map.__boundHoverLayers.add(fillLayerId);
+    }
+    if (!map.__boundClickLayers.has(fillLayerId)) {
+      bindClickForLayer(fillLayerId);
+      map.__boundClickLayers.add(fillLayerId);
+    }
+  }
+
   function initMap() {
     map = new maplibregl.Map({
       container: "map",
@@ -869,12 +885,6 @@
     map.on("error", (e) => console.warn("[map]", e && e.error ? e.error.message : e));
 
     map.on("load", () => {
-      map.addSource("tracts", {
-        type: "geojson",
-        data: "data/tracts.geojson",
-        generateId: false,
-        tolerance: 0.5,
-      });
       map.addSource("counties", {
         type: "geojson",
         data: "data/counties.geojson",
@@ -895,87 +905,6 @@
           ],
           "fill-opacity-transition": { duration: 600, delay: 0 },
           "fill-color-transition": { duration: 500, delay: 0 },
-        },
-      });
-
-      // Tract fill — base coloring on the active model × horizon
-      map.addLayer({
-        id: "tracts-fill",
-        type: "fill",
-        source: "tracts",
-        paint: {
-          "fill-color": rampToExpr(),
-          "fill-opacity": [
-            "case",
-            ["==", ["get", riskProp()], null], 0.18,
-            REDUCED ? 0.92 : 0,
-          ],
-          "fill-opacity-transition": { duration: 600, delay: 0 },
-          "fill-color-transition": { duration: 500, delay: 0 },
-        },
-      });
-
-      // State-tint overlay — peripheral spatial context (visible state boundaries
-      // without a dedicated state polygon source). Sits ABOVE choropleth fill,
-      // BELOW hover/edge lines. Hidden for the focused state.
-      const stateTintMatch = ["match", ["get", "st"]];
-      Object.entries(STATE_TINT).forEach(([st, color]) => {
-        stateTintMatch.push(st, color);
-      });
-      stateTintMatch.push("hsl(0, 0%, 50%)"); // fallback
-      map.addLayer({
-        id: "state-tint-overlay",
-        type: "fill",
-        source: "tracts",
-        paint: {
-          "fill-color": stateTintMatch,
-          "fill-opacity": tintOpacityExpr(),
-          "fill-opacity-transition": { duration: 350, delay: 0 },
-        },
-      });
-
-      // Tract outline — appears on hover only
-      map.addLayer({
-        id: "tracts-outline-hover",
-        type: "line",
-        source: "tracts",
-        filter: ["==", ["get", "f"], "__none__"],
-        paint: {
-          "line-color": "#fc5855",
-          "line-width": 1.2,
-          "line-opacity": 1,
-        },
-      });
-
-      // Pinned tract outline — visible only for the currently pinned tract.
-      // Uses a layer-level filter so it disappears when nothing is pinned.
-      map.addLayer({
-        id: "tracts-outline-pinned",
-        type: "line",
-        source: "tracts",
-        filter: ["==", ["get", "f"], "__none__"],
-        paint: {
-          "line-color": "#fc5855",
-          "line-width": 1.5,
-          "line-opacity": 1,
-        },
-      });
-
-      // Faint hairline tract boundary at higher zoom
-      map.addLayer({
-        id: "tracts-edge",
-        type: "line",
-        source: "tracts",
-        paint: {
-          "line-color": "#0a1319",
-          "line-width": 0.3,
-          "line-opacity": [
-            "interpolate", ["linear"], ["zoom"],
-            3, 0,
-            5, 0,
-            6, 0.4,
-            9, 0.7,
-          ],
         },
       });
       map.addLayer({
@@ -1011,22 +940,109 @@
         },
       });
 
-      if (!REDUCED) {
-        map.setPaintProperty("tracts-fill", "fill-opacity", [
+      syncGeoLayers();
+      ensureLayerInteractions("counties-fill", "counties-outline-hover");
+    });
+  }
+
+  function ensureTractLayers() {
+    if (!map || STATE.tractLayersReady) return;
+
+    map.addSource("tracts", {
+      type: "geojson",
+      data: "data/tracts.geojson",
+      generateId: false,
+      tolerance: 0.5,
+    });
+
+    map.addLayer({
+      id: "tracts-fill",
+      type: "fill",
+      source: "tracts",
+      paint: {
+        "fill-color": rampToExpr(),
+        "fill-opacity": [
           "case",
           ["==", ["get", riskProp()], null], 0.18,
-          0.92
-        ]);
-      }
-
-      syncGeoLayers();
-      bindHover();
-      bindClick();
+          REDUCED ? 0.92 : 0,
+        ],
+        "fill-opacity-transition": { duration: 600, delay: 0 },
+        "fill-color-transition": { duration: 500, delay: 0 },
+      },
     });
+
+    const stateTintMatch = ["match", ["get", "st"]];
+    Object.entries(STATE_TINT).forEach(([st, color]) => {
+      stateTintMatch.push(st, color);
+    });
+    stateTintMatch.push("hsl(0, 0%, 50%)");
+    map.addLayer({
+      id: "state-tint-overlay",
+      type: "fill",
+      source: "tracts",
+      paint: {
+        "fill-color": stateTintMatch,
+        "fill-opacity": tintOpacityExpr(),
+        "fill-opacity-transition": { duration: 350, delay: 0 },
+      },
+    });
+
+    map.addLayer({
+      id: "tracts-outline-hover",
+      type: "line",
+      source: "tracts",
+      filter: ["==", ["get", "f"], "__none__"],
+      paint: {
+        "line-color": "#fc5855",
+        "line-width": 1.2,
+        "line-opacity": 1,
+      },
+    });
+
+    map.addLayer({
+      id: "tracts-outline-pinned",
+      type: "line",
+      source: "tracts",
+      filter: ["==", ["get", "f"], "__none__"],
+      paint: {
+        "line-color": "#fc5855",
+        "line-width": 1.5,
+        "line-opacity": 1,
+      },
+    });
+
+    map.addLayer({
+      id: "tracts-edge",
+      type: "line",
+      source: "tracts",
+      paint: {
+        "line-color": "#0a1319",
+        "line-width": 0.3,
+        "line-opacity": [
+          "interpolate", ["linear"], ["zoom"],
+          3, 0,
+          5, 0,
+          6, 0.4,
+          9, 0.7,
+        ],
+      },
+    });
+
+    if (!REDUCED) {
+      map.setPaintProperty("tracts-fill", "fill-opacity", [
+        "case",
+        ["==", ["get", riskProp()], null], 0.18,
+        0.92
+      ]);
+    }
+
+    STATE.tractLayersReady = true;
+    ensureLayerInteractions("tracts-fill", "tracts-outline-hover");
   }
 
   function syncGeoLayers() {
     if (!map) return;
+    if (!isCountyMode()) ensureTractLayers();
     const countyVis = isCountyMode() ? "visible" : "none";
     const tractVis = isCountyMode() ? "none" : "visible";
     [
@@ -1131,25 +1147,36 @@
     });
   }
 
-  function bindHover() {
-    bindHoverForLayer("counties-fill", "counties-outline-hover");
-    bindHoverForLayer("tracts-fill", "tracts-outline-hover");
-  }
-
-  function bindClick() {
-    const bindClickForLayer = (fillLayerId) => map.on("click", fillLayerId, (e) => {
+  function bindClickForLayer(fillLayerId) {
+    map.on("click", fillLayerId, (e) => {
       if (fillLayerId !== activeFillLayerId()) return;
       if (!e.features || !e.features.length) return;
       const p = e.features[0].properties;
-      // Toggle pin: click same geography again closes the drawer.
       if (STATE.pinnedFeature && STATE.pinnedFeature.f === p.f) {
         unpinFeature();
       } else {
         pinFeature(p);
       }
     });
-    bindClickForLayer("counties-fill");
-    bindClickForLayer("tracts-fill");
+  }
+
+  async function ensureCountyStats() {
+    if (STATE.countyStats || STATE.countyStatsLoading || STATE.countyStatsTried) return;
+    STATE.countyStatsLoading = true;
+    const data = await fetchOptional("data/county_stats.json");
+    STATE.countyStats = data;
+    STATE.countyStatsLoading = false;
+    STATE.countyStatsTried = true;
+    if (STATE.pinnedFeature && isCountyMode()) renderDrawer();
+  }
+
+  async function fetchGzipJson(path) {
+    if (typeof DecompressionStream === "undefined") return null;
+    const r = await fetch(path);
+    if (!r.ok || !r.body) return null;
+    const stream = r.body.pipeThrough(new DecompressionStream("gzip"));
+    const text = await new Response(stream).text();
+    return JSON.parse(text);
   }
 
   function flyToState(st) {
@@ -1282,7 +1309,8 @@
     }
     openDrawer();
     refreshScenarioDrawer();
-    if (!isCountyMode()) ensureShap();   // lazy-load SHAP attribution on first tract pin
+    if (isCountyMode()) ensureCountyStats();
+    else ensureShap();
   }
 
   function unpinFeature() {
@@ -1964,8 +1992,8 @@
     if (STATE.shap || STATE.shapLoading || STATE.shapTried) return;
     STATE.shapLoading = true;
     renderDrawerShap(); // show "Loading attribution…"
-    fetch("data/shap_top.json")
-      .then(r => r.ok ? r.json() : null)
+    fetchGzipJson("data/shap_top.json.gz")
+      .then(j => j || fetchOptional("data/shap_top.json"))
       .then(j => {
         STATE.shap = j;
         STATE.shapLoading = false;
