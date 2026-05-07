@@ -772,12 +772,28 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   gap: 0;
 }
 .guide__card {
-  padding: 0 var(--s-4) 0 0;
+  padding: var(--s-3) var(--s-4) var(--s-3) 0;
   margin-right: var(--s-4);
   border-right: 1px solid var(--rule-soft);
-  display: flex; flex-direction: column; gap: var(--s-3);
+  display: flex; flex-direction: row; align-items: center; gap: var(--s-3);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 140ms ease;
 }
+.guide__card:hover,
+.guide__card:focus-visible { background: oklch(1 0.005 240 / 0.05); outline: none; }
 .guide__card:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.guide__card .accordion__body { display: none; }
+.guide__caret {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--tx-2);
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: transform 140ms ease, color 140ms ease;
+}
+.guide__card:hover .guide__caret,
+.guide__card:focus-visible .guide__caret { transform: translateX(3px); color: var(--tx); }
 .guide__num {
   font-family: var(--ff-disp);
   font-weight: 700;
@@ -821,6 +837,192 @@ input[type="range"].slider__rng:focus-visible::-webkit-slider-thumb {
   .guide__card { border-right: 0; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--rule-soft); padding-bottom: var(--s-4); }
   .guide__card:last-child { border-bottom: 0; padding-bottom: 0; }
 }
+
+/* =====================================================================
+   GUIDE STRIP — collapsible overlay anchored to bottom of hero
+   ===================================================================== */
+.ovl--guide {
+  left: 0; right: 0; bottom: 0; top: auto;
+  max-width: none;
+  z-index: 6;
+  pointer-events: auto;
+  background: var(--bg);
+  border-top: 1px solid var(--rule);
+  border-bottom: none;
+  overflow: hidden;
+  transition: max-height 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ovl--guide.is-expanded {
+  max-height: 400px;
+  padding: var(--s-4) max(var(--s-6), 4vw) var(--s-5);
+}
+.ovl--guide.is-collapsed {
+  max-height: 32px;
+  padding: 0 max(var(--s-6), 4vw);
+  cursor: pointer;
+}
+.ovl--guide .guide__head {
+  align-items: center;
+  padding-bottom: var(--s-3);
+}
+.ovl--guide.is-collapsed .guide__head,
+.ovl--guide.is-collapsed .guide__grid { display: none; }
+.ovl--guide.is-expanded  .guide__tab  { display: none; }
+
+.guide__tab {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+.guide__tab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-family: var(--ff-mono);
+  font-variation-settings: "MONO" 1, "CASL" 0.85;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--tx-2);
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.ovl--guide.is-collapsed:hover .guide__tab-pill {
+  background: oklch(1 0.005 240 / 0.06);
+  border-color: var(--tx-2);
+  color: var(--tx);
+}
+.guide__head-meta { display: flex; flex-direction: column; gap: 2px; }
+.guide__hint {
+  font-family: var(--ff-mono);
+  font-variation-settings: "MONO" 1, "CASL" 0.85;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--tx-2);
+  margin: 0;
+}
+.guide__collapse {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--rule-soft);
+  border-radius: 20px;
+  color: var(--tx-2);
+  font-family: var(--ff-mono);
+  font-variation-settings: "MONO" 1, "CASL" 0.85;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.guide__collapse:hover,
+.guide__collapse:focus-visible {
+  background: oklch(1 0.005 240 / 0.06);
+  border-color: var(--tx-2);
+  color: var(--tx);
+  outline: none;
+}
+
+/* =====================================================================
+   SPOTLIGHT TOUR OVERLAY
+   ===================================================================== */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: auto;
+}
+.spotlight__ring {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 6px;
+  outline: 2px solid var(--coral);
+  outline-offset: 7px;
+  box-shadow: 0 0 0 9999px oklch(0.05 0.005 240 / 0.72);
+  animation: spotlight-pulse 2.4s ease-in-out infinite;
+}
+@keyframes spotlight-pulse {
+  0%, 100% { outline-offset: 7px; }
+  50%       { outline-offset: 11px; outline-color: oklch(0.72 0.15 35 / 0.6); }
+}
+.spotlight__callout {
+  position: fixed;
+  width: 340px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  pointer-events: auto;
+  box-shadow: 0 20px 60px oklch(0 0 0 / 0.55);
+}
+.spotlight__kicker {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--coral);
+}
+.spotlight__title {
+  font-family: var(--ff-disp);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--tx);
+  margin: 0;
+  line-height: 1.2;
+}
+.spotlight__body {
+  font-family: var(--ff-body);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--tx-2);
+}
+.spotlight__body p { margin: 0; }
+.spotlight__body b { color: var(--tx); font-weight: 600; }
+.spotlight__nav {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--rule-soft);
+}
+.spotlight__prev,
+.spotlight__next {
+  background: none;
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  color: var(--tx-2);
+  font-family: var(--ff-mono);
+  font-variation-settings: "MONO" 1, "CASL" 0.85;
+  font-size: 0.6875rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.spotlight__prev:hover,
+.spotlight__next:hover { background: oklch(1 0.005 240 / 0.06); color: var(--tx); }
+.spotlight__close {
+  margin-left: auto;
+  background: var(--coral);
+  border: none;
+  border-radius: 4px;
+  color: oklch(0.12 0.02 35);
+  font-family: var(--ff-mono);
+  font-variation-settings: "MONO" 1, "CASL" 0.85;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+.spotlight__close:hover { filter: brightness(1.12); }
 
 /* =====================================================================
    FOCUS MODE — state-detail panel in right rail

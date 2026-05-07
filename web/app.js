@@ -634,7 +634,191 @@
     bindDrawerClose();
     syncHorizonAffordances();
     initAccordions();
+    const stripCtrl = initGuideStrip();
+    initSpotlight(stripCtrl);
     renderGeoCopy();
+  }
+
+  function initGuideStrip() {
+    const el = document.getElementById("useGuide");
+    if (!el) return null;
+    const btn = el.querySelector(".guide__collapse");
+
+    function setState(s) {
+      el.classList.toggle("is-expanded", s === "expanded");
+      el.classList.toggle("is-collapsed", s === "collapsed");
+      if (btn) {
+        btn.setAttribute("aria-expanded", String(s === "expanded"));
+        btn.innerHTML = s === "expanded"
+          ? '<span>Hide guide</span> <span aria-hidden="true">&#8595;</span>'
+          : '<span>Show guide</span> <span aria-hidden="true">&#8593;</span>';
+      }
+    }
+
+    setState("expanded");
+
+    el.addEventListener("click", (e) => {
+      if (el.classList.contains("is-collapsed")) {
+        setState("expanded");
+        return;
+      }
+      if (btn && (e.target === btn || btn.contains(e.target))) {
+        setState("collapsed");
+        localStorage.setItem("guideSeen", "1");
+      }
+    });
+
+    return { collapse: () => setState("collapsed") };
+  }
+
+  function initSpotlight(stripCtrl) {
+    const cards = [...document.querySelectorAll(".guide__card[data-spotlight-target]")];
+    if (!cards.length) return;
+
+    const overlay  = document.getElementById("spotlight");
+    if (!overlay) return;
+    const ring     = overlay.querySelector(".spotlight__ring");
+    const callout  = overlay.querySelector(".spotlight__callout");
+    const kicker   = overlay.querySelector(".spotlight__kicker");
+    const titleEl  = overlay.querySelector(".spotlight__title");
+    const bodyEl   = overlay.querySelector(".spotlight__body");
+    const prevBtn  = overlay.querySelector(".spotlight__prev");
+    const nextBtn  = overlay.querySelector(".spotlight__next");
+    const closeBtn = overlay.querySelector(".spotlight__close");
+
+    let current = -1;
+    let rafId   = null;
+
+    // wire card clicks + keyboard
+    cards.forEach((card, i) => {
+      card.addEventListener("click", (e) => { e.stopPropagation(); open(i); });
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
+      });
+    });
+
+    prevBtn.addEventListener("click",  () => open((current - 1 + cards.length) % cards.length));
+    nextBtn.addEventListener("click",  () => open((current + 1) % cards.length));
+    closeBtn.addEventListener("click", close);
+
+    overlay.addEventListener("click", (e) => {
+      if (!callout.contains(e.target)) close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (overlay.hidden) return;
+      if (e.key === "Escape")     close();
+      if (e.key === "ArrowRight") open((current + 1) % cards.length);
+      if (e.key === "ArrowLeft")  open((current - 1 + cards.length) % cards.length);
+    });
+
+    function open(i) {
+      const wasOpen = !overlay.hidden;
+      current = i;
+      const card     = cards[i];
+      const selector = card.dataset.spotlightTarget;
+      const target   = document.querySelector(selector);
+      if (!target) return;
+
+      // collapse guide strip
+      if (stripCtrl) stripCtrl.collapse();
+
+      // populate callout
+      kicker.textContent  = `Step ${String(i + 1).padStart(2, "0")} of ${cards.length}`;
+      titleEl.textContent = card.querySelector(".guide__h")?.textContent || "";
+      bodyEl.innerHTML    = card.querySelector(".accordion__body")?.innerHTML || "";
+
+      // show overlay
+      overlay.hidden = false;
+      overlay.removeAttribute("aria-hidden");
+
+      // attach persistent listeners only on first open
+      if (!wasOpen) {
+        window.addEventListener("resize", onResize);
+        const rail = document.querySelector(".rail");
+        if (rail) rail.addEventListener("scroll", onRailScroll, { passive: true });
+      }
+
+      const railEl = document.querySelector(".rail");
+      const rect   = target.getBoundingClientRect();
+      const inView = rect.top >= 0 && rect.bottom <= window.innerHeight &&
+                     rect.left >= 0 && rect.right <= window.innerWidth;
+
+      // if target IS the rail container and it's scrolled down, reset scroll first
+      if (target === railEl && railEl.scrollTop > 0) {
+        railEl.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => requestAnimationFrame(() => position(target)), 380);
+      } else if (!inView) {
+        // target is off-screen: scroll it into view then reposition
+        target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+        let timer = null;
+        const onScroll = () => { clearTimeout(timer); timer = setTimeout(() => requestAnimationFrame(() => position(target)), 80); };
+        const els = [window, railEl].filter(Boolean);
+        els.forEach(el => el.addEventListener("scroll", onScroll, { passive: true }));
+        setTimeout(() => {
+          els.forEach(el => el.removeEventListener("scroll", onScroll));
+          requestAnimationFrame(() => position(target));
+        }, 500);
+      } else {
+        // already in view — defer one frame so callout reflow settles after innerHTML change
+        requestAnimationFrame(() => position(target));
+      }
+    }
+
+    function position(target) {
+      const PAD  = 8;
+      const rect = target.getBoundingClientRect();
+      const vw   = window.innerWidth;
+      const vh   = window.innerHeight;
+
+      ring.style.left   = (rect.left - PAD) + "px";
+      ring.style.top    = (rect.top  - PAD) + "px";
+      ring.style.width  = (rect.width  + PAD * 2) + "px";
+      ring.style.height = (rect.height + PAD * 2) + "px";
+
+      const calloutW = 340;
+      const calloutH = callout.getBoundingClientRect().height || 260;
+      const GAP      = 20;
+
+      let left;
+      if (rect.right + calloutW + GAP * 2 <= vw) {
+        left = rect.right + GAP;
+      } else if (rect.left - calloutW - GAP * 2 >= 0) {
+        left = rect.left - calloutW - GAP;
+      } else {
+        left = Math.max(GAP, Math.min(vw - calloutW - GAP, rect.left));
+      }
+
+      let top = rect.top + rect.height / 2 - calloutH / 2;
+      top = Math.max(GAP, Math.min(vh - calloutH - GAP, top));
+
+      callout.style.left = left + "px";
+      callout.style.top  = top  + "px";
+    }
+
+    function close() {
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden", "true");
+      current = -1;
+      window.removeEventListener("resize", onResize);
+      const rail = document.querySelector(".rail");
+      if (rail) rail.removeEventListener("scroll", onRailScroll);
+    }
+
+    function onResize() {
+      if (current < 0) return;
+      const target = document.querySelector(cards[current].dataset.spotlightTarget);
+      if (target) position(target);
+    }
+
+    function onRailScroll() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (current < 0) return;
+        const target = document.querySelector(cards[current].dataset.spotlightTarget);
+        if (target) position(target);
+      });
+    }
   }
 
   function initAccordions() {
