@@ -13,42 +13,48 @@
 
   // Lever feature → display label + ablation group key
   const LEVERS = [
-    { key: "distance_to_nearest_bank_branch",
+    {
+      key: "distance_to_nearest_bank_branch",
       label: "Bank branch distance",
       unit: "mi",
       group: "branch_access",
       polarity: -1,         // farther → MORE risk (we model -polarity*z*w)
       hint: "Median miles to nearest branch.",
     },
-    { key: "branches_within_5mi",
+    {
+      key: "branches_within_5mi",
       label: "Branches within 5 mi",
       unit: "branches",
       group: "branch_access",
       polarity: +1,
       hint: "More branches → less risk.",
     },
-    { key: "mdi_branches_within_25mi",
+    {
+      key: "mdi_branches_within_25mi",
       label: "MDI branch reach",
       unit: "MDI within 25 mi",
       group: "mdi_mission_lender",
       polarity: +1,
       hint: "Minority Depository Institution presence.",
     },
-    { key: "ssbci_active",
+    {
+      key: "ssbci_active",
       label: "SSBCI program coverage",
       unit: "share active",
       group: "ssbci_state_policy",
       polarity: +1,
       hint: "State Small Business Credit Initiative.",
     },
-    { key: "microloan_intermediary_within_25mi",
+    {
+      key: "microloan_intermediary_within_25mi",
       label: "Microlender ecosystem",
       unit: "intermediaries",
       group: "microlender_ecosystem",
       polarity: +1,
       hint: "SBA microloan intermediaries within 25 mi.",
     },
-    { key: "lender_hhi_tract_resid",
+    {
+      key: "lender_hhi_tract_resid",
       label: "Lender concentration (resid.)",
       unit: "HHI deviation",
       group: "residualized_concentration",
@@ -457,9 +463,9 @@
   // ---------------------------------------------------------------------
   const isDarkTheme = () => document.documentElement.dataset.theme !== "light";
   const nullFillColor = () => isDarkTheme() ? "#0c1318" : "#f2f1ee";
-  const coralColor    = () => isDarkTheme() ? "#fc5855" : "#cc3d3a";
-  const edgeColor     = () => isDarkTheme() ? "#0a1319" : "#c2cad4";
-  const bgColor       = () => isDarkTheme() ? "#040c13" : "#f7f5f0";
+  const coralColor = () => isDarkTheme() ? "#fc5855" : "#cc3d3a";
+  const edgeColor = () => isDarkTheme() ? "#0a1319" : "#c2cad4";
+  const bgColor = () => isDarkTheme() ? "#040c13" : "#f7f5f0";
 
   // Choropleth ramps — paper→deep-accent for light, dark→bright-accent for dark.
   const RAMPS_DARK = {
@@ -536,11 +542,14 @@
     },
     layers: [
       { id: "bg", type: "background", paint: { "background-color": bgColor() } },
-      { id: "base-dark", type: "raster", source: "carto-dark",
+      {
+        id: "base-dark", type: "raster", source: "carto-dark",
+        layout: { visibility: isDarkTheme() ? "visible" : "none" },
         paint: { "raster-opacity": 0.55, "raster-saturation": -0.4, "raster-contrast": -0.05, "raster-brightness-min": 0.02 }
       },
-      { id: "base-light", type: "raster", source: "carto-light",
-        layout: { visibility: "none" },
+      {
+        id: "base-light", type: "raster", source: "carto-light",
+        layout: { visibility: isDarkTheme() ? "none" : "visible" },
         paint: { "raster-opacity": 0.50, "raster-saturation": -0.20, "raster-contrast": 0.05 }
       },
     ],
@@ -640,7 +649,7 @@
   const stateBordersOpacity = () => {
     const base = ["interpolate", ["linear"], ["zoom"], 3, 0.35, 5, 0.45, 8, 0.55, 10, 0.65];
     if (!STATE.focusedState) return base;
-    const dim  = ["interpolate", ["linear"], ["zoom"], 3, 0.25, 5, 0.30, 8, 0.35, 10, 0.40];
+    const dim = ["interpolate", ["linear"], ["zoom"], 3, 0.25, 5, 0.30, 8, 0.35, 10, 0.40];
     return ["case", ["==", ["get", "st"], STATE.focusedState], 0.95, dim];
   };
   const stateBordersWidth = () => {
@@ -659,14 +668,14 @@
     if (!map) return;
     const dark = isDarkTheme();
     map.setPaintProperty("bg", "background-color", bgColor());
-    map.setLayoutProperty("base-dark",  "visibility", dark ? "visible" : "none");
+    map.setLayoutProperty("base-dark", "visibility", dark ? "visible" : "none");
     map.setLayoutProperty("base-light", "visibility", dark ? "none" : "visible");
     const outline = coralColor();
-    const edge    = edgeColor();
+    const edge = edgeColor();
     ["counties-outline-hover", "counties-outline-pinned",
-     "tracts-outline-hover",   "tracts-outline-pinned"].forEach(id => {
-      if (map.getLayer(id)) map.setPaintProperty(id, "line-color", outline);
-    });
+      "tracts-outline-hover", "tracts-outline-pinned"].forEach(id => {
+        if (map.getLayer(id)) map.setPaintProperty(id, "line-color", outline);
+      });
     ["counties-edge", "tracts-edge"].forEach(id => {
       if (map.getLayer(id)) map.setPaintProperty(id, "line-color", edge);
     });
@@ -713,16 +722,16 @@
       fetchOptional("data/pruning_h3.json"),
       fetchOptional("data/pruning_h6.json"),
     ]);
-    STATE.feat    = feat;
+    STATE.feat = feat;
     STATE.featureDictionary = dict;
-    STATE.states  = states;
-    STATE.bbox    = bbox;
-    STATE.abl     = { h3: ablH3, h6: ablH6 };
-    STATE.regime  = { h3: regH3, h6: regH6 };
+    STATE.states = states;
+    STATE.bbox = bbox;
+    STATE.abl = { h3: ablH3, h6: ablH6 };
+    STATE.regime = { h3: regH3, h6: regH6 };
     STATE.pruning = { h3: prH3, h6: prH6 };
 
-    if (!feat)          document.getElementById('sliders')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Scenario data unavailable</p>');
-    if (!states)        document.getElementById('topStates')?.insertAdjacentHTML('beforebegin', '<p class="data-missing">State data unavailable</p>');
+    if (!feat) document.getElementById('sliders')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Scenario data unavailable</p>');
+    if (!states) document.getElementById('topStates')?.insertAdjacentHTML('beforebegin', '<p class="data-missing">State data unavailable</p>');
     if (!ablH3 && !ablH6) document.getElementById('ablChart')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Ablation data unavailable</p>');
 
     initTheme();
@@ -796,19 +805,19 @@
     const cards = [...document.querySelectorAll(".guide__card[data-spotlight-target]")];
     if (!cards.length) return;
 
-    const overlay  = document.getElementById("spotlight");
+    const overlay = document.getElementById("spotlight");
     if (!overlay) return;
-    const ring     = overlay.querySelector(".spotlight__ring");
-    const callout  = overlay.querySelector(".spotlight__callout");
-    const kicker   = overlay.querySelector(".spotlight__kicker");
-    const titleEl  = overlay.querySelector(".spotlight__title");
-    const bodyEl   = overlay.querySelector(".spotlight__body");
-    const prevBtn  = overlay.querySelector(".spotlight__prev");
-    const nextBtn  = overlay.querySelector(".spotlight__next");
+    const ring = overlay.querySelector(".spotlight__ring");
+    const callout = overlay.querySelector(".spotlight__callout");
+    const kicker = overlay.querySelector(".spotlight__kicker");
+    const titleEl = overlay.querySelector(".spotlight__title");
+    const bodyEl = overlay.querySelector(".spotlight__body");
+    const prevBtn = overlay.querySelector(".spotlight__prev");
+    const nextBtn = overlay.querySelector(".spotlight__next");
     const closeBtn = overlay.querySelector(".spotlight__close");
 
     let current = -1;
-    let rafId   = null;
+    let rafId = null;
 
     // wire card clicks + keyboard
     cards.forEach((card, i) => {
@@ -818,8 +827,8 @@
       });
     });
 
-    prevBtn.addEventListener("click",  () => open((current - 1 + cards.length) % cards.length));
-    nextBtn.addEventListener("click",  () => open((current + 1) % cards.length));
+    prevBtn.addEventListener("click", () => open((current - 1 + cards.length) % cards.length));
+    nextBtn.addEventListener("click", () => open((current + 1) % cards.length));
     closeBtn.addEventListener("click", close);
 
     overlay.addEventListener("click", (e) => {
@@ -828,26 +837,26 @@
 
     document.addEventListener("keydown", (e) => {
       if (overlay.hidden) return;
-      if (e.key === "Escape")     close();
+      if (e.key === "Escape") close();
       if (e.key === "ArrowRight") open((current + 1) % cards.length);
-      if (e.key === "ArrowLeft")  open((current - 1 + cards.length) % cards.length);
+      if (e.key === "ArrowLeft") open((current - 1 + cards.length) % cards.length);
     });
 
     function open(i) {
       const wasOpen = !overlay.hidden;
       current = i;
-      const card     = cards[i];
+      const card = cards[i];
       const selector = card.dataset.spotlightTarget;
-      const target   = document.querySelector(selector);
+      const target = document.querySelector(selector);
       if (!target) return;
 
       // collapse guide strip
       if (stripCtrl) stripCtrl.collapse();
 
       // populate callout
-      kicker.textContent  = `Step ${String(i + 1).padStart(2, "0")} of ${cards.length}`;
+      kicker.textContent = `Step ${String(i + 1).padStart(2, "0")} of ${cards.length}`;
       titleEl.textContent = card.querySelector(".guide__h")?.textContent || "";
-      bodyEl.innerHTML    = card.querySelector(".accordion__body")?.innerHTML || "";
+      bodyEl.innerHTML = card.querySelector(".accordion__body")?.innerHTML || "";
 
       // show overlay
       overlay.hidden = false;
@@ -861,9 +870,9 @@
       }
 
       const railEl = document.querySelector(".rail");
-      const rect   = target.getBoundingClientRect();
+      const rect = target.getBoundingClientRect();
       const inView = rect.top >= 0 && rect.bottom <= window.innerHeight &&
-                     rect.left >= 0 && rect.right <= window.innerWidth;
+        rect.left >= 0 && rect.right <= window.innerWidth;
 
       // if target IS the rail container and it's scrolled down, reset scroll first
       if (target === railEl && railEl.scrollTop > 0) {
@@ -887,19 +896,19 @@
     }
 
     function position(target) {
-      const PAD  = 8;
+      const PAD = 8;
       const rect = target.getBoundingClientRect();
-      const vw   = window.innerWidth;
-      const vh   = window.innerHeight;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
 
-      ring.style.left   = (rect.left - PAD) + "px";
-      ring.style.top    = (rect.top  - PAD) + "px";
-      ring.style.width  = (rect.width  + PAD * 2) + "px";
+      ring.style.left = (rect.left - PAD) + "px";
+      ring.style.top = (rect.top - PAD) + "px";
+      ring.style.width = (rect.width + PAD * 2) + "px";
       ring.style.height = (rect.height + PAD * 2) + "px";
 
       const calloutW = 340;
       const calloutH = callout.getBoundingClientRect().height || 260;
-      const GAP      = 20;
+      const GAP = 20;
 
       let left;
       if (rect.right + calloutW + GAP * 2 <= vw) {
@@ -914,7 +923,7 @@
       top = Math.max(GAP, Math.min(vh - calloutH - GAP, top));
 
       callout.style.left = left + "px";
-      callout.style.top  = top  + "px";
+      callout.style.top = top + "px";
     }
 
     function close() {
@@ -1429,6 +1438,7 @@
 
       syncGeoLayers();
       ensureLayerInteractions("counties-fill", "counties-outline-hover");
+      applyThemeToMap();
       hideMapLoading();
       waitForMapIdle(warmTractLayers, 900);
     });
@@ -1586,7 +1596,7 @@
 
       // Active row vs other row
       const active = STATE.activeModel;
-      const other  = active === "m1" ? "m2" : "m1";
+      const other = active === "m1" ? "m2" : "m1";
       const labels = { m1: "Diagnostic", m2: "Influenceable" };
 
       const aRow = document.getElementById("tipRowActive");
@@ -1595,15 +1605,15 @@
       aRow.classList.add(`is-${STATE.activeHorizon}`);
 
       document.getElementById("tipDotActive").className = "tip__dot tip__dot--" + active;
-      document.getElementById("tipDotOther").className  = "tip__dot tip__dot--" + other;
+      document.getElementById("tipDotOther").className = "tip__dot tip__dot--" + other;
       document.getElementById("tipLActive").textContent = labels[active];
-      document.getElementById("tipLOther").textContent  = labels[other];
+      document.getElementById("tipLOther").textContent = labels[other];
 
       const vals = { m1: { h3: m1_h3, h6: m1_h6 }, m2: { h3: m2_h3, h6: m2_h6 } };
       document.getElementById("tipActive_h3").textContent = fmt(vals[active].h3);
       document.getElementById("tipActive_h6").textContent = fmt(vals[active].h6);
-      document.getElementById("tipOther_h3").textContent  = fmt(vals[other].h3);
-      document.getElementById("tipOther_h6").textContent  = fmt(vals[other].h6);
+      document.getElementById("tipOther_h3").textContent = fmt(vals[other].h3);
+      document.getElementById("tipOther_h6").textContent = fmt(vals[other].h6);
 
       // Percentile is for active (model, horizon)
       const ranks = { m1: { h3: m1r_h3, h6: m1r_h6 }, m2: { h3: m2r_h3, h6: m2r_h6 } };
@@ -1617,12 +1627,12 @@
       const w = rect.width || 280, h = rect.height || 160;
       let tx = x + 16, ty = y + 16;
       const bottomEdge = viewportBottomEdge();
-      if (tx + w > innerWidth - 8)  tx = x - w - 16;
+      if (tx + w > innerWidth - 8) tx = x - w - 16;
       if (ty + h > bottomEdge) ty = y - h - 16;
       if (ty + h > bottomEdge) ty = bottomEdge - h;
       if (ty < 8) ty = 8;
       tip.style.left = tx + "px";
-      tip.style.top  = ty + "px";
+      tip.style.top = ty + "px";
       map.getCanvas().style.cursor = "crosshair";
     });
 
@@ -1700,20 +1710,20 @@
   }
 
   function renderFocusPanel() {
-    const focusEl  = document.getElementById("modeFocus");
-    const sumEl    = document.getElementById("modeSummary");
-    const scenEl   = document.getElementById("modeScenario");
+    const focusEl = document.getElementById("modeFocus");
+    const sumEl = document.getElementById("modeSummary");
+    const scenEl = document.getElementById("modeScenario");
     const anyShift = Object.values(STATE.sliderShifts).some(z => Math.abs(z) > 0.01);
 
     if (!STATE.focusedState) {
       if (focusEl) focusEl.hidden = true;
       // restore the appropriate non-focus mode
-      if (sumEl)  sumEl.hidden  = anyShift;
+      if (sumEl) sumEl.hidden = anyShift;
       if (scenEl) scenEl.hidden = !anyShift;
       return;
     }
     // Focused: hide both summary + scenario, show focus
-    if (sumEl)  sumEl.hidden  = true;
+    if (sumEl) sumEl.hidden = true;
     if (scenEl) scenEl.hidden = true;
     if (focusEl) focusEl.hidden = false;
 
@@ -2129,7 +2139,7 @@
       { m: "m2", h: "h6", v: m2_h6, r: m2r_h6 },
     ];
     const MODEL_NAME = { m1: "Diagnostic", m2: "Influenceable" };
-    const YEAR_OF    = { h3: "2027 forecast", h6: "2030 scenario" };
+    const YEAR_OF = { h3: "2027 forecast", h6: "2030 scenario" };
     cells.forEach(c => {
       const isActive = c.m === STATE.activeModel && c.h === STATE.activeHorizon;
       const div = document.createElement("div");
@@ -2291,7 +2301,7 @@
     const m = STATE.activeModel;
     const h = STATE.activeHorizon;
     const MODEL_NAME = { m1: "Diagnostic", m2: "Influenceable" };
-    const YEAR_OF    = { h3: "2027 forecast", h6: "2030 scenario" };
+    const YEAR_OF = { h3: "2027 forecast", h6: "2030 scenario" };
     hzLbl.textContent = `${MODEL_NAME[m]} · ${YEAR_OF[h]}`;
 
     wrap.innerHTML = "";
@@ -2668,7 +2678,7 @@
   function syncHorizonAffordances() {
     document.getElementById("horizonLabel").textContent =
       "Forecasting → " + HZ_YEAR[STATE.activeHorizon];
-    document.getElementById("metaHorizon").textContent  = HZ_META[STATE.activeHorizon];
+    document.getElementById("metaHorizon").textContent = HZ_META[STATE.activeHorizon];
     document.getElementById("legendHorizon").textContent = HZ_YEAR[STATE.activeHorizon] + " forecast";
     document.getElementById("railHorizon").textContent =
       STATE.activeHorizon === "h3" ? "2027 forecast" : "2030 scenario";
@@ -2690,17 +2700,17 @@
       m === "m1" ? "Diagnostic" : "Influenceable";
     document.getElementById("railModelDesc").textContent =
       m === "m1"
-        ? "All 39 features. Round-5 champion. The strongest predictor of future credit deserts, but it leans on supply-side signal we can't move."
+        ? "All 39 features. The strongest predictor of future credit deserts, but it leans on supply-side signal we can't move."
         : "Twenty influenceable features, residualized against demographics. A quieter forecast, but every signal in it is something policy could fund or build.";
 
     if (!head) {
       document.getElementById("bigAuc").textContent = "–";
-      document.getElementById("bigAp").textContent  = "–";
+      document.getElementById("bigAp").textContent = "–";
       document.getElementById("bigSpread").textContent = "–";
       return;
     }
     tweenNumber(document.getElementById("bigAuc"), head.mean_auc, 3, 1.0);
-    tweenNumber(document.getElementById("bigAp"),  head.mean_ap,  3, 1.0);
+    tweenNumber(document.getElementById("bigAp"), head.mean_ap, 3, 1.0);
     document.getElementById("bigSpread").textContent =
       "± " + (head.std_auc != null ? head.std_auc.toFixed(3) : "–");
   }
@@ -2736,7 +2746,7 @@
     const m = STATE.activeModel;
     const h = STATE.activeHorizon;
     const meanK = geoMeanKey(m, h);
-    const aucK  = `auc_${m}_${h}`;
+    const aucK = `auc_${m}_${h}`;
 
     const states = STATE.states.states.filter(s => s[meanK] != null);
 
@@ -2747,9 +2757,9 @@
       const li = document.createElement("li");
       li.className = "topstate";
       li.innerHTML = `
-        <span class="topstate__rk">${String(i+1).padStart(2,"0")}</span>
+        <span class="topstate__rk">${String(i + 1).padStart(2, "0")}</span>
         <span class="topstate__nm">${s.state}</span>
-        <span class="topstate__v">${(s[meanK]*100).toFixed(2)}%</span>
+        <span class="topstate__v">${(s[meanK] * 100).toFixed(2)}%</span>
       `;
       li.addEventListener("click", () => flyToState(s.state));
       tEl.appendChild(li);
@@ -2763,7 +2773,7 @@
       const li = document.createElement("li");
       li.className = "topstate";
       li.innerHTML = `
-        <span class="topstate__rk">${String(i+1).padStart(2,"0")}</span>
+        <span class="topstate__rk">${String(i + 1).padStart(2, "0")}</span>
         <span class="topstate__nm">${s.state}</span>
         <span class="topstate__v">AUC ${s[aucK].toFixed(3)}</span>
       `;
@@ -2789,7 +2799,7 @@
       const bar = document.createElement("div");
       bar.className = "histo__bar";
       const lo = hist.edges[i], hi = hist.edges[i + 1];
-      bar.dataset.c = `${(lo*100).toFixed(0)}–${(hi*100).toFixed(0)}%: ${c.toLocaleString()}`;
+      bar.dataset.c = `${(lo * 100).toFixed(0)}–${(hi * 100).toFixed(0)}%: ${c.toLocaleString()}`;
       bar.style.height = `${Math.max(2, (c / max) * 100)}%`;
       wrap.appendChild(bar);
     });
@@ -2841,7 +2851,7 @@
       wrap.appendChild(div);
 
       const rng = div.querySelector("input");
-      rng.addEventListener("input",  (e) => onSliderInput(lev, parseFloat(e.target.value)));
+      rng.addEventListener("input", (e) => onSliderInput(lev, parseFloat(e.target.value)));
       rng.addEventListener("change", (e) => onSliderInput(lev, parseFloat(e.target.value)));
 
       // Lever tooltip — only for sliders we have locked plain-language copy for.
@@ -2850,8 +2860,8 @@
       if (LEVER_TOOLTIP_CONTENT[lev.key]) {
         div.addEventListener("mouseenter", () => showLeverTip(lev.key, div));
         div.addEventListener("mouseleave", () => hideLeverTip());
-        div.addEventListener("focusin",   () => showLeverTip(lev.key, div));
-        div.addEventListener("focusout",  () => hideLeverTip());
+        div.addEventListener("focusin", () => showLeverTip(lev.key, div));
+        div.addEventListener("focusout", () => hideLeverTip());
       }
 
       // Restore "shifted" display if user already moved this lever
@@ -2873,16 +2883,16 @@
       const fmt = lev.unit === "share active"
         ? shifted.toFixed(2)
         : Math.abs(shifted) >= 100 ? shifted.toFixed(0)
-        : Math.abs(shifted) >= 10  ? shifted.toFixed(1)
-        : shifted.toFixed(2);
+          : Math.abs(shifted) >= 10 ? shifted.toFixed(1)
+            : shifted.toFixed(2);
       // Plain-language descriptor for how far above/below the national average
       // we are, based on z-score magnitude. Drop greek letters entirely.
       const unitWord = lev.unit === "mi" ? "miles"
-                     : lev.unit === "branches" ? "branches"
-                     : lev.unit === "MDI within 25 mi" ? "MDIs within 25 mi"
-                     : lev.unit === "intermediaries" ? "microlenders"
-                     : lev.unit === "share active" ? "share active"
-                     : lev.unit;
+        : lev.unit === "branches" ? "branches"
+          : lev.unit === "MDI within 25 mi" ? "MDIs within 25 mi"
+            : lev.unit === "intermediaries" ? "microlenders"
+              : lev.unit === "share active" ? "share active"
+                : lev.unit;
       const az = Math.abs(z);
       const direction = z > 0 ? "above" : "below";
       let descriptor;
@@ -2954,11 +2964,11 @@
 
     const cntUp = document.getElementById("cntUp");
     const cntDn = document.getElementById("cntDn");
-    const net   = document.getElementById("netDelta");
+    const net = document.getElementById("netDelta");
 
-    cntUp.textContent = (delta > 0 ? "+" : "") + Math.round(Math.max(0,  delta)).toLocaleString();
+    cntUp.textContent = (delta > 0 ? "+" : "") + Math.round(Math.max(0, delta)).toLocaleString();
     cntDn.textContent = (delta < 0 ? "−" : "") + Math.round(Math.max(0, -delta)).toLocaleString();
-    net.textContent = `net ${delta >= 0 ? "+" : "−"}${Math.abs(Math.round(delta)).toLocaleString()} ${activeGeoMeta().plural} · estimated national shift ${(shift*100 >= 0?"+":"")}${(shift*100).toFixed(2)} percentage points`;
+    net.textContent = `net ${delta >= 0 ? "+" : "−"}${Math.abs(Math.round(delta)).toLocaleString()} ${activeGeoMeta().plural} · estimated national shift ${(shift * 100 >= 0 ? "+" : "")}${(shift * 100).toFixed(2)} percentage points`;
   }
 
   function baselineMeanRisk(model, horizon) {
@@ -3055,8 +3065,8 @@
     setText("t_hzlabel", h === "h3" ? "2027 forecast" : "2030 scenario");
     setText("t_m1auc", m1k && m1k.mean_auc != null ? m1k.mean_auc.toFixed(3) : "–");
     setText("t_m2auc", m2k && m2k.mean_auc != null ? m2k.mean_auc.toFixed(3) : "–");
-    setText("t_m1ap",  m1k && m1k.mean_ap  != null ? m1k.mean_ap.toFixed(3)  : "–");
-    setText("t_m2ap",  m2k && m2k.mean_ap  != null ? m2k.mean_ap.toFixed(3)  : "–");
+    setText("t_m1ap", m1k && m1k.mean_ap != null ? m1k.mean_ap.toFixed(3) : "–");
+    setText("t_m2ap", m2k && m2k.mean_ap != null ? m2k.mean_ap.toFixed(3) : "–");
     setText("t_m1folds", m1k && m1k.n_folds != null ? String(m1k.n_folds) : "–");
     setText("t_m2folds", m2k && m2k.n_folds != null ? String(m2k.n_folds) : "–");
 
@@ -3166,10 +3176,10 @@
       return;
     }
 
-    const pre  = (reg.rows || []).find(r => r.regime === "precovid");
+    const pre = (reg.rows || []).find(r => r.regime === "precovid");
     const post = (reg.rows || []).find(r => r.regime === "postcovid");
     const rows = [
-      { ...pre,  label: "Pre-COVID",  top: reg.precovid_top,  key: "precovid"  },
+      { ...pre, label: "Pre-COVID", top: reg.precovid_top, key: "precovid" },
       { ...post, label: "Post-COVID", top: reg.postcovid_top, key: "postcovid" },
     ];
 
@@ -3199,8 +3209,8 @@
           <ol>
             ${top5.map(t => `
               <li>
-                <span>${String(t.rank).padStart(2,"0")}</span>
-                <b>${FEAT_LBL[t.feature] || t.feature.replace(/_/g," ")}</b>
+                <span>${String(t.rank).padStart(2, "0")}</span>
+                <b>${FEAT_LBL[t.feature] || t.feature.replace(/_/g, " ")}</b>
                 <span>${t.importance.toFixed(3)}</span>
               </li>`).join("")}
           </ol>
