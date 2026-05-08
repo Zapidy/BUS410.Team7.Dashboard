@@ -189,66 +189,6 @@
     n_black: "Black population (count)",
   };
 
-  // Direction convention for the percentile-driven row coloring on the drivers
-  // panel. Hand-curated, NOT auto-detected — see
-  // docs/superpowers/specs/2026-05-08-driver-percentile-design.md for the rationale.
-  //
-  //   "lower_is_worse"  (default) → below-median = red (worse), above-median = green (better)
-  //   "higher_is_worse"            → above-median = red (worse), below-median = green (better)
-  //   "neutral"                    → grey arrow, no green/red coloring
-  //
-  // Adding a feature: only flip from the default if there is a clear domain
-  // reason (concentration, distress measure, distance penalty, etc.).
-  // Race / ethnicity composition is intentionally "neutral" to avoid
-  // value-judgement coloring of demographic mix.
-  const FEATURE_DIRECTION = {
-    // Concentration / HHI — higher = more concentrated lending = worse for borrowers
-    cra_county_amount_hhi:               "higher_is_worse",
-    cra_county_count_hhi:                "higher_is_worse",
-    lender_hhi_tract_resid:              "higher_is_worse",
-    fdic_deposit_hhi:                    "higher_is_worse",
-    fdic_deposit_hhi_chg1yr:             "higher_is_worse",
-    fdic_deposit_hhi_chg3yr:             "higher_is_worse",
-    // Top-lender shares — higher = single-lender dominance = worse
-    top1_lender_share_tract_resid:       "higher_is_worse",
-    top3_lender_share_tract_resid:       "higher_is_worse",
-    pct_loans_from_top4_banks_resid:     "higher_is_worse",
-    cra_county_top_lender_share_count:   "higher_is_worse",
-    cra_county_top_lender_share_amount:  "higher_is_worse",
-    fdic_top_bank_share:                 "higher_is_worse",
-    fdic_top_bank_share_chg1yr:          "higher_is_worse",
-    fdic_top_bank_share_chg3yr:          "higher_is_worse",
-    // Access penalties — higher distance = harder to reach a branch = worse
-    distance_to_nearest_bank_branch:     "higher_is_worse",
-    nearest_mdi_branch_miles:            "higher_is_worse",
-    branch_closures_3y_within_10mi:      "higher_is_worse",
-    // Distress measures — higher = more distress = worse
-    unemployment_rate:                   "higher_is_worse",
-    pct_vacant:                          "higher_is_worse",
-    pct_poverty:                         "higher_is_worse",
-    is_persistent_poverty:               "higher_is_worse",
-    denial_rate:                         "higher_is_worse",
-    n_denied:                            "higher_is_worse",
-    n_withdrawn:                         "higher_is_worse",
-    // Rurality — USDA RUCA 1-urban → 10-rural; this model penalises rural
-    ruca_code:                           "higher_is_worse",
-
-    // Demographic composition — coloring these green/red would imply a
-    // value judgement on demographic mix; render arrow grey instead.
-    pct_minority:                        "neutral",
-    pct_black:                           "neutral",
-    pct_hispanic:                        "neutral",
-    n_black:                             "neutral",
-    n_hispanic:                          "neutral",
-    n_asian:                             "neutral",
-    n_white:                             "neutral",
-    n_other_race:                        "neutral",
-    // Loan-size mix has ambiguous direction in this model — leave neutral
-    mean_loan_amount:                    "neutral",
-  };
-  // Default for everything else: "lower_is_worse" (population, income, branches,
-  // SSBCI presence, MDI presence, originations, education, etc.).
-
   // Plain-English explainer for every feature that may show up in SHAP top-N.
   // Each entry: {what: definition, read: how to interpret}.
   const FEATURE_DESCRIPTION = {
@@ -2234,22 +2174,18 @@
     return Math.abs(v) < 1 ? v.toFixed(3) : v.toLocaleString(undefined, { maximumFractionDigits: 2 });
   }
 
-  // Returns 'drv-good' (green), 'drv-bad' (red), or 'drv-neu' (grey) based on
-  // direction convention + percentile. See FEATURE_DIRECTION above.
-  function colorClassForRow(feat, percentile) {
-    if (percentile == null) return "drv-neu";
-    const dir = FEATURE_DIRECTION[feat] || "lower_is_worse";
-    if (dir === "neutral") return "drv-neu";
-    const above = percentile > 50;
-    const below = percentile < 50;
-    if (dir === "lower_is_worse") {
-      if (below) return "drv-bad";
-      if (above) return "drv-good";
-    } else {  // higher_is_worse
-      if (above) return "drv-bad";
-      if (below) return "drv-good";
-    }
-    return "drv-neu";
+  // Color rule: pure pp sign.
+  //   pp > 0 (driver raises risk)  → drv-bad  (red)
+  //   pp < 0 (driver lowers risk)  → drv-good (green)
+  //   pp ≈ 0 or unknown            → drv-neu  (grey)
+  // FEATURE_DIRECTION is no longer consulted here; the percentile / value /
+  // bell still render so the user can see *where* the metric sits, but the
+  // colour answers the simpler question "is this driver helping or hurting
+  // this place's risk."
+  function colorClassForPp(pp) {
+    const n = Number(pp);
+    if (pp == null || isNaN(n) || Math.abs(n) < 0.05) return "drv-neu";
+    return n > 0 ? "drv-bad" : "drv-good";
   }
 
   // SVG sparkline: faint normal-curve silhouette + colored marker at percentile.
@@ -2831,22 +2767,15 @@
         const rawValue = lookupRawValue(feat, geoid, countyMode);
         const distRec = STATE.featureDistributions[feat];
         const isCat = !!(distRec && distRec.is_categorical);
-        // For continuous features: cumulative-distribution percentile.
-        // For categoricals/binaries: position on the category value scale
-        //   (e.g., RUCA=6 → 56% across a 1..10 scale, ssbci=1 → 100%).
-        // The bell marker, color rule, and arrow direction all use the same
-        // number — so a categorical row reads as "high RUCA = right side of
-        // the scale = red (because higher_is_worse)" without computing a
-        // misleading cumulative-share percentile.
+        // pos is purely informational now — drives the bell marker and the
+        // percentile label. Color and arrow direction come from pp sign.
         const pos = isCat
           ? valuePositionForCategorical(feat, rawValue)
           : featurePercentile(feat, rawValue, scope);
-        const colorCls = colorClassForRow(feat, pos);
-        let arrow = "·";
-        if (pos != null) {
-          if (pos > 50) arrow = "▲";
-          else if (pos < 50) arrow = "▼";
-        }
+        const colorCls = colorClassForPp(pp);
+        const arrow = colorCls === "drv-bad" ? "▲"
+                    : colorCls === "drv-good" ? "▼"
+                    : "·";
         const valueText = formatRawValue(feat, rawValue);
         let pctText;
         if (pos == null) {
@@ -2901,17 +2830,10 @@
     const valEl = anchorEl ? anchorEl.querySelector(".drawshap__val") : null;
     let summary = "";
     if (pct != null && !isNaN(pct) && valEl) {
-      const dir = FEATURE_DIRECTION[featKey] || "lower_is_worse";
-      const aboveBelow = pct > 50 ? "above-average" : (pct < 50 ? "below-average" : "exactly-average");
       const ppText = ppEl ? ppEl.textContent.trim() : "";
       const verb = ppText.startsWith("+") ? "raises" : (ppText.startsWith("-") || ppText.startsWith("−") ? "lowers" : "shifts");
       const horizonLabel = STATE.activeHorizon === "h6" ? "2030 scenario" : "2027 forecast";
       const scopeLabel = scope === "national" ? "" : ` in ${scope}`;
-      const directionNote = dir === "neutral"
-        ? ""
-        : ` This ${aboveBelow} reading on this driver is `
-          + ((dir === "lower_is_worse") === (pct > 50) ? "<b>better</b>" : "<b>worse</b>")
-          + " than typical for this metric.";
       // Categorical/binary rows lead with the raw value, not a percentile.
       const lead = isCat
         ? `<b>${valEl.textContent.trim()}</b>${scopeLabel}.`
@@ -2919,7 +2841,7 @@
       summary = `
         <div class="featTip__summary">
           ${lead}
-          ${verb.charAt(0).toUpperCase() + verb.slice(1)} the ${horizonLabel} by <b>${ppText}</b>.${directionNote}
+          ${verb.charAt(0).toUpperCase() + verb.slice(1)} the ${horizonLabel} by <b>${ppText}</b>.
         </div>
         <div class="featTip__rule"></div>
       `;
