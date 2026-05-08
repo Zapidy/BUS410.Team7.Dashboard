@@ -189,6 +189,66 @@
     n_black: "Black population (count)",
   };
 
+  // Direction convention for the percentile-driven row coloring on the drivers
+  // panel. Hand-curated, NOT auto-detected — see
+  // docs/superpowers/specs/2026-05-08-driver-percentile-design.md for the rationale.
+  //
+  //   "lower_is_worse"  (default) → below-median = red (worse), above-median = green (better)
+  //   "higher_is_worse"            → above-median = red (worse), below-median = green (better)
+  //   "neutral"                    → grey arrow, no green/red coloring
+  //
+  // Adding a feature: only flip from the default if there is a clear domain
+  // reason (concentration, distress measure, distance penalty, etc.).
+  // Race / ethnicity composition is intentionally "neutral" to avoid
+  // value-judgement coloring of demographic mix.
+  const FEATURE_DIRECTION = {
+    // Concentration / HHI — higher = more concentrated lending = worse for borrowers
+    cra_county_amount_hhi:               "higher_is_worse",
+    cra_county_count_hhi:                "higher_is_worse",
+    lender_hhi_tract_resid:              "higher_is_worse",
+    fdic_deposit_hhi:                    "higher_is_worse",
+    fdic_deposit_hhi_chg1yr:             "higher_is_worse",
+    fdic_deposit_hhi_chg3yr:             "higher_is_worse",
+    // Top-lender shares — higher = single-lender dominance = worse
+    top1_lender_share_tract_resid:       "higher_is_worse",
+    top3_lender_share_tract_resid:       "higher_is_worse",
+    pct_loans_from_top4_banks_resid:     "higher_is_worse",
+    cra_county_top_lender_share_count:   "higher_is_worse",
+    cra_county_top_lender_share_amount:  "higher_is_worse",
+    fdic_top_bank_share:                 "higher_is_worse",
+    fdic_top_bank_share_chg1yr:          "higher_is_worse",
+    fdic_top_bank_share_chg3yr:          "higher_is_worse",
+    // Access penalties — higher distance = harder to reach a branch = worse
+    distance_to_nearest_bank_branch:     "higher_is_worse",
+    nearest_mdi_branch_miles:            "higher_is_worse",
+    branch_closures_3y_within_10mi:      "higher_is_worse",
+    // Distress measures — higher = more distress = worse
+    unemployment_rate:                   "higher_is_worse",
+    pct_vacant:                          "higher_is_worse",
+    pct_poverty:                         "higher_is_worse",
+    is_persistent_poverty:               "higher_is_worse",
+    denial_rate:                         "higher_is_worse",
+    n_denied:                            "higher_is_worse",
+    n_withdrawn:                         "higher_is_worse",
+    // Rurality — USDA RUCA 1-urban → 10-rural; this model penalises rural
+    ruca_code:                           "higher_is_worse",
+
+    // Demographic composition — coloring these green/red would imply a
+    // value judgement on demographic mix; render arrow grey instead.
+    pct_minority:                        "neutral",
+    pct_black:                           "neutral",
+    pct_hispanic:                        "neutral",
+    n_black:                             "neutral",
+    n_hispanic:                          "neutral",
+    n_asian:                             "neutral",
+    n_white:                             "neutral",
+    n_other_race:                        "neutral",
+    // Loan-size mix has ambiguous direction in this model — leave neutral
+    mean_loan_amount:                    "neutral",
+  };
+  // Default for everything else: "lower_is_worse" (population, income, branches,
+  // SSBCI presence, MDI presence, originations, education, etc.).
+
   // Plain-English explainer for every feature that may show up in SHAP top-N.
   // Each entry: {what: definition, read: how to interpret}.
   const FEATURE_DESCRIPTION = {
@@ -708,7 +768,7 @@
     document.body.dataset.horizon = "h3";
     STATE.methModel = STATE.activeModel === "m2" ? "influenceable" : "diagnostic";
 
-    const [feat, dict, states, bbox, ablH3, ablH6, regH3, regH6, prH3, prH6] = await Promise.all([
+    const [feat, dict, states, bbox, ablH3, ablH6, regH3, regH6, prH3, prH6, fdist, tfeat, cfeat] = await Promise.all([
       fetchOptional("data/feature_stats.json"),
       fetchOptional("data/feature_dictionary.json"),
       fetchOptional("data/state_stats.json"),
@@ -719,6 +779,9 @@
       fetchOptional("data/regime_h6.json"),
       fetchOptional("data/pruning_h3.json"),
       fetchOptional("data/pruning_h6.json"),
+      fetchOptional("data/feature_distributions.json"),
+      fetchGzipJson("data/tract_features.json.gz").catch(() => null),
+      fetchGzipJson("data/county_features.json.gz").catch(() => null),
     ]);
     STATE.feat = feat;
     STATE.featureDictionary = dict;
@@ -727,6 +790,10 @@
     STATE.abl = { h3: ablH3, h6: ablH6 };
     STATE.regime = { h3: regH3, h6: regH6 };
     STATE.pruning = { h3: prH3, h6: prH6 };
+    STATE.featureDistributions = fdist;
+    STATE.tractFeatures = tfeat;
+    STATE.countyFeatures = cfeat;
+    if (!fdist || !tfeat) document.body.dataset.noDistributions = "1";
     syncMethodologyModelButtons();
 
     if (!feat) document.getElementById('sliders')?.insertAdjacentHTML('afterbegin', '<p class="data-missing">Scenario data unavailable</p>');
@@ -1807,6 +1874,9 @@
       map.setPaintProperty("state-borders", "line-width", stateBordersWidth());
     }
     renderFocusPanel();
+    // Drivers panel percentiles depend on scope (within-state vs national);
+    // refresh the open drawer so they re-rank.
+    if (STATE.pinnedFeature) renderDrawerShap();
   }
 
   function bindFocusClose() {
@@ -2023,6 +2093,175 @@
     const sign = n >= 0 ? "+" : "";
     return `${sign}${n.toFixed(1)} pp`;
   }
+  // Same number, '%' suffix — the percentile-aware drivers panel reads "+4.2%"
+  // as the per-tract risk delta from this driver. The unit is still
+  // percentage points; '%' is a typographic preference, not a unit change.
+  function fmtPpAsPct(v) {
+    const n = Number(v);
+    if (n == null || isNaN(n)) return "–";
+    const sign = n >= 0 ? "+" : "";
+    return `${sign}${n.toFixed(1)}%`;
+  }
+
+  // ─── Driver percentile + bell-curve helpers ─────────────────────────────
+  // Wired against the new data files: feature_distributions, tract_features,
+  // county_features. All optional — if absent the renderer falls back to
+  // the legacy 3-column layout (no value, no bell, no percentile).
+
+  function lookupRawValue(feat, geoid, isCounty) {
+    const src = isCounty ? STATE.countyFeatures : STATE.tractFeatures;
+    if (!src) return null;
+    const rec = src[geoid];
+    if (!rec || rec[feat] == null) return null;
+    return Number(rec[feat]);
+  }
+
+  // Returns 0..100 (linear interp into the 99-quantile array). For
+  // categorical features returns the cumulative share at-or-below the bucket.
+  // `scope`: state abbreviation, or null for national.
+  function featurePercentile(feat, rawValue, scope) {
+    const dist = STATE.featureDistributions && STATE.featureDistributions[feat];
+    if (!dist || rawValue == null || isNaN(rawValue)) return null;
+    let arr = null;
+    if (scope && dist.by_state && dist.by_state[scope]) arr = dist.by_state[scope];
+    else if (dist.is_categorical) arr = dist.categories;
+    else arr = dist.national;
+    if (!arr || !arr.length) return null;
+    if (dist.is_categorical) {
+      // arr is [{value, share}] sorted ascending by value. Cumulative share
+      // through the matching bucket. If raw doesn't match any, return null.
+      let cum = 0;
+      for (const c of arr) {
+        cum += Number(c.share) || 0;
+        if (Number(c.value) === Number(rawValue)) {
+          return Math.max(0, Math.min(100, cum * 100));
+        }
+      }
+      // Not an exact bucket match — interpolate between nearest brackets.
+      const sorted = arr.slice().sort((a, b) => Number(a.value) - Number(b.value));
+      let belowShare = 0;
+      for (const c of sorted) {
+        if (Number(c.value) < Number(rawValue)) belowShare += Number(c.share) || 0;
+      }
+      return Math.max(0, Math.min(100, belowShare * 100));
+    }
+    // Continuous: binary search into the 99 cutpoints (p1..p99).
+    if (rawValue <= arr[0]) return 1;
+    if (rawValue >= arr[arr.length - 1]) return 99;
+    let lo = 0, hi = arr.length - 1;
+    while (lo + 1 < hi) {
+      const mid = (lo + hi) >> 1;
+      if (rawValue >= arr[mid]) lo = mid; else hi = mid;
+    }
+    // arr[lo] <= rawValue < arr[hi]; lo is index 0..97 → p(lo+1)..p(hi+1).
+    const span = arr[hi] - arr[lo] || 1e-9;
+    const t = (rawValue - arr[lo]) / span;
+    return (lo + 1) + t;  // returns a percentile in (1,99)
+  }
+
+  // Per-feature formatter for the raw-value column in the drivers panel.
+  // Falls back to localized number for anything not specifically registered.
+  function formatRawValue(feat, value) {
+    if (value == null || isNaN(value)) return "—";
+    const v = Number(value);
+    // Currency
+    if (feat === "median_hh_income" || feat === "median_household_income") {
+      return v >= 1000 ? `$${Math.round(v / 1000)}k` : `$${Math.round(v)}`;
+    }
+    if (feat === "mean_loan_amount" || feat === "sum_loan_amount") {
+      if (v >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
+      if (v >= 1e3) return `$${Math.round(v / 1e3)}k`;
+      return `$${Math.round(v)}`;
+    }
+    // Percentages — already on 0..100 scale in the panels for these
+    if (/^pct_/.test(feat) || feat === "approval_rate" || feat === "denial_rate" || feat === "unemployment_rate") {
+      return `${v.toFixed(1)}%`;
+    }
+    // Distances
+    if (/_miles$|_miles$|nearest.*branch_miles$|distance_to/.test(feat)) {
+      return `${v.toFixed(1)} mi`;
+    }
+    // HHI (0..1 scale here) → 4-digit precision
+    if (/_hhi(_|$)/.test(feat) || /_hhi$/.test(feat)) {
+      return v.toFixed(3);
+    }
+    // RUCA — show code + plain-language band
+    if (feat === "ruca_code") {
+      const code = Math.round(v);
+      const band = code <= 3 ? "urban" : code <= 6 ? "small town" : "rural";
+      return `RUCA ${code} (${band})`;
+    }
+    // Binary flags
+    if (feat === "ssbci_active" || feat === "is_persistent_poverty" ||
+        feat === "mdi_active_in_county" || feat === "is_rural" ||
+        feat === "ssbci_2_0_active") {
+      return Math.round(v) ? "yes" : "no";
+    }
+    // Counts — integer with commas
+    if (/^n_|^branches?_|^housing_units$|^population$|_count$|^cra_county_total/.test(feat)) {
+      return Math.round(v).toLocaleString();
+    }
+    // Default
+    return Math.abs(v) < 1 ? v.toFixed(3) : v.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  }
+
+  // Returns 'drv-good' (green), 'drv-bad' (red), or 'drv-neu' (grey) based on
+  // direction convention + percentile. See FEATURE_DIRECTION above.
+  function colorClassForRow(feat, percentile) {
+    if (percentile == null) return "drv-neu";
+    const dir = FEATURE_DIRECTION[feat] || "lower_is_worse";
+    if (dir === "neutral") return "drv-neu";
+    const above = percentile > 50;
+    const below = percentile < 50;
+    if (dir === "lower_is_worse") {
+      if (below) return "drv-bad";
+      if (above) return "drv-good";
+    } else {  // higher_is_worse
+      if (above) return "drv-bad";
+      if (below) return "drv-good";
+    }
+    return "drv-neu";
+  }
+
+  // SVG sparkline: faint normal-curve silhouette + colored marker at percentile.
+  function bellSvg(percentile, colorClass) {
+    if (percentile == null) return "";
+    const W = 80, H = 22, PAD = 2;
+    // Pre-baked normal-curve path normalized to [0,1] x [0,1], then scaled.
+    // Coarse polyline; cheap enough to inline per row.
+    const pts = [];
+    for (let i = 0; i <= 24; i++) {
+      const x = i / 24;
+      const z = (x - 0.5) * 6;            // ±3σ across the box
+      const y = Math.exp(-0.5 * z * z);   // standard normal, peak = 1
+      pts.push([PAD + x * (W - 2 * PAD), H - PAD - y * (H - 2 * PAD)]);
+    }
+    const path = "M" + pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("L");
+    const cx = PAD + (percentile / 100) * (W - 2 * PAD);
+    const baseY = H - PAD;
+    return `
+      <svg class="drawshap__bell" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+        <path d="${path}" class="drawshap__bell-curve"/>
+        <line x1="${PAD}" x2="${W - PAD}" y1="${baseY}" y2="${baseY}" class="drawshap__bell-axis"/>
+        <circle cx="${cx.toFixed(1)}" cy="${baseY - 1}" r="3.5" class="drawshap__bell-dot ${colorClass}"/>
+      </svg>
+    `;
+  }
+
+  // Categorical analog — faint dotted segments with the active bucket dot.
+  function bucketSvg(percentile, colorClass) {
+    if (percentile == null) return "";
+    const W = 80, H = 22, PAD = 2;
+    const cx = PAD + (percentile / 100) * (W - 2 * PAD);
+    const baseY = H / 2;
+    return `
+      <svg class="drawshap__bell" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="${PAD}" x2="${W - PAD}" y1="${baseY}" y2="${baseY}" class="drawshap__bell-axis"/>
+        <circle cx="${cx.toFixed(1)}" cy="${baseY}" r="3.5" class="drawshap__bell-dot ${colorClass}"/>
+      </svg>
+    `;
+  }
+
 
   // List of {label, z} for the plain-language scenario note in the drawer.
   function activeLeversForNote() {
@@ -2530,25 +2769,69 @@
     }
     const maxAbs = Math.max(...top5.map(row => Math.abs(row.pp))) || 1e-6;
 
+    // Distribution-aware path: when feature_distributions.json + per-geo
+    // raw values are loaded, render the 5-column layout (name | value | bell |
+    // pct | pp). Otherwise fall back to the legacy 3-column layout.
+    const distOk = !!STATE.featureDistributions && !!(countyMode ? STATE.countyFeatures : STATE.tractFeatures);
+    const geoid = countyMode ? (p.f || p.cf) : p.f;
+    const scope = STATE.focusedState || null;
+
     top5.forEach(({ feat, pp }) => {
-      const isPos = pp >= 0;
-      const widthPct = Math.max(4, (Math.abs(pp) / maxAbs) * 100);
       const li = document.createElement("li");
       li.className = "drawshap";
-      li.dataset.feat = feat;  // for tooltip binding
-      li.tabIndex = 0;          // keyboard-focusable
+      li.dataset.feat = feat;
+      li.tabIndex = 0;
       const pretty = FEATURE_LABEL[feat] || feat.replace(/_/g, " ");
-      const arrow = isPos ? "▲" : "▼";
-      li.innerHTML = `
-        <span class="drawshap__nm">
-          <span class="drawshap__arrow ${isPos ? "pos" : "neg"}" aria-hidden="true">${arrow}</span>
-          ${pretty}
-        </span>
-        <span class="drawshap__bar"><span class="drawshap__bar-fill ${isPos ? "pos" : "neg"}" style="width:${widthPct}%;"></span></span>
-        <span class="drawshap__v ${isPos ? "pos" : "neg"}">${fmtPp(pp)}</span>
-      `;
+
+      if (!distOk) {
+        // ---- Legacy 3-column fallback ----
+        const isPos = pp >= 0;
+        const widthPct = Math.max(4, (Math.abs(pp) / maxAbs) * 100);
+        const arrow = isPos ? "▲" : "▼";
+        li.classList.add("drawshap--legacy");
+        li.innerHTML = `
+          <span class="drawshap__nm">
+            <span class="drawshap__arrow ${isPos ? "pos" : "neg"}" aria-hidden="true">${arrow}</span>
+            ${pretty}
+          </span>
+          <span class="drawshap__bar"><span class="drawshap__bar-fill ${isPos ? "pos" : "neg"}" style="width:${widthPct}%;"></span></span>
+          <span class="drawshap__v ${isPos ? "pos" : "neg"}">${fmtPp(pp)}</span>
+        `;
+      } else {
+        // ---- Percentile-aware 5-column layout ----
+        const rawValue = lookupRawValue(feat, geoid, countyMode);
+        const pct = featurePercentile(feat, rawValue, scope);
+        const distRec = STATE.featureDistributions[feat];
+        const isCat = !!(distRec && distRec.is_categorical);
+        const colorCls = colorClassForRow(feat, pct);
+        // Arrow direction: ▲ if above median, ▼ if below, · if exactly 50
+        // or percentile unknown.
+        let arrow = "·";
+        if (pct != null) {
+          if (pct > 50) arrow = "▲";
+          else if (pct < 50) arrow = "▼";
+        }
+        const valueText = formatRawValue(feat, rawValue);
+        const pctText = pct == null
+          ? "—"
+          : (scope ? `${ordinal(Math.round(pct))} in ${scope}` : ordinal(Math.round(pct)));
+        const bell = isCat ? bucketSvg(pct, colorCls) : bellSvg(pct, colorCls);
+        li.dataset.pct = pct == null ? "" : Math.round(pct);
+        li.dataset.scope = scope || "national";
+        li.innerHTML = `
+          <span class="drawshap__nm">
+            <span class="drawshap__arrow ${colorCls}" aria-hidden="true">${arrow}</span>
+            ${pretty}
+          </span>
+          <span class="drawshap__val ${colorCls}">${valueText}</span>
+          <span class="drawshap__bellwrap">${bell}</span>
+          <span class="drawshap__pct ${colorCls}">${pctText}</span>
+          <span class="drawshap__v ${colorCls}">${fmtPpAsPct(pp)}</span>
+        `;
+      }
+
       // Tooltip handlers — show feature description on hover/focus
-      li.addEventListener("mouseenter", (e) => showFeatureTip(feat, li));
+      li.addEventListener("mouseenter", () => showFeatureTip(feat, li));
       li.addEventListener("mouseleave", () => hideFeatureTip());
       li.addEventListener("focus", () => showFeatureTip(feat, li));
       li.addEventListener("blur", () => hideFeatureTip());
@@ -2557,6 +2840,8 @@
   }
 
   // Feature tooltip — explains what each SHAP-listed feature is and how to read it.
+  // When the row carries percentile/value data (5-column layout), prepend a
+  // plain-language summary above the static feature description.
   function showFeatureTip(featKey, anchorEl) {
     const tip = document.getElementById("featTip");
     if (!tip) return;
@@ -2564,9 +2849,39 @@
     const label = FEATURE_LABEL[featKey] || featKey.replace(/_/g, " ");
     const what = desc ? desc.what : "Feature definition not yet documented.";
     const read = desc ? desc.read : "";
+
+    // Pull the percentile/value off the row's dataset so we don't recompute.
+    const pctRaw = anchorEl && anchorEl.dataset ? anchorEl.dataset.pct : "";
+    const pct = pctRaw === "" || pctRaw == null ? null : Number(pctRaw);
+    const scope = anchorEl && anchorEl.dataset ? anchorEl.dataset.scope : "national";
+    const ppEl = anchorEl ? anchorEl.querySelector(".drawshap__v") : null;
+    const valEl = anchorEl ? anchorEl.querySelector(".drawshap__val") : null;
+    let summary = "";
+    if (pct != null && !isNaN(pct) && valEl) {
+      const dir = FEATURE_DIRECTION[featKey] || "lower_is_worse";
+      const aboveBelow = pct > 50 ? "above-average" : (pct < 50 ? "below-average" : "exactly-average");
+      const ppText = ppEl ? ppEl.textContent.trim() : "";
+      const verb = ppText.startsWith("+") ? "raises" : (ppText.startsWith("-") || ppText.startsWith("−") ? "lowers" : "shifts");
+      const horizonLabel = STATE.activeHorizon === "h6" ? "2030 scenario" : "2027 forecast";
+      const scopeLabel = scope === "national" ? "" : ` in ${scope}`;
+      const directionNote = dir === "neutral"
+        ? ""
+        : ` Being ${aboveBelow} on this driver is `
+          + ((dir === "lower_is_worse") === (pct > 50) ? "<b>better</b>" : "<b>worse</b>")
+          + " than typical for this metric.";
+      summary = `
+        <div class="featTip__summary">
+          <b>${valEl.textContent.trim()}</b> · ${ordinal(Math.round(pct))} percentile${scopeLabel}.
+          ${verb.charAt(0).toUpperCase() + verb.slice(1)} the ${horizonLabel} by <b>${ppText}</b>.${directionNote}
+        </div>
+        <div class="featTip__rule"></div>
+      `;
+    }
+
     tip.innerHTML = `
       <div class="featTip__nm">${label}</div>
       <div class="featTip__rule"></div>
+      ${summary}
       <div class="featTip__what"><span class="featTip__lbl">What it is</span>${what}</div>
       ${read ? `<div class="featTip__read"><span class="featTip__lbl">How to read it</span>${read}</div>` : ""}
       <div class="featTip__key mono">${featKey}</div>

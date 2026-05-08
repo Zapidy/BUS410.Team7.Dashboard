@@ -70,6 +70,7 @@ GAZ_PLACE_FILE = Path("/tmp/gaz_place/2020_Gaz_place_national.txt")
 PLACE_POP_FILE = Path("/tmp/place_pop.json")
 
 PANEL_PARQUET = ROUND7 / "data" / "processed" / "panel" / "tract_year_with_target_round7.parquet"
+ROUND5_PANEL_PARQUET = ROUND5 / "data" / "processed" / "panel" / "tract_year_with_target.parquet"
 ACS_POP_CSV = ROUND5 / "data" / "processed" / "acs" / "tract_year_h2020.csv"
 ACS_POP_CSV_FALLBACK = ROUND5 / "data" / "processed" / "acs" / "tract_year.csv"
 
@@ -475,6 +476,157 @@ def build_city_index() -> list[dict]:
 
     out.sort(key=lambda r: (-r["pop"], r["name"].lower()))
     return out
+
+
+def build_driver_distributions(snap_year: int = 2024) -> None:
+    """Emit feature_distributions.json + tract_features.json.gz + county_features.json.gz.
+
+    Drives the new percentile-aware drivers panel. Reads the SHAP cache to
+    determine which features ever appear as a top driver, then snapshots the
+    latest year of both panels (round 5 for ACS/HMDA features, round 7 for
+    lever features), computes p1..p99 nationally and per-state, and emits
+    per-tract / per-county raw values for those features.
+    """
+    print(f"\nDriver distributions (year={snap_year})…")
+
+    shap_path = SHAP_JSON_GZ if SHAP_JSON_GZ.exists() else SHAP_JSON
+    if not shap_path.exists():
+        print(f"  SKIP: SHAP cache missing at {shap_path}")
+        return
+    opener = gzip.open if shap_path.suffix == ".gz" else open
+    with opener(shap_path, "rt") as f:
+        shap = json.load(f)
+
+    feat_universe: set[str] = set()
+    for tract, models in shap.items():
+        if not isinstance(models, dict):
+            continue
+        for _key, drivers in models.items():
+            for entry in (drivers or []):
+                if isinstance(entry, (list, tuple)) and len(entry) >= 1:
+                    feat_universe.add(str(entry[0]))
+    feat_universe.discard("has_hmda")  # render-excluded; skip distribution work
+    print(f"  driver universe: {len(feat_universe)} features")
+
+    panels = []
+    if PANEL_PARQUET.exists():
+        r7 = pd.read_parquet(PANEL_PARQUET)
+        r7 = r7[r7["year"] == snap_year].copy()
+        panels.append(("round7", r7))
+        print(f"  round7 panel: {len(r7):,} tracts")
+    if ROUND5_PANEL_PARQUET.exists():
+        r5 = pd.read_parquet(ROUND5_PANEL_PARQUET)
+        r5 = r5[r5["year"] == snap_year].copy()
+        panels.append(("round5", r5))
+        print(f"  round5 panel: {len(r5):,} tracts")
+    if not panels:
+        print("  SKIP: no panel parquet found")
+        return
+
+    # Outer-merge on tract_fips. For features in multiple panels, the first
+    # panel listed wins (round 7 takes precedence — it's what the model trained on).
+    merged = panels[0][1].drop(columns=["year"], errors="ignore").copy()
+    for _name, p in panels[1:]:
+        new_cols = [c for c in p.columns if c not in merged.columns and c != "year"]
+        if not new_cols:
+            continue
+        merged = merged.merge(
+            p[["tract_fips"] + new_cols], on="tract_fips", how="outer"
+        )
+    merged["tract_fips"] = merged["tract_fips"].astype(str).str.zfill(11)
+    merged["_state"] = merged["tract_fips"].str[:2]
+
+    keep_feats = sorted([f for f in feat_universe if f in merged.columns])
+    skipped = sorted(feat_universe - set(keep_feats))
+    if skipped:
+        print(f"  features in SHAP cache but absent from panels (skipped): {skipped}")
+    print(f"  features kept: {len(keep_feats)}")
+
+    # ---- 1. feature_distributions.json ----
+    QUANTILES = [i / 100.0 for i in range(1, 100)]  # p1..p99 (99 cutpoints)
+    distributions: dict[str, dict] = {}
+    for feat in keep_feats:
+        s = pd.to_numeric(merged[feat], errors="coerce").dropna()
+        if len(s) < 100:
+            continue
+        nunique = int(s.nunique())
+        # Categorical heuristic: small distinct count AND values are integer-valued.
+        is_cat = (nunique <= 12) and bool(np.allclose(s.values, np.round(s.values)))
+        rec: dict = {"is_categorical": is_cat}
+        if is_cat:
+            counts = s.astype(int).value_counts(normalize=True).sort_index()
+            rec["categories"] = [
+                {"value": int(v), "share": round(float(counts[v]), 4)}
+                for v in counts.index
+            ]
+        else:
+            rec["national"] = [round(float(q), 6) for q in s.quantile(QUANTILES).tolist()]
+        # By-state slice (skip if too few non-null tracts in the state).
+        by_state: dict = {}
+        for st_fips, st_abbr in STATE_ABBR.items():
+            mask = merged["_state"] == st_fips
+            ss = pd.to_numeric(merged.loc[mask, feat], errors="coerce").dropna()
+            if len(ss) < 25:
+                continue
+            if is_cat:
+                vc = ss.astype(int).value_counts(normalize=True).sort_index()
+                by_state[st_abbr] = [
+                    {"value": int(v), "share": round(float(vc[v]), 4)}
+                    for v in vc.index
+                ]
+            else:
+                by_state[st_abbr] = [round(float(q), 6) for q in ss.quantile(QUANTILES).tolist()]
+        if by_state:
+            rec["by_state"] = by_state
+        distributions[feat] = rec
+    with (DATA / "feature_distributions.json").open("w") as f:
+        json.dump(distributions, f, separators=(",", ":"))
+    print(f"  → feature_distributions.json ({len(distributions)} features)")
+
+    # ---- 2. tract_features.json.gz ----
+    tract_features: dict[str, dict] = {}
+    feat_arrays = {feat: pd.to_numeric(merged[feat], errors="coerce").to_numpy() for feat in keep_feats}
+    fips_arr = merged["tract_fips"].to_numpy()
+    for i, fips in enumerate(fips_arr):
+        rec: dict = {}
+        for feat in keep_feats:
+            v = feat_arrays[feat][i]
+            if np.isnan(v) or np.isinf(v):
+                continue
+            rec[feat] = round(float(v), 4)
+        if rec:
+            tract_features[fips] = rec
+    with gzip.open(DATA / "tract_features.json.gz", "wt") as f:
+        json.dump(tract_features, f, separators=(",", ":"))
+    print(f"  → tract_features.json.gz ({len(tract_features)} tracts)")
+
+    # ---- 3. county_features.json.gz (population-weighted across tracts) ----
+    pop = pd.to_numeric(merged.get("population"), errors="coerce").fillna(0.0).to_numpy()
+    county_fips = merged["tract_fips"].str[:5].to_numpy()
+    county_features: dict[str, dict] = {}
+    df = merged[["tract_fips"] + keep_feats].copy()
+    df["_county"] = county_fips
+    df["_w"] = pop
+    for cf, grp in df.groupby("_county", sort=False):
+        w = grp["_w"].to_numpy()
+        wsum = float(w.sum())
+        if wsum <= 0:
+            w = np.ones(len(grp), dtype=float)
+            wsum = float(len(grp))
+        rec: dict = {}
+        for feat in keep_feats:
+            vals = pd.to_numeric(grp[feat], errors="coerce").to_numpy()
+            mask = ~np.isnan(vals)
+            if not mask.any():
+                continue
+            v = float(np.average(vals[mask], weights=w[mask]))
+            if math.isfinite(v):
+                rec[feat] = round(v, 4)
+        if rec:
+            county_features[str(cf)] = rec
+    with gzip.open(DATA / "county_features.json.gz", "wt") as f:
+        json.dump(county_features, f, separators=(",", ":"))
+    print(f"  → county_features.json.gz ({len(county_features)} counties)")
 
 
 def main() -> None:
@@ -978,6 +1130,8 @@ def main() -> None:
     with (DATA / "feature_stats.json").open("w") as f:
         json.dump(feat_stats, f, indent=2)
     print(f"  → feature_stats.json")
+
+    build_driver_distributions()
 
     print("\nDone.")
 

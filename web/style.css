@@ -2679,13 +2679,18 @@ body[data-model="m2"] .drawshap__arrow.neg { color: var(--m1); }
   gap: 0;
   border-top: 1px solid var(--rule-soft);
 }
+/* Default: percentile-aware 5-column layout */
 .drawshap {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 56px 64px;
+  grid-template-columns: minmax(0, 1fr) 64px 84px 60px 60px;
   gap: 10px;
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid var(--rule-soft);
+}
+/* Legacy 3-column fallback when distribution data is absent */
+.drawshap--legacy {
+  grid-template-columns: minmax(0, 1fr) 56px 64px;
 }
 .drawshap__nm {
   font-family: var(--ff-body);
@@ -2722,6 +2727,83 @@ body[data-model="m2"] .drawshap__bar-fill.neg { background: var(--m1); }
 .drawshap__v.neg { color: var(--m2); }
 body[data-model="m2"] .drawshap__v.pos { color: var(--m2); }
 body[data-model="m2"] .drawshap__v.neg { color: var(--m1); }
+
+/* ─── Percentile-aware drivers panel ─────────────────────────────────── */
+:root {
+  --drv-good: oklch(0.78 0.165 145);  /* green */
+  --drv-bad:  oklch(0.70 0.20 25);    /* coral-red */
+  --drv-neu:  var(--tx-4);            /* muted grey */
+}
+.drawshap__val {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--tx-2);
+}
+.drawshap__bellwrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.drawshap__bell {
+  width: 80px;
+  height: 22px;
+  display: block;
+}
+.drawshap__bell-curve {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.drawshap__bell-axis {
+  stroke: var(--rule-soft);
+  stroke-width: 1;
+}
+.drawshap__bell-dot {
+  stroke: var(--bg);
+  stroke-width: 1;
+}
+.drawshap__bell-dot.drv-good { fill: var(--drv-good); }
+.drawshap__bell-dot.drv-bad  { fill: var(--drv-bad); }
+.drawshap__bell-dot.drv-neu  { fill: var(--drv-neu); }
+.drawshap__pct {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--tx-3);
+}
+
+/* Percentile-driven color classes — apply to arrow, value, percentile, pp.
+   These OVERRIDE the legacy .pos/.neg model-accent coloring because they
+   live further down the cascade and are only set on the new layout. */
+.drawshap__arrow.drv-good,
+.drawshap__val.drv-good,
+.drawshap__pct.drv-good,
+.drawshap__v.drv-good { color: var(--drv-good); }
+.drawshap__arrow.drv-bad,
+.drawshap__val.drv-bad,
+.drawshap__pct.drv-bad,
+.drawshap__v.drv-bad { color: var(--drv-bad); }
+.drawshap__arrow.drv-neu,
+.drawshap__val.drv-neu,
+.drawshap__pct.drv-neu,
+.drawshap__v.drv-neu { color: var(--drv-neu); }
+
+/* Tooltip summary block (percentile-aware drivers). */
+.featTip__summary {
+  font-family: var(--ff-body);
+  font-size: 0.8125rem;
+  color: var(--tx-2);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.featTip__summary b { color: var(--tx); font-weight: 600; }
 
 .drawshap__empty {
   font-family: var(--ff-body);
