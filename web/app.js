@@ -818,9 +818,21 @@
     const prevBtn = overlay.querySelector(".spotlight__prev");
     const nextBtn = overlay.querySelector(".spotlight__next");
     const closeBtn = overlay.querySelector(".spotlight__close");
+    const railEl = document.querySelector(".rail");
+    const drawerEl = document.getElementById("drawer");
+    const viewport = window.visualViewport || null;
 
     let current = -1;
     let rafId = null;
+    let activeTarget = null;
+    let activeSelector = "";
+    let settleTimer = null;
+    let settleCleanup = null;
+    let layoutObserver = null;
+
+    function emitDrawerLayoutChange() {
+      window.dispatchEvent(new CustomEvent("drawer-layout-change"));
+    }
 
     // wire card clicks + keyboard
     cards.forEach((card, i) => {
@@ -834,16 +846,89 @@
     nextBtn.addEventListener("click", () => open((current + 1) % cards.length));
     closeBtn.addEventListener("click", close);
 
-    overlay.addEventListener("click", (e) => {
-      if (!callout.contains(e.target)) close();
-    });
-
     document.addEventListener("keydown", (e) => {
       if (overlay.hidden) return;
       if (e.key === "Escape") close();
       if (e.key === "ArrowRight") open((current + 1) % cards.length);
       if (e.key === "ArrowLeft") open((current - 1 + cards.length) % cards.length);
     });
+
+    function resolveActiveTarget() {
+      if (activeTarget && activeTarget.isConnected) return activeTarget;
+      if (!activeSelector) return null;
+      activeTarget = document.querySelector(activeSelector);
+      return activeTarget;
+    }
+
+    function measureTargetRect() {
+      const target = resolveActiveTarget();
+      if (!target) return null;
+      const rect = target.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return null;
+      return rect;
+    }
+
+    function pointInRect(x, y, rect) {
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    }
+
+    function getDrawerRect() {
+      if (!drawerEl || drawerEl.hidden || drawerEl.getAttribute("aria-hidden") === "true") return null;
+      const rect = drawerEl.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return null;
+      return rect;
+    }
+
+    function schedulePosition() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        if (current < 0) return;
+        position();
+      });
+    }
+
+    function watchScrollUntilSettled(scrollers, fallbackMs = 520) {
+      const els = scrollers.filter(Boolean);
+      if (!els.length) {
+        schedulePosition();
+        return;
+      }
+
+      let idleTimer = null;
+      const onScroll = () => {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => schedulePosition(), 80);
+      };
+
+      clearTimeout(settleTimer);
+      if (settleCleanup) settleCleanup();
+      els.forEach(el => el.addEventListener("scroll", onScroll, { passive: true }));
+      settleCleanup = () => {
+        els.forEach(el => el.removeEventListener("scroll", onScroll));
+        clearTimeout(idleTimer);
+        settleCleanup = null;
+      };
+      settleTimer = setTimeout(() => {
+        if (settleCleanup) settleCleanup();
+        schedulePosition();
+      }, fallbackMs);
+    }
+
+    function onViewportChange() {
+      if (overlay.hidden) return;
+      schedulePosition();
+    }
+
+    function onDocumentPointerDown(e) {
+      if (overlay.hidden) return;
+      if (callout.contains(e.target)) return;
+      const rect = measureTargetRect();
+      if (rect && pointInRect(e.clientX, e.clientY, rect)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      close();
+    }
 
     function open(i) {
       const wasOpen = !overlay.hidden;
@@ -852,6 +937,8 @@
       const selector = card.dataset.spotlightTarget;
       const target = document.querySelector(selector);
       if (!target) return;
+      activeSelector = selector;
+      activeTarget = target;
 
       // collapse guide strip
       if (stripCtrl) stripCtrl.collapse();
@@ -867,12 +954,30 @@
 
       // attach persistent listeners only on first open
       if (!wasOpen) {
-        window.addEventListener("resize", onResize);
-        const rail = document.querySelector(".rail");
-        if (rail) rail.addEventListener("scroll", onRailScroll, { passive: true });
+        window.addEventListener("resize", onViewportChange);
+        window.addEventListener("scroll", onViewportChange, { passive: true });
+        window.addEventListener("drawer-layout-change", onViewportChange);
+        document.addEventListener("pointerdown", onDocumentPointerDown, true);
+        if (viewport) {
+          viewport.addEventListener("resize", onViewportChange);
+          viewport.addEventListener("scroll", onViewportChange);
+        }
+        if (railEl) railEl.addEventListener("scroll", onViewportChange, { passive: true });
+        if (drawerEl) {
+          drawerEl.addEventListener("transitionrun", emitDrawerLayoutChange);
+          drawerEl.addEventListener("transitionend", emitDrawerLayoutChange);
+        }
+        if (!layoutObserver) {
+          layoutObserver = new MutationObserver(() => {
+            if (!overlay.hidden) schedulePosition();
+          });
+          layoutObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+          if (drawerEl) {
+            layoutObserver.observe(drawerEl, { attributes: true, attributeFilter: ["hidden", "aria-hidden", "class", "style"] });
+          }
+        }
       }
 
-      const railEl = document.querySelector(".rail");
       const rect = target.getBoundingClientRect();
       const inView = rect.top >= 0 && rect.bottom <= window.innerHeight &&
         rect.left >= 0 && rect.right <= window.innerWidth;
@@ -880,29 +985,25 @@
       // if target IS the rail container and it's scrolled down, reset scroll first
       if (target === railEl && railEl.scrollTop > 0) {
         railEl.scrollTo({ top: 0, behavior: "smooth" });
-        setTimeout(() => requestAnimationFrame(() => position(target)), 380);
+        watchScrollUntilSettled([railEl], 420);
       } else if (!inView) {
         // target is off-screen: scroll it into view then reposition
         target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-        let timer = null;
-        const onScroll = () => { clearTimeout(timer); timer = setTimeout(() => requestAnimationFrame(() => position(target)), 80); };
-        const els = [window, railEl].filter(Boolean);
-        els.forEach(el => el.addEventListener("scroll", onScroll, { passive: true }));
-        setTimeout(() => {
-          els.forEach(el => el.removeEventListener("scroll", onScroll));
-          requestAnimationFrame(() => position(target));
-        }, 500);
+        watchScrollUntilSettled([window, railEl], 560);
       } else {
         // already in view — defer one frame so callout reflow settles after innerHTML change
-        requestAnimationFrame(() => position(target));
+        schedulePosition();
       }
     }
 
-    function position(target) {
+    function position() {
+      const rect = measureTargetRect();
+      if (!rect) return;
+
       const PAD = 8;
-      const rect = target.getBoundingClientRect();
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const drawerRect = getDrawerRect();
 
       ring.style.left = (rect.left - PAD) + "px";
       ring.style.top = (rect.top - PAD) + "px";
@@ -912,14 +1013,16 @@
       const calloutW = 340;
       const calloutH = callout.getBoundingClientRect().height || 260;
       const GAP = 20;
+      const minLeft = drawerRect ? Math.max(GAP, drawerRect.right + GAP) : GAP;
+      const maxLeft = Math.max(minLeft, vw - calloutW - GAP);
 
       let left;
       if (rect.right + calloutW + GAP * 2 <= vw) {
         left = rect.right + GAP;
-      } else if (rect.left - calloutW - GAP * 2 >= 0) {
+      } else if (rect.left - calloutW - GAP * 2 >= minLeft) {
         left = rect.left - calloutW - GAP;
       } else {
-        left = Math.max(GAP, Math.min(vw - calloutW - GAP, rect.left));
+        left = Math.max(minLeft, Math.min(maxLeft, rect.left));
       }
 
       let top = rect.top + rect.height / 2 - calloutH / 2;
@@ -933,24 +1036,29 @@
       overlay.hidden = true;
       overlay.setAttribute("aria-hidden", "true");
       current = -1;
-      window.removeEventListener("resize", onResize);
-      const rail = document.querySelector(".rail");
-      if (rail) rail.removeEventListener("scroll", onRailScroll);
-    }
-
-    function onResize() {
-      if (current < 0) return;
-      const target = document.querySelector(cards[current].dataset.spotlightTarget);
-      if (target) position(target);
-    }
-
-    function onRailScroll() {
+      activeTarget = null;
+      activeSelector = "";
+      clearTimeout(settleTimer);
+      if (settleCleanup) settleCleanup();
       if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        if (current < 0) return;
-        const target = document.querySelector(cards[current].dataset.spotlightTarget);
-        if (target) position(target);
-      });
+      rafId = null;
+      window.removeEventListener("resize", onViewportChange);
+      window.removeEventListener("scroll", onViewportChange);
+      window.removeEventListener("drawer-layout-change", onViewportChange);
+      document.removeEventListener("pointerdown", onDocumentPointerDown, true);
+      if (viewport) {
+        viewport.removeEventListener("resize", onViewportChange);
+        viewport.removeEventListener("scroll", onViewportChange);
+      }
+      if (railEl) railEl.removeEventListener("scroll", onViewportChange);
+      if (drawerEl) {
+        drawerEl.removeEventListener("transitionrun", emitDrawerLayoutChange);
+        drawerEl.removeEventListener("transitionend", emitDrawerLayoutChange);
+      }
+      if (layoutObserver) {
+        layoutObserver.disconnect();
+        layoutObserver = null;
+      }
     }
   }
 
@@ -1828,10 +1936,13 @@
     if (!dr) return;
     dr.hidden = false;
     document.body.classList.add("is-drawer-open");
+    window.dispatchEvent(new CustomEvent("drawer-layout-change"));
     // Force a frame to commit the hidden→visible state before transitioning.
     requestAnimationFrame(() => {
       dr.classList.add("is-open");
       dr.setAttribute("aria-hidden", "false");
+      window.dispatchEvent(new CustomEvent("drawer-layout-change"));
+      requestAnimationFrame(() => window.dispatchEvent(new CustomEvent("drawer-layout-change")));
     });
   }
 
@@ -1841,12 +1952,17 @@
     dr.classList.remove("is-open");
     dr.setAttribute("aria-hidden", "true");
     document.body.classList.remove("is-drawer-open");
+    window.dispatchEvent(new CustomEvent("drawer-layout-change"));
     // After transition, hide for a11y. Reduced-motion: hide immediately.
     if (REDUCED) {
       dr.hidden = true;
+      window.dispatchEvent(new CustomEvent("drawer-layout-change"));
     } else {
       setTimeout(() => {
-        if (!dr.classList.contains("is-open")) dr.hidden = true;
+        if (!dr.classList.contains("is-open")) {
+          dr.hidden = true;
+          window.dispatchEvent(new CustomEvent("drawer-layout-change"));
+        }
       }, 360);
     }
   }

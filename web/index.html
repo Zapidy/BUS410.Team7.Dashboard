@@ -445,30 +445,28 @@
         </div>
       </article>
 
-      <div class="meth__modelSwitch" aria-label="Choose model for methodology cards 02 and 02b">
-        <div class="meth__modelSwitch-num" aria-hidden="true">02</div>
-        <div class="meth__modelSwitch-copy">
-          <p class="meth__modelSwitch-kicker mono">Cards 02–02b</p>
-          <p class="meth__modelSwitch-hint">Toggle just the two model-specific methodology cards below.</p>
-        </div>
-        <div class="meth__modelSwitch-controls" role="group" aria-label="Model for methodology cards">
-          <button class="methModelBtn is-active" type="button" data-meth-model="diagnostic" aria-pressed="true">
-            <span class="methModelBtn__eyebrow mono">Diagnostic</span>
-            <span class="methModelBtn__label">Full 39-feature model</span>
-          </button>
-          <button class="methModelBtn" type="button" data-meth-model="influenceable" aria-pressed="false">
-            <span class="methModelBtn__eyebrow mono">Influenceable</span>
-            <span class="methModelBtn__label">Policy-facing 20-feature model</span>
-          </button>
-        </div>
-      </div>
-
       <article class="meth__sec" data-accordion>
         <div class="meth__num">02</div>
         <div class="meth__body">
           <h3 class="meth__h">Importance is not impact.</h3>
           <p class="accordion__hook">A feature the model notices heavily is not always the same as a feature that
             changes the final forecast by itself.</p>
+          <div class="meth__modelSwitch meth__modelSwitch--inline" aria-label="Choose model for methodology cards 02 and 02b">
+            <div class="meth__modelSwitch-copy">
+              <p class="meth__modelSwitch-kicker mono">Model for cards 02–02b</p>
+              <p class="meth__modelSwitch-hint">Switch just these two model-specific methodology views.</p>
+            </div>
+            <div class="meth__modelSwitch-controls" role="group" aria-label="Model for methodology cards">
+              <button class="methModelBtn is-active" type="button" data-meth-model="diagnostic" aria-pressed="true">
+                <span class="methModelBtn__eyebrow mono">Diagnostic</span>
+                <span class="methModelBtn__label">Full 39-feature model</span>
+              </button>
+              <button class="methModelBtn" type="button" data-meth-model="influenceable" aria-pressed="false">
+                <span class="methModelBtn__eyebrow mono">Influenceable</span>
+                <span class="methModelBtn__label">Policy-facing 20-feature model</span>
+              </button>
+            </div>
+          </div>
           <button class="accordion__toggle" aria-expanded="false" aria-label="Toggle: Importance is not impact"><i
               class="accordion__chevron" aria-hidden="true">&#9658;</i>
             Details</button>
