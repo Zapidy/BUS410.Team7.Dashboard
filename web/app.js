@@ -2159,6 +2159,35 @@
     return (lo + 1) + t;  // returns a percentile in (1,99)
   }
 
+  // For categorical / binary features the percentile (cumulative share) hides
+  // the actual category. Map the raw value to a 0..100 position on the
+  // category scale instead — matches RUCA's natural 1-10 reading and lets
+  // binaries land cleanly at 0% or 100%. Returns null if no scale is known.
+  function valuePositionForCategorical(feat, rawValue) {
+    const dist = STATE.featureDistributions && STATE.featureDistributions[feat];
+    if (!dist || !dist.is_categorical || !dist.categories || !dist.categories.length) return null;
+    if (rawValue == null || isNaN(rawValue)) return null;
+    const vals = dist.categories.map(c => Number(c.value));
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    if (max === min) return 50;  // single-category degenerate case
+    const v = Math.max(min, Math.min(max, Number(rawValue)));
+    return ((v - min) / (max - min)) * 100;
+  }
+
+  // Short label for the percentile column when the feature is categorical.
+  // RUCA → just the integer code. Binary → "yes"/"no". Otherwise the int.
+  function categoricalLabel(feat, value) {
+    if (value == null || isNaN(value)) return "—";
+    const v = Math.round(Number(value));
+    if (feat === "ssbci_active" || feat === "ssbci_2_0_active" ||
+        feat === "is_persistent_poverty" || feat === "mdi_active_in_county" ||
+        feat === "is_rural") {
+      return v ? "yes" : "no";
+    }
+    return String(v);
+  }
+
   // Per-feature formatter for the raw-value column in the drivers panel.
   // Falls back to localized number for anything not specifically registered.
   function formatRawValue(feat, value) {
@@ -2800,24 +2829,37 @@
       } else {
         // ---- Percentile-aware 5-column layout ----
         const rawValue = lookupRawValue(feat, geoid, countyMode);
-        const pct = featurePercentile(feat, rawValue, scope);
         const distRec = STATE.featureDistributions[feat];
         const isCat = !!(distRec && distRec.is_categorical);
-        const colorCls = colorClassForRow(feat, pct);
-        // Arrow direction: ▲ if above median, ▼ if below, · if exactly 50
-        // or percentile unknown.
+        // For continuous features: cumulative-distribution percentile.
+        // For categoricals/binaries: position on the category value scale
+        //   (e.g., RUCA=6 → 56% across a 1..10 scale, ssbci=1 → 100%).
+        // The bell marker, color rule, and arrow direction all use the same
+        // number — so a categorical row reads as "high RUCA = right side of
+        // the scale = red (because higher_is_worse)" without computing a
+        // misleading cumulative-share percentile.
+        const pos = isCat
+          ? valuePositionForCategorical(feat, rawValue)
+          : featurePercentile(feat, rawValue, scope);
+        const colorCls = colorClassForRow(feat, pos);
         let arrow = "·";
-        if (pct != null) {
-          if (pct > 50) arrow = "▲";
-          else if (pct < 50) arrow = "▼";
+        if (pos != null) {
+          if (pos > 50) arrow = "▲";
+          else if (pos < 50) arrow = "▼";
         }
         const valueText = formatRawValue(feat, rawValue);
-        const pctText = pct == null
-          ? "—"
-          : (scope ? `${ordinal(Math.round(pct))} in ${scope}` : ordinal(Math.round(pct)));
-        const bell = isCat ? bucketSvg(pct, colorCls) : bellSvg(pct, colorCls);
-        li.dataset.pct = pct == null ? "" : Math.round(pct);
+        let pctText;
+        if (pos == null) {
+          pctText = "—";
+        } else if (isCat) {
+          pctText = categoricalLabel(feat, rawValue);
+        } else {
+          pctText = scope ? `${ordinal(Math.round(pos))} in ${scope}` : ordinal(Math.round(pos));
+        }
+        const bell = isCat ? bucketSvg(pos, colorCls) : bellSvg(pos, colorCls);
+        li.dataset.pct = pos == null ? "" : Math.round(pos);
         li.dataset.scope = scope || "national";
+        li.dataset.cat = isCat ? "1" : "";
         li.innerHTML = `
           <span class="drawshap__nm">
             <span class="drawshap__arrow ${colorCls}" aria-hidden="true">${arrow}</span>
@@ -2854,6 +2896,7 @@
     const pctRaw = anchorEl && anchorEl.dataset ? anchorEl.dataset.pct : "";
     const pct = pctRaw === "" || pctRaw == null ? null : Number(pctRaw);
     const scope = anchorEl && anchorEl.dataset ? anchorEl.dataset.scope : "national";
+    const isCat = !!(anchorEl && anchorEl.dataset && anchorEl.dataset.cat);
     const ppEl = anchorEl ? anchorEl.querySelector(".drawshap__v") : null;
     const valEl = anchorEl ? anchorEl.querySelector(".drawshap__val") : null;
     let summary = "";
@@ -2866,12 +2909,16 @@
       const scopeLabel = scope === "national" ? "" : ` in ${scope}`;
       const directionNote = dir === "neutral"
         ? ""
-        : ` Being ${aboveBelow} on this driver is `
+        : ` This ${aboveBelow} reading on this driver is `
           + ((dir === "lower_is_worse") === (pct > 50) ? "<b>better</b>" : "<b>worse</b>")
           + " than typical for this metric.";
+      // Categorical/binary rows lead with the raw value, not a percentile.
+      const lead = isCat
+        ? `<b>${valEl.textContent.trim()}</b>${scopeLabel}.`
+        : `<b>${valEl.textContent.trim()}</b> · ${ordinal(Math.round(pct))} percentile${scopeLabel}.`;
       summary = `
         <div class="featTip__summary">
-          <b>${valEl.textContent.trim()}</b> · ${ordinal(Math.round(pct))} percentile${scopeLabel}.
+          ${lead}
           ${verb.charAt(0).toUpperCase() + verb.slice(1)} the ${horizonLabel} by <b>${ppText}</b>.${directionNote}
         </div>
         <div class="featTip__rule"></div>
