@@ -2255,38 +2255,38 @@
   // SVG sparkline: faint normal-curve silhouette + colored marker at percentile.
   function bellSvg(percentile, colorClass) {
     if (percentile == null) return "";
-    const W = 80, H = 22, PAD = 2;
-    // Pre-baked normal-curve path normalized to [0,1] x [0,1], then scaled.
-    // Coarse polyline; cheap enough to inline per row.
+    const W = 80, H = 22, PAD = 6, R = 4.2;  // PAD ≥ R + stroke for clean edges
     const pts = [];
     for (let i = 0; i <= 24; i++) {
       const x = i / 24;
       const z = (x - 0.5) * 6;            // ±3σ across the box
       const y = Math.exp(-0.5 * z * z);   // standard normal, peak = 1
-      pts.push([PAD + x * (W - 2 * PAD), H - PAD - y * (H - 2 * PAD)]);
+      pts.push([PAD + x * (W - 2 * PAD), H - 3 - y * (H - 6)]);
     }
     const path = "M" + pts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("L");
-    const cx = PAD + (percentile / 100) * (W - 2 * PAD);
-    const baseY = H - PAD;
+    let cx = PAD + (percentile / 100) * (W - 2 * PAD);
+    cx = Math.max(R + 1, Math.min(W - R - 1, cx));
+    const baseY = H - 3;
     return `
       <svg class="drawshap__bell" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
         <path d="${path}" class="drawshap__bell-curve"/>
         <line x1="${PAD}" x2="${W - PAD}" y1="${baseY}" y2="${baseY}" class="drawshap__bell-axis"/>
-        <circle cx="${cx.toFixed(1)}" cy="${baseY - 1}" r="3.5" class="drawshap__bell-dot ${colorClass}"/>
+        <circle cx="${cx.toFixed(1)}" cy="${baseY - 1}" r="${R}" class="drawshap__bell-dot ${colorClass}"/>
       </svg>
     `;
   }
 
-  // Categorical analog — faint dotted segments with the active bucket dot.
+  // Categorical analog — flat axis with the dot at value/max position.
   function bucketSvg(percentile, colorClass) {
     if (percentile == null) return "";
-    const W = 80, H = 22, PAD = 2;
-    const cx = PAD + (percentile / 100) * (W - 2 * PAD);
+    const W = 80, H = 22, PAD = 6, R = 4.2;
+    let cx = PAD + (percentile / 100) * (W - 2 * PAD);
+    cx = Math.max(R + 1, Math.min(W - R - 1, cx));
     const baseY = H / 2;
     return `
       <svg class="drawshap__bell" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
         <line x1="${PAD}" x2="${W - PAD}" y1="${baseY}" y2="${baseY}" class="drawshap__bell-axis"/>
-        <circle cx="${cx.toFixed(1)}" cy="${baseY}" r="3.5" class="drawshap__bell-dot ${colorClass}"/>
+        <circle cx="${cx.toFixed(1)}" cy="${baseY}" r="${R}" class="drawshap__bell-dot ${colorClass}"/>
       </svg>
     `;
   }

@@ -2730,19 +2730,26 @@ body[data-model="m2"] .drawshap__v.neg { color: var(--m1); }
 
 /* ─── Percentile-aware drivers panel ─────────────────────────────────── */
 :root {
-  --drv-good: oklch(0.78 0.165 145);  /* green */
-  --drv-bad:  oklch(0.70 0.20 25);    /* coral-red */
-  --drv-neu:  var(--tx-4);            /* muted grey */
+  --drv-good: oklch(0.84 0.18 145);   /* brighter green so it lands on dark bg */
+  --drv-bad:  oklch(0.74 0.22 25);    /* brighter coral-red */
+  --drv-neu:  var(--tx-2);            /* still readable, not muted-out */
+  --drv-bell-curve: oklch(0.55 0.02 240 / 0.55);
+}
+[data-theme="light"] {
+  --drv-good: oklch(0.55 0.18 145);
+  --drv-bad:  oklch(0.55 0.22 25);
+  --drv-bell-curve: oklch(0.45 0.02 240 / 0.55);
 }
 .drawshap__val {
   font-family: var(--ff-body);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 600;
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--tx-2);
+  color: var(--tx);
+  font-variant-numeric: tabular-nums;
 }
 .drawshap__bellwrap {
   display: flex;
@@ -2756,15 +2763,17 @@ body[data-model="m2"] .drawshap__v.neg { color: var(--m1); }
 }
 .drawshap__bell-curve {
   fill: none;
-  stroke: var(--rule);
-  stroke-width: 1;
+  stroke: var(--drv-bell-curve);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .drawshap__bell-axis {
   stroke: var(--rule-soft);
   stroke-width: 1;
 }
 .drawshap__bell-dot {
-  stroke: var(--bg);
+  stroke: oklch(0.98 0.005 80 / 0.85);
   stroke-width: 1;
 }
 .drawshap__bell-dot.drv-good { fill: var(--drv-good); }
@@ -2772,11 +2781,24 @@ body[data-model="m2"] .drawshap__v.neg { color: var(--m1); }
 .drawshap__bell-dot.drv-neu  { fill: var(--drv-neu); }
 .drawshap__pct {
   font-family: var(--ff-body);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 700;
   text-align: right;
   white-space: nowrap;
-  color: var(--tx-3);
+  color: var(--tx);
+  font-variant-numeric: tabular-nums;
+}
+.drawshap__nm {
+  font-weight: 600;
+  color: var(--tx);
+}
+.drawshap__v {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.drawshap__arrow {
+  font-size: 0.875rem;
 }
 
 /* Percentile-driven color classes — apply to arrow, value, percentile, pp.
